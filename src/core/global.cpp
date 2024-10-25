@@ -12,3 +12,5 @@ UndoManager* g_undo_manager;
 EntityData* g_selected_entity;
 
 bool g_controller_connected;
+bool g_enter_pressed;
+

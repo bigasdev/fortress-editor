@@ -25,5 +25,6 @@ extern UndoManager* g_undo_manager;
 extern EntityData* g_selected_entity;
 
 extern bool g_controller_connected;
+extern bool g_enter_pressed;
 
 #endif

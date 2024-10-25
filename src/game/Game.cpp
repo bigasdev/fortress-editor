@@ -131,6 +131,7 @@ void Game::init() {
   g_input_manager->bind_keyboard(SDLK_e, &load_project);
   g_input_manager->bind_keyboard(SDLK_z, &z_pressed);
   g_input_manager->bind_keyboard(SDLK_LCTRL, &ctrl_pressed);
+  g_input_manager->bind_keyboard(SDLK_RETURN, &g_enter_pressed);
 
   // test stuff
   // TODO: create a note or a doc about how the animation works before cleaning

@@ -66,20 +66,4 @@ logo
 ui
 Game initialized
 Engine post init
-Adding action to undo stack
-Undoing last action
-Undoing asset b
-Adding action to undo stack
-Adding action to undo stack
-Adding action to undo stack
-Undoing last action
-Undoing asset 
-Undoing last action
-Undoing last action
-Adding action to undo stack
-Adding action to undo stack
-Undoing last action
-Undoing asset hehehetw
-Undoing last action
-Undoing asset etetw
 SDL2 quit

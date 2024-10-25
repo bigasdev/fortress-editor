@@ -76,7 +76,7 @@ void AssetView::entities() {
     ImGui::Text("Create a new group");
     static char group_name[128] = "";
     ImGui::InputText("Group Name", group_name, IM_ARRAYSIZE(group_name));
-    if (ImGui::Button("Create", ImVec2(120, 0))) {
+    if (ImGui::Button("Create", ImVec2(120, 0)) || g_enter_pressed) {
       m_groups.push_back(group_name);
       ImGui::CloseCurrentPopup();
     }
@@ -170,7 +170,7 @@ void AssetView::atlas() {
       ImGui::Text("Create a new entity");
       static char entity_name[128] = "";
       ImGui::InputText("Entity Name", entity_name, IM_ARRAYSIZE(entity_name));
-      if (ImGui::Button("Create", ImVec2(120, 0))) {
+      if (ImGui::Button("Create", ImVec2(120, 0)) || g_enter_pressed) {
         EntityData data;
         data.name = entity_name;
         data.pallete_name = m_selected_pallete;
