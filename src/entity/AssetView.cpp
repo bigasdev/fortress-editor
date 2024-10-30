@@ -18,6 +18,7 @@
 #include "EntityData.hpp"
 #include "InfoBar.hpp"
 
+
 std::unique_ptr<InfoBar> info_bar;
 std::map<std::string, Pallete> m_sprites;
 std::map<std::string, EntityData> m_entities;

@@ -18,44 +18,21 @@ GAME_FLAGS = -D_IMGUI -DWIN_WIDTH=1024 -DWIN_HEIGHT=576 -DGAME_SCALE=1
 bin_dir:
 	mkdir bin
 
-imgui_o: $(patsubst src/imgui/%.cpp,bin/%.o,$(wildcard src/imgui/*.cpp))
-app_o: $(patsubst src/core/%.cpp,bin/%.o,$(wildcard src/core/*.cpp))
-entity_o : $(patsubst src/entity/%.cpp,bin/%.o,$(wildcard src/entity/*.cpp))
-renderer_o : $(patsubst src/renderer/%.cpp,bin/%.o,$(wildcard src/renderer/*.cpp))
-resources_o : $(patsubst src/res/%.cpp,bin/%.o,$(wildcard src/res/*.cpp))
-game_o : $(patsubst src/game/%.cpp,bin/%.o,$(wildcard src/game/*.cpp))
-tools_o : $(patsubst src/tools/%.cpp,bin/%.o,$(wildcard src/tools/*.cpp))
+SRC_DIRS := src/imgui src/core src/entity src/renderer src/res src/game src/tools
 
-# Rule to build all .cpp files in the src/ImGui folder
-bin/%.o: src/imgui/%.cpp
+OBJ_FILES := $(foreach dir, $(SRC_DIRS), $(patsubst $(dir)/%.cpp, bin/%.o, $(wildcard $(dir)/*.cpp)))
+
+bin/%.o: src/**/%.cpp
 	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
 
-bin/%.o: src/core/%.cpp
-	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+debug: $(OBJ_FILES)
+	${CC} -g -O0 $(STATIC_LIBS) $(INCLUDES) -o $(DEBUG_FOLDER)/fortress.exe $(OBJ_FILES) $(ICON_DIR) $(DEBUG_LIBS) -mconsole
 
-bin/%.o: src/entity/%.cpp
-	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+build: $(OBJ_FILES)
+	${CC} -s -O3 -finline-functions -flto $(STATIC_LIBS) $(INCLUDES) -o $(RELEASE_FOLDER)/${NAME}.exe $(OBJ_FILES) $(ICON_DIR) $(LIBS)
 
-bin/%.o: src/renderer/%.cpp
-	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
-
-bin/%.o: src/res/%.cpp
-	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
-
-bin/%.o: src/game/%.cpp
-	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
-
-bin/%.o: src/tools/%.cpp
-	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
-
-debug: imgui_o app_o entity_o renderer_o resources_o game_o tools_o
-	${CC} -g -O0 $(STATIC_LIBS) $(INCLUDES) -o $(DEBUG_FOLDER)/fortress.exe ${BIN} $(ICON_DIR) $(DEBUG_LIBS) -mconsole
-
-build: imgui_o app_o entity_o renderer_o resources_o game_o tools_o
-	${CC} -s -O3 -finline-functions -flto $(STATIC_LIBS) $(INCLUDES) -o $(RELEASE_FOLDER)/${NAME}.exe ${BIN} $(ICON_DIR) $(LIBS)
-
-compile: bin_dir imgui_o app_o entity_o renderer_o resources_o game_o tools_o
-	${CC} $(STATIC_LIBS) $(INCLUDES) -Llib -o ${NAME}_debug ${BIN} $(ICON_DIR) $(LIBS) -mconsole
+compile: bin_dir $(OBJ_FILES)
+	${CC} $(STATIC_LIBS) $(INCLUDES) -Llib -o ${NAME}_debug $(OBJ_FILES) $(ICON_DIR) $(LIBS) -mconsole
 
 web: src/core/*.cpp src/entity/*.cpp src/renderer/*.cpp src/res/*.cpp src/game/*.cpp src/tools/*.cpp
 	em++ $^ -o .web/yare.js -g -lm --bind -std=c++20 -Wno-narrowing -s USE_SDL=2 -O3 -s USE_SDL_IMAGE=2 -s USE_SDL_TTF=2 -s USE_SDL_MIXER=2 -s SDL2_IMAGE_FORMATS='["png"]' -s ALLOW_MEMORY_GROWTH=1 -s TOTAL_STACK=64MB -s INITIAL_MEMORY=96MB --preload-file res --preload-file res/font --preload-file res/icon --preload-file res/sprites --use-preload-plugins
