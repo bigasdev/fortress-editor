@@ -15,7 +15,7 @@
 #include <iostream>
 #include <memory>
 
-#include "EntityData.hpp"
+#include "data/EntityData.hpp"
 #include "InfoBar.hpp"
 
 std::unique_ptr<InfoBar> info_bar;
