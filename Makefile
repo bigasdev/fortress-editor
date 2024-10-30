@@ -18,15 +18,38 @@ GAME_FLAGS = -D_IMGUI -DWIN_WIDTH=1024 -DWIN_HEIGHT=576 -DGAME_SCALE=1
 bin_dir:
 	mkdir bin
 
-SRC_FILES := $(wildcard src/**/**/*.cpp)
-OBJ_FILES := $(patsubst src/%.cpp, bin/%.o, $(SRC_FILES))
+imgui_o: $(patsubst src/imgui/%.cpp,bin/%.o,$(wildcard src/imgui/*.cpp))
+app_o: $(patsubst src/core/%.cpp,bin/%.o,$(wildcard src/core/*.cpp))
+entity_o : $(patsubst src/entity/%.cpp,bin/%.o,$(wildcard src/entity/*.cpp))
+renderer_o : $(patsubst src/renderer/%.cpp,bin/%.o,$(wildcard src/renderer/*.cpp))
+resources_o : $(patsubst src/res/%.cpp,bin/%.o,$(wildcard src/res/*.cpp))
+game_o : $(patsubst src/game/%.cpp,bin/%.o,$(wildcard src/game/*.cpp))
+tools_o : $(patsubst src/tools/%.cpp,bin/%.o,$(wildcard src/tools/*.cpp))
 
 # Rule to build all .cpp files in the src/ImGui folder
-bin/%.o: src/%.cpp
+bin/%.o: src/imgui/%.cpp
 	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
 
-debug: ${OBJ_FILES}
-	${CC} -g -O0 $(STATIC_LIBS) $(INCLUDES) -o $(DEBUG_FOLDER)/fortress.exe ${OBJ_FILES} $(ICON_DIR) $(DEBUG_LIBS) -mconsole
+bin/%.o: src/core/%.cpp
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+
+bin/%.o: src/entity/%.cpp
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+
+bin/%.o: src/renderer/%.cpp
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+
+bin/%.o: src/res/%.cpp
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+
+bin/%.o: src/game/%.cpp
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+
+bin/%.o: src/tools/%.cpp
+	$(CC) $(GAME_FLAGS) $(if $(filter true,$(DEBUG)),-g $(DEBUG_FLAGS)) $(INCLUDES) -c $< -o $@
+
+debug: imgui_o app_o entity_o renderer_o resources_o game_o tools_o
+	${CC} -g -O0 $(STATIC_LIBS) $(INCLUDES) -o $(DEBUG_FOLDER)/fortress.exe ${BIN} $(ICON_DIR) $(DEBUG_LIBS) -mconsole
 
 build: imgui_o app_o entity_o renderer_o resources_o game_o tools_o
 	${CC} -s -O3 -finline-functions -flto $(STATIC_LIBS) $(INCLUDES) -o $(RELEASE_FOLDER)/${NAME}.exe ${BIN} $(ICON_DIR) $(LIBS)

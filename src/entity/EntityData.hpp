@@ -1,6 +1,6 @@
 #pragma once 
 #include "IData.hpp"
-#include "../../tools/Common.hpp"
+#include "../tools/Common.hpp"
 #include <string>
 
 class EntityData : public IData
