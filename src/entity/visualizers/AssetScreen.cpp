@@ -1,10 +1,10 @@
 #include "AssetScreen.hpp"
-#include "../core/Engine.hpp"
-#include "../core/global.hpp"
-#include "../renderer/Renderer.hpp"
-#include "../res/Res.hpp"
-#include "../tools/Logger.hpp"
-#include "data/EntityData.hpp"
+#include "../../core/Engine.hpp"
+#include "../../core/global.hpp"
+#include "../../renderer/Renderer.hpp"
+#include "../../res/Res.hpp"
+#include "../../tools/Logger.hpp"
+#include "../data/EntityData.hpp"
 
 AssetScreen::AssetScreen() {}
 

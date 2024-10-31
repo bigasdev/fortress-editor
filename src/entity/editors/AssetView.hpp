@@ -1,5 +1,7 @@
 #pragma once 
 
+#include "IEditor.hpp"
+
 #include <map>
 #include <string>
 #include <vector>
@@ -11,12 +13,14 @@ struct Pallete{
   ase_t *ase;
 };
 
-class AssetView
+class AssetView : public IEditor
 {
 public:
     AssetView(std::map<std::string, Sprite> sprites);
 
-    void show();
+    void show() override;
+    void update() override;
+    void dispose() override;
 private:
     void entities();
     void atlas();

@@ -18,7 +18,7 @@ GAME_FLAGS = -D_IMGUI -DWIN_WIDTH=1024 -DWIN_HEIGHT=576 -DGAME_SCALE=1
 bin_dir:
 	mkdir bin
 
-SRC_DIRS := src/imgui src/core src/entity src/entity/data src/renderer src/res src/game src/tools
+SRC_DIRS := src/imgui src/core src/entity src/entity/data src/entity/actions src/entity/editors src/entity/visualizers src/renderer src/res src/game src/tools
 
 OBJ_FILES := $(foreach dir, $(SRC_DIRS), $(patsubst $(dir)/%.cpp, bin/%.o, $(wildcard $(dir)/*.cpp)))
 
