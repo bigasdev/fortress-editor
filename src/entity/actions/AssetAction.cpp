@@ -1,11 +1,11 @@
 #include "AssetAction.hpp"
-#include "EntityData.hpp"
-#include "../tools/Logger.hpp"
-#include "../core/global.hpp"
+#include "../data/EntityData.hpp"
+#include "../../tools/Logger.hpp"
+#include "../../core/global.hpp"
 #include <algorithm>
 #include <string>
 #include <map>
-#include "../tools/boxer.h"
+#include "../../tools/boxer.h"
 
 AssetAction::~AssetAction() {}
 

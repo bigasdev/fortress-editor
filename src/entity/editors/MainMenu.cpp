@@ -1,5 +1,5 @@
 #include "MainMenu.hpp"
-#include "../imgui/imgui.h"
+#include "../../imgui/imgui.h"
 
 MainMenu::MainMenu() {}
 
@@ -37,3 +37,7 @@ void MainMenu::show() {
 
   ImGui::EndMainMenuBar();
 }
+
+void MainMenu::update() {}
+
+void MainMenu::dispose() {}

@@ -1,13 +1,13 @@
 #include "AssetView.hpp"
-#include "../core/Engine.hpp"
-#include "../core/UndoManager.hpp"
-#include "../core/global.hpp"
-#include "../imgui/imgui_impl_opengl3.h"
-#include "../renderer/Renderer.hpp"
-#include "../renderer/Sprite.hpp"
-#include "../res/Res.hpp"
-#include "../tools/ImGuiHelper.hpp"
-#include "AssetAction.hpp"
+#include "../../core/Engine.hpp"
+#include "../../core/UndoManager.hpp"
+#include "../../core/global.hpp"
+#include "../../imgui/imgui_impl_opengl3.h"
+#include "../../renderer/Renderer.hpp"
+#include "../../renderer/Sprite.hpp"
+#include "../../res/Res.hpp"
+#include "../../tools/ImGuiHelper.hpp"
+#include "../actions/AssetAction.hpp"
 #include "SDL.h"
 #include "SDL_gpu.h"
 #include "cute_aseprite.h"
@@ -15,8 +15,9 @@
 #include <iostream>
 #include <memory>
 
-#include "EntityData.hpp"
-#include "InfoBar.hpp"
+#include "../data/EntityData.hpp"
+#include "../editors/InfoBar.hpp"
+
 
 std::unique_ptr<InfoBar> info_bar;
 std::map<std::string, Pallete> m_sprites;
@@ -223,4 +224,13 @@ void AssetView::pallete() {
   }
   ImGui::PopStyleVar();
   ImGui::EndChild();
+}
+
+void AssetView::update() {
+}
+
+void AssetView::dispose() {
+  for (auto &[key, value] : m_sprites) {
+    cute_aseprite_free(value.ase);
+  }
 }

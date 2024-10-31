@@ -1,6 +1,6 @@
 #include "InfoBar.hpp"
-#include "../imgui/imgui.h"
-#include "../tools/Mouse.hpp"
+#include "../../imgui/imgui.h"
+#include "../../tools/Mouse.hpp"
 
 InfoBar::InfoBar() {}
 
@@ -20,3 +20,7 @@ void InfoBar::show() {
   ImGui::PopStyleColor();
   ImGui::EndChild();
 }
+
+void InfoBar::update() {}
+
+void InfoBar::dispose() {}

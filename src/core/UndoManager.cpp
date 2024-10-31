@@ -1,5 +1,5 @@
 #include "UndoManager.hpp"
-#include "../entity/IAction.hpp"
+#include "../entity/actions/IAction.hpp"
 #include "../tools/Logger.hpp"
 
 UndoManager::UndoManager() {}

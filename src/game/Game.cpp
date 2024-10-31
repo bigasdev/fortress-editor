@@ -28,10 +28,10 @@
 #include "../core/UndoManager.hpp"
 
 // Components
-#include "../entity/AssetScreen.hpp"
-#include "../entity/AssetView.hpp"
-#include "../entity/MainMenu.hpp"
-#include "../entity/SideMenu.hpp"
+#include "../entity/visualizers/AssetScreen.hpp"
+#include "../entity/editors/AssetView.hpp"
+#include "../entity/editors/MainMenu.hpp"
+#include "../entity/editors/SideMenu.hpp"
 
 struct Animation {
   std::string name;

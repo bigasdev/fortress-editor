@@ -1,8 +1,8 @@
 #include "SideMenu.hpp"
-#include "../core/Engine.hpp"
-#include "../core/global.hpp"
-#include "../imgui/imgui_impl_opengl3.h"
-#include "../res/Res.hpp"
+#include "../../core/Engine.hpp"
+#include "../../core/global.hpp"
+#include "../../imgui/imgui_impl_opengl3.h"
+#include "../../res/Res.hpp"
 #include "SDL.h"
 #include "SDL_gpu.h"
 #include <cstdint>
@@ -61,4 +61,10 @@ void SideMenu::show() {
   ImGui::PopStyleVar();
   ImGui::PopStyleColor();
   ImGui::EndChild();
+}
+
+void SideMenu::update() {}
+
+void SideMenu::dispose() {
+  GPU_FreeImage(sdl_img);
 }
