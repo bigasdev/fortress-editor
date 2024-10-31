@@ -4,7 +4,7 @@
 #include "../renderer/Renderer.hpp"
 #include "../res/Res.hpp"
 #include "../tools/Logger.hpp"
-#include "EntityData.hpp"
+#include "data/EntityData.hpp"
 
 AssetScreen::AssetScreen() {}
 

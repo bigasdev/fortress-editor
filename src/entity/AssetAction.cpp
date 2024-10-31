@@ -1,5 +1,5 @@
 #include "AssetAction.hpp"
-#include "EntityData.hpp"
+#include "data/EntityData.hpp"
 #include "../tools/Logger.hpp"
 #include "../core/global.hpp"
 #include <algorithm>

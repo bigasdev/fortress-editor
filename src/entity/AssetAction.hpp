@@ -4,7 +4,7 @@
 
 #include <string>
 #include <map>
-#include "EntityData.hpp"
+#include "data/EntityData.hpp"
 
 class AssetAction :  public IAction{
 public:
