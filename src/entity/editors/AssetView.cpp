@@ -45,7 +45,7 @@ AssetView::AssetView(std::map<std::string, Sprite> sprites) {
 
 void AssetView::show() {
   ImGui::SetNextWindowPos(ImVec2(75, 20.0f));
-  ImGui::SetNextWindowSize(ImVec2(g_engine->get_window_size()->x - 80,
+  ImGui::SetNextWindowSize(ImVec2(320,
                                   g_engine->get_window_size()->y - 25));
   ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.05, 0.05, 0.05, 1.0));
   ImGui::Begin(" Assets", nullptr,

@@ -221,11 +221,6 @@ void Engine::draw() {
   m_profiler->draw();
 #endif
 
-#if _IMGUI
-  GPU_FlushBlitBuffer();
-  m_game->draw_imgui();
-#endif
-
   // game draw
   GPU_SetCamera(m_gpu, nullptr);
   m_game->draw_root();
@@ -235,6 +230,10 @@ void Engine::draw() {
   m_game->draw_ui();
   GPU_DeactivateShaderProgram();
 
+#if _IMGUI
+  GPU_FlushBlitBuffer();
+  m_game->draw_imgui();
+#endif
 
   GPU_Flip(m_gpu);
 }
