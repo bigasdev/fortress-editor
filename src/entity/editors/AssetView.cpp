@@ -2,6 +2,7 @@
 #include "../../core/Engine.hpp"
 #include "../../core/UndoManager.hpp"
 #include "../../core/global.hpp"
+#include "../../core/EditorDataManager.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../renderer/Renderer.hpp"
 #include "../../renderer/Sprite.hpp"
@@ -227,6 +228,9 @@ void AssetView::pallete() {
 }
 
 void AssetView::update() {
+  if(g_ctrl_pressed && g_s_pressed){
+    g_editor_data_manager->export_(m_entities);
+  }
 }
 
 void AssetView::dispose() {

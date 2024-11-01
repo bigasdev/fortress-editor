@@ -1,6 +1,7 @@
 #include "global.hpp"
 
 Engine* g_engine;
+EditorDataManager* g_editor_data_manager;
 Res* g_res;
 Renderer* g_renderer;
 Camera* g_camera;
@@ -13,4 +14,6 @@ EntityData* g_selected_entity;
 
 bool g_controller_connected;
 bool g_enter_pressed;
+bool g_ctrl_pressed;
+bool g_s_pressed;
 

@@ -1,4 +1,5 @@
 #include "EditorDataManager.hpp"
+#include "DataLoader.hpp"
 #include "Fini.hpp"
 #include "json.hpp"
 #include "../entity/data/EntityData.hpp"
@@ -16,6 +17,10 @@ void EditorDataManager::import(std::string path){
 }
 
 void EditorDataManager::export_(std::map<std::string, EntityData> assets, std::string path){
+  if(path == ""){
+    path = Data_Loader::load_folder("Select a folder to save the assets");
+  }
+
   nlohmann::json j;
   for (auto &asset : assets) {
     nlohmann::json asset_j;

@@ -11,8 +11,10 @@ class Cooldown;
 class InputManager;
 class UndoManager;
 class EntityData;
+class EditorDataManager;
 
 extern Engine* g_engine;
+extern EditorDataManager* g_editor_data_manager;
 extern Res* g_res;
 extern Renderer* g_renderer;
 extern Camera* g_camera;
@@ -26,5 +28,7 @@ extern EntityData* g_selected_entity;
 
 extern bool g_controller_connected;
 extern bool g_enter_pressed;
+extern bool g_ctrl_pressed;
+extern bool g_s_pressed;
 
 #endif

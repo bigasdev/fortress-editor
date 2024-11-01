@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "../core/Engine.hpp"
 #include "../core/InputManager.hpp"
+#include "../core/EditorDataManager.hpp"
 #include "../core/Timer.hpp"
 #include "../core/global.hpp"
 #include "../imgui/imgui.h"
@@ -48,6 +49,8 @@ struct Asset {
   std::vector<Animation> animations;
 };
 
+std::unique_ptr<EditorDataManager> m_editor_data_manager;
+
 std::string project_folder;
 std::string asset_folder;
 vec2 pos = {0, 0};
@@ -87,6 +90,8 @@ void Game::init() {
   m_camera = new Camera(g_engine->get_window_size());
   m_cooldown = new Cooldown();
   m_undo_manager = new UndoManager();
+  m_editor_data_manager = std::make_unique<EditorDataManager>();
+  g_editor_data_manager = m_editor_data_manager.get();
   g_undo_manager = m_undo_manager;
 
   //
@@ -126,11 +131,11 @@ void Game::init() {
   g_camera->track_pos(&pos);
 
   g_input_manager->bind_mouse(&mouse_clicked, nullptr, &mouse_wheel_clicked);
-  g_input_manager->bind_keyboard(SDLK_s, &save_pressed);
+  g_input_manager->bind_keyboard(SDLK_s, &g_s_pressed);
   g_input_manager->bind_keyboard(SDLK_p, &load_assets);
   g_input_manager->bind_keyboard(SDLK_e, &load_project);
   g_input_manager->bind_keyboard(SDLK_z, &z_pressed);
-  g_input_manager->bind_keyboard(SDLK_LCTRL, &ctrl_pressed);
+  g_input_manager->bind_keyboard(SDLK_LCTRL, &g_ctrl_pressed);
   g_input_manager->bind_keyboard(SDLK_RETURN, &g_enter_pressed);
 
   // test stuff
@@ -174,6 +179,8 @@ void Game::update(double dt) {
   m_sprite_animator->update(dt);
 
   mouse_not_clicked = !mouse_clicked;
+
+  asset_view->update();
 
   // LOAD PROJECT FOLDER
   if (ctrl_pressed and load_project) {
