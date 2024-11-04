@@ -37,6 +37,11 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
     entity.sprite_size.y = asset["sprite_size_y"];
 
     assets[entity.name] = entity;
+
+    Logger::log("Assets from the data manager");
+    for(auto &asset : assets){
+      Logger::log(asset.first);
+    }
   }
 
   i.close();

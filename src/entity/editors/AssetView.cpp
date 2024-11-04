@@ -15,6 +15,7 @@
 #include <cstdint>
 #include <iostream>
 #include <memory>
+#include "../../tools/Logger.hpp"
 
 #include "../data/EntityData.hpp"
 #include "../editors/InfoBar.hpp"
@@ -233,6 +234,10 @@ void AssetView::update() {
   }
   if(g_ctrl_pressed && g_o_pressed){
     g_editor_data_manager->import(m_entities);
+    Logger::log("Assets from the asset view");
+    for(auto &asset : m_entities){
+      Logger::log(asset.first);
+    }
   }
 }
 
