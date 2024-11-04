@@ -66,4 +66,6 @@ logo
 ui
 Game initialized
 Engine post init
+Adding action to undo stack
+Exporting assets to: C:\Users\Escritorio2\Documents
 SDL2 quit

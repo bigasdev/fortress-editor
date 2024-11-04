@@ -3,6 +3,7 @@
 #include "Fini.hpp"
 #include "json.hpp"
 #include "../entity/data/EntityData.hpp"
+#include "../tools/Logger.hpp"
 
 EditorDataManager::EditorDataManager(){
 }
@@ -20,6 +21,7 @@ void EditorDataManager::export_(std::map<std::string, EntityData> assets, std::s
   if(path == ""){
     path = Data_Loader::load_folder("Select a folder to save the assets");
   }
+  Logger::log("Exporting assets to: " + path);
 
   nlohmann::json j;
   for (auto &asset : assets) {
@@ -40,7 +42,7 @@ void EditorDataManager::export_(std::map<std::string, EntityData> assets, std::s
     o << std::setw(4) << j << std::endl;
     o.close();
   } else {
-    std::ofstream o(path);
+    std::ofstream o(path + "/map.json");
     o << std::setw(4) << j << std::endl;
     o.close();
   }

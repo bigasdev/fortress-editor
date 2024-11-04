@@ -180,7 +180,6 @@ void Game::update(double dt) {
 
   mouse_not_clicked = !mouse_clicked;
 
-  asset_view->update();
 
   // LOAD PROJECT FOLDER
   if (ctrl_pressed and load_project) {
@@ -205,24 +204,6 @@ void Game::update(double dt) {
     ctrl_pressed = false;
   }
 
-  // SAVE ASSETS
-  if (ctrl_pressed and save_pressed) {
-    save();
-    save_pressed = false;
-    ctrl_pressed = false;
-  }
-
-  // LOAD ASSETS
-  if (ctrl_pressed and load_assets) {
-    auto file_path = Data_Loader::load_file("*.json");
-    if (file_path == "")
-      return;
-    load(file_path);
-    fini->set_value("last", "asset", file_path);
-    load_assets = false;
-    ctrl_pressed = false;
-  }
-
   // UNDO
   if (ctrl_pressed and z_pressed) {
     m_undo_manager->undo();
@@ -233,6 +214,7 @@ void Game::update(double dt) {
   // components updates
   if (side_menu->get_state() == State::ASSET) {
     asset_screen->update();
+    asset_view->update();
   }
 }
 
