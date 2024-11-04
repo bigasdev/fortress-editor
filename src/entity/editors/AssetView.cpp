@@ -231,6 +231,9 @@ void AssetView::update() {
   if(g_ctrl_pressed && g_s_pressed){
     g_editor_data_manager->export_(m_entities);
   }
+  if(g_ctrl_pressed && g_o_pressed){
+    g_editor_data_manager->import(m_entities);
+  }
 }
 
 void AssetView::dispose() {

@@ -4,6 +4,7 @@
 #include "json.hpp"
 #include "../entity/data/EntityData.hpp"
 #include "../tools/Logger.hpp"
+#include <fstream>
 
 EditorDataManager::EditorDataManager(){
 }
@@ -14,7 +15,31 @@ EditorDataManager::~EditorDataManager(){
 void EditorDataManager::on_file_drop(std::string path){
 }
 
-void EditorDataManager::import(std::string path){
+void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::string path){
+  if(path == ""){
+    path = Data_Loader::load_file("json");
+  }
+  Logger::log("Importing assets from: " + path);
+  assets.clear();
+
+  std::ifstream i(path);
+  nlohmann::json j;
+  i >> j;
+
+  for (auto &asset : j) {
+    Logger::log("Importing asset: ");
+    EntityData entity;
+    entity.name = asset["name"];
+    entity.pallete_name = asset["atlas_name"];
+    entity.atlas_pos.x = asset["atlas_pos_x"];
+    entity.atlas_pos.y = asset["atlas_pos_y"];
+    entity.sprite_size.x = asset["sprite_size_x"];
+    entity.sprite_size.y = asset["sprite_size_y"];
+
+    assets[entity.name] = entity;
+  }
+
+  i.close();
 }
 
 void EditorDataManager::export_(std::map<std::string, EntityData> assets, std::string path){

@@ -135,6 +135,7 @@ void Game::init() {
   g_input_manager->bind_keyboard(SDLK_p, &load_assets);
   g_input_manager->bind_keyboard(SDLK_e, &load_project);
   g_input_manager->bind_keyboard(SDLK_z, &z_pressed);
+  g_input_manager->bind_keyboard(SDLK_o, &g_o_pressed);
   g_input_manager->bind_keyboard(SDLK_LCTRL, &g_ctrl_pressed);
   g_input_manager->bind_keyboard(SDLK_RETURN, &g_enter_pressed);
 

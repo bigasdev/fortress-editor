@@ -11,7 +11,7 @@ class EditorDataManager{
     ~EditorDataManager();
 
     void on_file_drop(std::string path);
-    void import(std::string path);
+    void import(std::map<std::string, EntityData>& assets, std::string path = "");
     void export_(std::map<std::string, EntityData> assets, std::string path = "");
 
 private:

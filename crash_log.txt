@@ -66,6 +66,5 @@ logo
 ui
 Game initialized
 Engine post init
-Adding action to undo stack
-Adding action to undo stack
+Importing assets from: 
 ERROR: Signal: 22

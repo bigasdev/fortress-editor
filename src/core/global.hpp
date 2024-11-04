@@ -30,5 +30,6 @@ extern bool g_controller_connected;
 extern bool g_enter_pressed;
 extern bool g_ctrl_pressed;
 extern bool g_s_pressed;
+extern bool g_o_pressed;
 
 #endif
