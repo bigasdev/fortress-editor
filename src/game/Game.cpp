@@ -206,7 +206,7 @@ void Game::update(double dt) {
   }
 
   // UNDO
-  if (ctrl_pressed and z_pressed) {
+  if (g_ctrl_pressed and z_pressed) {
     m_undo_manager->undo();
     z_pressed = false;
     ctrl_pressed = false;

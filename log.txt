@@ -66,6 +66,14 @@ logo
 ui
 Game initialized
 Engine post init
+Adding action to undo stack
+Exporting assets to: C:\Users\Escritorio2\Documents
+Adding action to undo stack
+Adding action to undo stack
 Importing assets from: C:\Users\Escritorio2\Documents\map.json
 Importing asset: 
+Assets from the data manager
+bibi
+Assets from the asset view
+bibi
 SDL2 quit
