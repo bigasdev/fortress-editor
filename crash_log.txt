@@ -66,5 +66,15 @@ logo
 ui
 Game initialized
 Engine post init
-Importing assets from: 
-ERROR: Signal: 22
+Importing assets from: C:\Users\Escritorio2\Documents\map.json
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+bibi
+Assets from the asset view
+bibi
+Undoing last action
+Undoing asset bibi
+Exporting assets to: 
+ERROR: Texture  not found!
+ERROR: Signal: 11

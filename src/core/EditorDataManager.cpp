@@ -6,6 +6,10 @@
 #include "../tools/Logger.hpp"
 #include <fstream>
 
+#include "UndoManager.hpp"
+#include "global.hpp"
+#include "../entity/actions/AssetAction.hpp"
+
 EditorDataManager::EditorDataManager(){
 }
 
@@ -30,6 +34,7 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
     Logger::log("Importing asset: ");
     EntityData entity;
     entity.name = asset["name"];
+    entity.group = "default";
     entity.pallete_name = asset["atlas_name"];
     entity.atlas_pos.x = asset["atlas_pos_x"];
     entity.atlas_pos.y = asset["atlas_pos_y"];
@@ -37,6 +42,8 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
     entity.sprite_size.y = asset["sprite_size_y"];
 
     assets[entity.name] = entity;
+    auto action = new AssetAction(entity, assets);
+    g_undo_manager->add(action);
 
     Logger::log("Assets from the data manager");
     for(auto &asset : assets){
