@@ -102,6 +102,7 @@ void Game::init() {
   fini = new Fini("res/config.ini");
   fini->initialize_value("last", "folder", "");
   fini->initialize_value("last", "asset", "");
+  g_fini = fini;
 
   project_folder = fini->get_value<std::string>("last", "folder");
 
@@ -115,7 +116,6 @@ void Game::init() {
 
   asset_folder = fini->get_value<std::string>("last", "asset");
   if (asset_folder != "") {
-    load(asset_folder);
   }
 
   g_cooldown = m_cooldown;

@@ -57,13 +57,6 @@ Aseprite: ui
 Loaded shader: res/shaders/light_vertex.glsl and res/shaders/newoutline.frag.glsl
 Game:1
 1
-character_atlas
-concept
-item_atlas
-logo
-ui
-Game initialized
-Engine post init
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_icons.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_interface.aseprite
@@ -87,4 +80,11 @@ atlas_interfacemockup
 atlas_interfacemockup_1v
 atlas_interfacenew
 characters
+Importing assets from: C:\Users\Escritorio2\Downloads\map.json
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+dudes
+Game initialized
+Engine post init
 SDL2 quit

@@ -16,6 +16,7 @@
 #include <iostream>
 #include <memory>
 #include "../../tools/Logger.hpp"
+#include "Fini.hpp"
 
 #include "../data/EntityData.hpp"
 #include "../editors/InfoBar.hpp"
@@ -45,6 +46,11 @@ AssetView::AssetView(std::map<std::string, Sprite> sprites, std::string project_
         ("res/" + key + ".aseprite").c_str(), NULL);
     }
     m_sprites[key] = pallete;
+  }
+  
+  auto asset_folder = g_fini->get_value<std::string>("last", "asset");
+  if (asset_folder != "") {
+    g_editor_data_manager->import(m_entities, asset_folder);
   }
 
   m_groups.push_back("default");
@@ -165,6 +171,7 @@ void AssetView::atlas() {
                 asset, {i, j, sprite_x, sprite_y},
                 m_sprites[m_selected_pallete].ase))
           continue;
+
         if (ImGui::ImageButton(
                 ("t" + std::to_string(i) + std::to_string(j)).c_str(),
                 (void *)(intptr_t)ImGuiHelper::convert_to_imgui(

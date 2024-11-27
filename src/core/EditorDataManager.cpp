@@ -26,6 +26,8 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
   Logger::log("Importing assets from: " + path);
   assets.clear();
 
+  g_fini->set_value("last", "asset", path);
+
   std::ifstream i(path);
   nlohmann::json j;
   i >> j;
@@ -59,6 +61,8 @@ void EditorDataManager::export_(std::map<std::string, EntityData> assets, std::s
     path = Data_Loader::load_folder("Select a folder to save the assets");
   }
   Logger::log("Exporting assets to: " + path);
+
+  g_fini->set_value("last", "asset", path);
 
   nlohmann::json j;
   for (auto &asset : assets) {

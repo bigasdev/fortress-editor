@@ -9,6 +9,7 @@ Cooldown* g_cooldown;
 SoundManager* g_sound_manager;
 InputManager* g_input_manager;
 UndoManager* g_undo_manager;
+Fini* g_fini;
 
 EntityData* g_selected_entity;
 

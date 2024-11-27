@@ -12,6 +12,7 @@ class InputManager;
 class UndoManager;
 class EntityData;
 class EditorDataManager;
+class Fini;
 
 extern Engine* g_engine;
 extern EditorDataManager* g_editor_data_manager;
@@ -22,6 +23,7 @@ extern Cooldown* g_cooldown;
 extern SoundManager* g_sound_manager;
 extern InputManager* g_input_manager;
 extern UndoManager* g_undo_manager;
+extern Fini* g_fini;
 
 // variables 
 extern EntityData* g_selected_entity;
