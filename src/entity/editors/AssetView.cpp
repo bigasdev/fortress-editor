@@ -45,6 +45,17 @@ AssetView::AssetView(std::map<std::string, Sprite> sprites) {
   m_groups.push_back("default");
 }
 
+void AssetView::update_sprite_map(std::string project_folder, std::map<std::string, Sprite> sprites) {
+  m_sprites.clear();
+  for (auto &[key, value] : sprites) {
+    Pallete pallete;
+    pallete.sprite = &value;
+    pallete.ase = cute_aseprite_load_from_file(
+        (project_folder + "/res/" + key + ".aseprite").c_str(), NULL);
+    m_sprites[key] = pallete;
+  }
+}
+
 void AssetView::show() {
   ImGui::SetNextWindowPos(ImVec2(75, 20.0f));
   ImGui::SetNextWindowSize(ImVec2(320,

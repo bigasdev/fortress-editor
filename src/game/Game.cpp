@@ -84,7 +84,9 @@ std::unique_ptr<AssetScreen> asset_screen;
 
 Game::Game() {}
 
-Game::~Game() {}
+Game::~Game() {
+  fini->save();
+}
 
 void Game::init() {
   m_camera = new Camera(g_engine->get_window_size());
@@ -183,7 +185,7 @@ void Game::update(double dt) {
 
 
   // LOAD PROJECT FOLDER
-  if (ctrl_pressed and load_project) {
+  if (g_ctrl_pressed and load_project) {
     project_folder = Data_Loader::load_folder("Select project folder");
     if (project_folder == "")
       return;
@@ -203,6 +205,7 @@ void Game::update(double dt) {
 
     load_project = false;
     ctrl_pressed = false;
+    asset_view->update_sprite_map(project_folder, sprite_map);
   }
 
   // UNDO
