@@ -31,14 +31,19 @@ static char m_search_entity[256] = "";
 // settings
 int sprite_x = 8, sprite_y = 8;
 
-AssetView::AssetView(std::map<std::string, Sprite> sprites) {
+AssetView::AssetView(std::map<std::string, Sprite> sprites, std::string project_folder) {
   info_bar = std::make_unique<InfoBar>();
 
   for (auto &[key, value] : sprites) {
     Pallete pallete;
     pallete.sprite = &value;
-    pallete.ase = cute_aseprite_load_from_file(
+    if(project_folder != ""){
+      pallete.ase = cute_aseprite_load_from_file(
+        (project_folder + "/res/" + key + ".aseprite").c_str(), NULL);
+    }else{
+      pallete.ase = cute_aseprite_load_from_file(
         ("res/" + key + ".aseprite").c_str(), NULL);
+    }
     m_sprites[key] = pallete;
   }
 

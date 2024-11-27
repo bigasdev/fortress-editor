@@ -16,7 +16,7 @@ struct Pallete{
 class AssetView : public IEditor
 {
 public:
-    AssetView(std::map<std::string, Sprite> sprites);
+    AssetView(std::map<std::string, Sprite> sprites, std::string project_folder = "");
 
     void show() override;
     void update() override;

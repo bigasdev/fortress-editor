@@ -110,6 +110,7 @@ void Game::init() {
   if (project_folder != "") {
     g_res->reset_aseprites();
     g_res->load_aseprites(project_folder + "/res/");
+    sprite_map.clear();
   }
 
   asset_folder = fini->get_value<std::string>("last", "asset");
@@ -171,7 +172,7 @@ void Game::init() {
 
   side_menu = std::make_unique<SideMenu>();
   main_menu = std::make_unique<MainMenu>();
-  asset_view = std::make_unique<AssetView>(sprite_map);
+  asset_view = std::make_unique<AssetView>(sprite_map, project_folder);
   asset_screen = std::make_unique<AssetScreen>();
 }
 

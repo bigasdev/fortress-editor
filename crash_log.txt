@@ -57,38 +57,12 @@ Aseprite: ui
 Loaded shader: res/shaders/light_vertex.glsl and res/shaders/newoutline.frag.glsl
 Game:1
 1
-character_atlas
-concept
-item_atlas
-logo
-ui
-Game initialized
-Engine post init
-C:\Users\Escritorio2\Documents\.code\rog/res/character_atlas.aseprite
-C:\Users\Escritorio2\Documents\.code\rog/res/concept.aseprite
-C:\Users\Escritorio2\Documents\.code\rog/res/items_atlas.aseprite
-C:\Users\Escritorio2\Documents\.code\rog/res/logo.aseprite
-C:\Users\Escritorio2\Documents\.code\rog/res/ui.aseprite
-Finished aseprite load!
-------------
-Aseprite: character_atlas
-Aseprite: concept
-Aseprite: items_atlas
-Aseprite: logo
-Aseprite: ui
-character_atlas
-concept
-items_atlas
-logo
-ui
-Adding action to undo stack
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_icons.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_interface.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_interfacemockup.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_interfacemockup_1v.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_interfacenew.aseprite
-C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_tileset.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/characters.aseprite
 Finished aseprite load!
 ------------
@@ -98,7 +72,6 @@ Aseprite: atlas_interface
 Aseprite: atlas_interfacemockup
 Aseprite: atlas_interfacemockup_1v
 Aseprite: atlas_interfacenew
-Aseprite: atlas_tileset
 Aseprite: characters
 atlas
 atlas_icons
@@ -106,7 +79,7 @@ atlas_interface
 atlas_interfacemockup
 atlas_interfacemockup_1v
 atlas_interfacenew
-atlas_tileset
 characters
-ERROR: Texture items_atlas not found!
+Game initialized
+Engine post init
 ERROR: Signal: 11

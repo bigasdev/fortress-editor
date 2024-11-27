@@ -57,13 +57,19 @@ Aseprite: ui
 Loaded shader: res/shaders/light_vertex.glsl and res/shaders/newoutline.frag.glsl
 Game:1
 1
+character_atlas
+concept
+item_atlas
+logo
+ui
+Game initialized
+Engine post init
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_icons.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_interface.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_interfacemockup.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_interfacemockup_1v.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_interfacenew.aseprite
-C:\Users\Escritorio2\Documents\.code\Trekton/res/atlas_tileset.aseprite
 C:\Users\Escritorio2\Documents\.code\Trekton/res/characters.aseprite
 Finished aseprite load!
 ------------
@@ -73,7 +79,6 @@ Aseprite: atlas_interface
 Aseprite: atlas_interfacemockup
 Aseprite: atlas_interfacemockup_1v
 Aseprite: atlas_interfacenew
-Aseprite: atlas_tileset
 Aseprite: characters
 atlas
 atlas_icons
@@ -81,8 +86,5 @@ atlas_interface
 atlas_interfacemockup
 atlas_interfacemockup_1v
 atlas_interfacenew
-atlas_tileset
 characters
-Game initialized
-Engine post init
 SDL2 quit
