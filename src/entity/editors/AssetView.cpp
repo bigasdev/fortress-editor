@@ -16,6 +16,7 @@
 #include <iostream>
 #include <memory>
 #include "../../tools/Logger.hpp"
+#include "../../tools/Cooldown.hpp"
 #include "Fini.hpp"
 
 #include "../data/EntityData.hpp"
@@ -31,6 +32,8 @@ static char m_search_entity[256] = "";
 
 // settings
 int sprite_x = 8, sprite_y = 8;
+
+Cooldown asset_cd;
 
 AssetView::AssetView(std::map<std::string, Sprite> sprites, std::string project_folder) {
   info_bar = std::make_unique<InfoBar>();
@@ -261,6 +264,12 @@ void AssetView::update() {
     for(auto &asset : m_entities){
       Logger::log(asset.first);
     }
+  }
+}
+
+void AssetView::auto_update() {
+  if(!asset_cd.has_state("auto_update")){
+    asset_cd.set_state("auto_update", 0.5);
   }
 }
 
