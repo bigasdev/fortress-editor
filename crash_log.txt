@@ -73,4 +73,12 @@ Aseprite: atlas_interfacemockup
 Aseprite: atlas_interfacemockup_1v
 Aseprite: atlas_interfacenew
 Aseprite: characters
+atlas
+atlas_icons
+atlas_interface
+atlas_interfacemockup
+atlas_interfacemockup_1v
+atlas_interfacenew
+characters
+Importing assets from: C:\Users\Escritorio2\Downloads\map.json
 ERROR: Signal: 22

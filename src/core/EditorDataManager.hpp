@@ -15,4 +15,5 @@ class EditorDataManager{
     void export_(std::map<std::string, EntityData> assets, std::string path = "");
 
 private:
+    std::string m_current_path;
 };

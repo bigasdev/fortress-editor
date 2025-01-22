@@ -24,6 +24,7 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
     path = Data_Loader::load_file("json");
   }
   Logger::log("Importing assets from: " + path);
+  m_current_path = path;
   assets.clear();
 
   g_fini->set_value("last", "asset", path);
@@ -57,8 +58,10 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
 }
 
 void EditorDataManager::export_(std::map<std::string, EntityData> assets, std::string path){
-  if(path == ""){
+  if(path == "" && m_current_path == ""){
     path = Data_Loader::load_folder("Select a folder to save the assets");
+  }else{
+    path = m_current_path;
   }
   Logger::log("Exporting assets to: " + path);
 
@@ -78,6 +81,13 @@ void EditorDataManager::export_(std::map<std::string, EntityData> assets, std::s
     j.push_back(asset_j);
   }
   std::ofstream o;
+  
+  if(path == m_current_path){
+    std::ofstream o(path);
+    o << std::setw(4) << j << std::endl;
+    o.close();
+  }
+
   if (path == "") {
     std::ofstream o("res/map.json");
     o << std::setw(4) << j << std::endl;
