@@ -278,14 +278,14 @@ void AssetView::update() {
 
 void AssetView::draw(){
   if(asset_cd.has_state("auto_update")){
-    g_renderer->draw_text(vec2{g_engine->get_window_size()->x - 50, 20}, "Auto saving...", g_res->get_font("arial"));
+    g_renderer->draw_text(vec2{g_engine->get_window_size()->x - 60, 20}, "Saving...", g_res->get_font("arial"));
   }
 }
 
 void AssetView::auto_update() {
   if(!asset_cd.has_state("auto_update")){
-    asset_cd.set_state("auto_update", 0.5);
-    asset_cd.set_state("auto_update_time", 10.0);
+    asset_cd.set_state("auto_update", 1.5);
+    asset_cd.set_state("auto_update_time", 30.0);
 
     g_editor_data_manager->auto_save(m_entities);
   }
