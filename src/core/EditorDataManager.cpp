@@ -44,6 +44,18 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
     entity.sprite_size.x = asset["sprite_size_x"];
     entity.sprite_size.y = asset["sprite_size_y"];
 
+    if(entity.sprite_size.x > 0){
+      entity.sprite_pos.x = entity.atlas_pos.x * entity.sprite_size.x;
+    }else{
+      entity.sprite_pos.x = 0;
+    }
+
+    if(entity.sprite_size.y > 0){
+      entity.sprite_pos.y = entity.atlas_pos.y * entity.sprite_size.y;
+    }else{
+      entity.sprite_pos.y = 0;
+    }
+
     assets[entity.name] = entity;
     auto action = new AssetAction(entity, assets);
     g_undo_manager->add(action);

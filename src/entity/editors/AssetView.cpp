@@ -38,6 +38,7 @@ Cooldown asset_cd;
 
 AssetView::AssetView(std::map<std::string, Sprite> sprites, std::string project_folder) {
   info_bar = std::make_unique<InfoBar>();
+  m_groups.push_back("default");
 
   for (auto &[key, value] : sprites) {
     Pallete pallete;
@@ -57,7 +58,6 @@ AssetView::AssetView(std::map<std::string, Sprite> sprites, std::string project_
     g_editor_data_manager->import(m_entities, asset_folder);
   }
 
-  m_groups.push_back("default");
 }
 
 void AssetView::update_sprite_map(std::string project_folder, std::map<std::string, Sprite> sprites) {
