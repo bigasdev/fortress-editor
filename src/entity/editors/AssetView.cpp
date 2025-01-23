@@ -6,6 +6,7 @@
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../renderer/Renderer.hpp"
 #include "../../renderer/Sprite.hpp"
+#include "../../core/Timer.hpp"
 #include "../../res/Res.hpp"
 #include "../../tools/ImGuiHelper.hpp"
 #include "../actions/AssetAction.hpp"
@@ -106,6 +107,7 @@ void AssetView::entities() {
     ImGui::InputText("Group Name", group_name, IM_ARRAYSIZE(group_name));
     if (ImGui::Button("Create", ImVec2(120, 0)) || g_enter_pressed) {
       m_groups.push_back(group_name);
+      auto_update();
       ImGui::CloseCurrentPopup();
     }
     ImGui::EndPopup();
@@ -209,6 +211,7 @@ void AssetView::atlas() {
         data.atlas_pos = {spr_pos_x / sprite_x, spr_pos_y / sprite_y};
         auto action = new AssetAction(data, m_entities);
         g_undo_manager->add(action);
+        auto_update();
         ImGui::CloseCurrentPopup();
       }
       ImGui::EndPopup();
@@ -255,6 +258,8 @@ void AssetView::pallete() {
 }
 
 void AssetView::update() {
+  asset_cd.update(Timer::get_dt());
+
   if(g_ctrl_pressed && g_s_pressed){
     g_editor_data_manager->export_(m_entities);
   }
@@ -265,11 +270,24 @@ void AssetView::update() {
       Logger::log(asset.first);
     }
   }
+
+  if(!asset_cd.has_state("auto_update_time")){
+    auto_update();
+  }
+}
+
+void AssetView::draw(){
+  if(asset_cd.has_state("auto_update")){
+    g_renderer->draw_text(vec2{g_engine->get_window_size()->x - 50, 20}, "Auto saving...", g_res->get_font("arial"));
+  }
 }
 
 void AssetView::auto_update() {
   if(!asset_cd.has_state("auto_update")){
     asset_cd.set_state("auto_update", 0.5);
+    asset_cd.set_state("auto_update_time", 10.0);
+
+    g_editor_data_manager->auto_save(m_entities);
   }
 }
 

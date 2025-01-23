@@ -11,6 +11,7 @@ public:
   void show() override;
   void update() override;
   void dispose() override;
+  void draw() override;
 
 private:
 };

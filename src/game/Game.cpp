@@ -243,6 +243,7 @@ void Game::draw_ent() {
 void Game::draw_ui() {
   if (side_menu->get_state() == State::ASSET) {
     asset_screen->ui();
+    asset_view->draw();
   }
 }
 

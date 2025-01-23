@@ -68,3 +68,5 @@ void SideMenu::update() {}
 void SideMenu::dispose() {
   GPU_FreeImage(sdl_img);
 }
+
+void SideMenu::draw() {}

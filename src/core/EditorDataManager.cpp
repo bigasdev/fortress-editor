@@ -98,3 +98,11 @@ void EditorDataManager::export_(std::map<std::string, EntityData> assets, std::s
     o.close();
   }
 }
+
+void EditorDataManager::auto_save(std::map<std::string, EntityData> assets){
+  if(m_current_path == ""){
+    return;
+  }
+
+  export_(assets, m_current_path);
+}

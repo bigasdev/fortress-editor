@@ -24,3 +24,5 @@ void InfoBar::show() {
 void InfoBar::update() {}
 
 void InfoBar::dispose() {}
+
+void InfoBar::draw() {}

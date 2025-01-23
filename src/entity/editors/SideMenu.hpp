@@ -14,6 +14,7 @@ public:
   void show() override;
   void update() override;
   void dispose() override;
+  void draw() override;
 
   State get_state() { return m_state; }
 private: 

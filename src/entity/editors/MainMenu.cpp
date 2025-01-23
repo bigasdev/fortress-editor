@@ -41,3 +41,5 @@ void MainMenu::show() {
 void MainMenu::update() {}
 
 void MainMenu::dispose() {}
+
+void MainMenu::draw() {}
