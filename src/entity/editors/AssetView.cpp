@@ -96,11 +96,11 @@ void AssetView::show() {
 
   //asset info editor 
   if(g_selected_entity != nullptr){
-    ImGui::SetNextWindowPos(ImVec2(g_engine->get_window_size()->x - 328, 20.0f));
+    ImGui::SetNextWindowPos(ImVec2(g_engine->get_window_size()->x - 168, 20.0f));
     ImGui::SetNextWindowSize(ImVec2(160,
                                   220));
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.05, 0.05, 0.05, 1.0));
-    ImGui::Begin(" Assetdssdas", nullptr,
+    ImGui::Begin(" Editor", nullptr,
                ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
                    ImGuiWindowFlags_NoScrollbar);
 
