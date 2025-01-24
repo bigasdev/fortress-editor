@@ -24,9 +24,11 @@
 
 #include "../data/EntityData.hpp"
 #include "../editors/InfoBar.hpp"
+#include "../editors/AssetInfo.hpp"
 
 
 std::unique_ptr<InfoBar> info_bar;
+std::unique_ptr<AssetInfo> asset_info;
 std::map<std::string, Pallete> m_sprites;
 std::map<std::string, EntityData> m_entities;
 
@@ -40,6 +42,7 @@ Cooldown asset_cd;
 
 AssetView::AssetView(std::map<std::string, Sprite> sprites, std::string project_folder) {
   info_bar = std::make_unique<InfoBar>();
+  asset_info = std::make_unique<AssetInfo>(g_selected_entity);
   m_groups.push_back("default");
 
   for (auto &[key, value] : sprites) {
@@ -90,6 +93,23 @@ void AssetView::show() {
 
   ImGui::PopStyleColor();
   ImGui::End();
+
+  //asset info editor 
+  if(g_selected_entity != nullptr){
+    ImGui::SetNextWindowPos(ImVec2(g_engine->get_window_size()->x - 328, 20.0f));
+    ImGui::SetNextWindowSize(ImVec2(160,
+                                  220));
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.05, 0.05, 0.05, 1.0));
+    ImGui::Begin(" Assetdssdas", nullptr,
+               ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+                   ImGuiWindowFlags_NoScrollbar);
+
+    asset_info->show();
+
+
+    ImGui::PopStyleColor();
+    ImGui::End();
+  }
 }
 
 //
