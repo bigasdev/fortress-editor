@@ -10,9 +10,11 @@
 #include "../../res/Res.hpp"
 #include "../../tools/ImGuiHelper.hpp"
 #include "../actions/AssetAction.hpp"
+#include "../actions/DeleteAction.hpp"
 #include "SDL.h"
 #include "SDL_gpu.h"
 #include "cute_aseprite.h"
+#include <cmath>
 #include <cstdint>
 #include <iostream>
 #include <memory>
@@ -259,6 +261,16 @@ void AssetView::pallete() {
 
 void AssetView::update() {
   asset_cd.update(Timer::get_dt());
+
+  if(g_del_pressed){
+    if(g_selected_entity != nullptr){
+      auto action = new DeleteAction(g_selected_entity->name, m_entities);
+      g_undo_manager->add(action);
+      g_selected_entity = nullptr;
+      g_del_pressed = false;
+      auto_update();
+    }
+  }
 
   if(g_ctrl_pressed && g_s_pressed){
     g_editor_data_manager->export_(m_entities);
