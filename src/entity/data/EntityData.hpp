@@ -15,6 +15,7 @@ public:
     std::string group;
     vec2i sprite_size;
     vec2i sprite_pos;
+    vec2i sprite_offset;
     vec2i atlas_pos;
 private:
 };

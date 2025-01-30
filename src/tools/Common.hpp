@@ -69,7 +69,7 @@ struct Col {
 };
 
 struct vec2i {
-  int x, y;
+  int x = 0, y = 0;
 };
 
 struct vec3i {

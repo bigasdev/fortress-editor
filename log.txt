@@ -59,27 +59,33 @@ Game:1
 1
 C:\Users\Escritorio2\Documents\.code\orc-village/res/character_atlas.aseprite
 C:\Users\Escritorio2\Documents\.code\orc-village/res/concept.aseprite
+C:\Users\Escritorio2\Documents\.code\orc-village/res/concept_map.aseprite
 C:\Users\Escritorio2\Documents\.code\orc-village/res/concept_sketches.aseprite
 C:\Users\Escritorio2\Documents\.code\orc-village/res/concept_ui.aseprite
 C:\Users\Escritorio2\Documents\.code\orc-village/res/items_atlas.aseprite
 C:\Users\Escritorio2\Documents\.code\orc-village/res/logo.aseprite
 C:\Users\Escritorio2\Documents\.code\orc-village/res/ui.aseprite
+C:\Users\Escritorio2\Documents\.code\orc-village/res/weapons.aseprite
 Finished aseprite load!
 ------------
 Aseprite: character_atlas
 Aseprite: concept
+Aseprite: concept_map
 Aseprite: concept_sketches
 Aseprite: concept_ui
 Aseprite: items_atlas
 Aseprite: logo
 Aseprite: ui
+Aseprite: weapons
 character_atlas
 concept
+concept_map
 concept_sketches
 concept_ui
 items_atlas
 logo
 ui
+weapons
 Importing assets from: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
 Importing asset: 
 Adding action to undo stack
@@ -129,6 +135,17 @@ backpack_icon
 boots
 coin
 health_potion
+house
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+boots
+coin
+health_potion
+house
 orc
 Importing asset: 
 Adding action to undo stack
@@ -139,6 +156,7 @@ backpack_icon
 boots
 coin
 health_potion
+house
 orc
 pickaxe_16
 Importing asset: 
@@ -150,6 +168,7 @@ backpack_icon
 boots
 coin
 health_potion
+house
 orc
 pickaxe_16
 pickaxe_8
@@ -162,6 +181,7 @@ backpack_icon
 boots
 coin
 health_potion
+house
 orc
 pickaxe_16
 pickaxe_8
@@ -175,6 +195,7 @@ backpack_icon
 boots
 coin
 health_potion
+house
 orc
 pickaxe_16
 pickaxe_8
@@ -189,6 +210,7 @@ backpack_icon
 boots
 coin
 health_potion
+house
 orc
 pickaxe_16
 pickaxe_8
@@ -197,12 +219,5 @@ stamina_potion
 tree
 Game initialized
 Engine post init
-Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
-1073742048
-115
-Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
-Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
-Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
-Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
 Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
 SDL2 quit
