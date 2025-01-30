@@ -43,6 +43,8 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
     entity.atlas_pos.y = asset["atlas_pos_y"];
     entity.sprite_size.x = asset["sprite_size_x"];
     entity.sprite_size.y = asset["sprite_size_y"];
+    entity.sprite_offset.x = asset["sprite_offset_x"];
+    entity.sprite_offset.y = asset["sprite_offset_y"];
 
     if(entity.sprite_size.x > 0){
       entity.sprite_pos.x = entity.atlas_pos.x * entity.sprite_size.x;
@@ -89,6 +91,8 @@ void EditorDataManager::export_(std::map<std::string, EntityData> assets, std::s
     asset_j["atlas_pos_y"] = asset.second.atlas_pos.y;
     asset_j["sprite_size_x"] = asset.second.sprite_size.x;
     asset_j["sprite_size_y"] = asset.second.sprite_size.y;
+    asset_j["sprite_offset_x"] = asset.second.sprite_offset.x;
+    asset_j["sprite_offset_y"] = asset.second.sprite_offset.y;
 
     j.push_back(asset_j);
   }
