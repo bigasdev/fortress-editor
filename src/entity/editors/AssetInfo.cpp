@@ -20,6 +20,8 @@ void AssetInfo::show() {
   ImGui::InputInt("Size Y", &g_selected_entity->sprite_size.y);
   ImGui::InputInt("Position X", &g_selected_entity->atlas_pos.x);
   ImGui::InputInt("Position Y", &g_selected_entity->atlas_pos.y);
+  ImGui::InputInt("Collision Box X", &g_selected_entity->collision_box.x);
+  ImGui::InputInt("Collision Box Y", &g_selected_entity->collision_box.y);
   ImGui::InputInt("Offset X", &g_selected_entity->sprite_offset.x);
   ImGui::InputInt("Offset Y", &g_selected_entity->sprite_offset.y);
 

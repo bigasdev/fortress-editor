@@ -14,6 +14,7 @@ public:
     std::string pallete_name;
     std::string group;
     vec2i sprite_size;
+    vec2i collision_box = {16, 16};
     vec2i sprite_pos;
     vec2i sprite_offset;
     vec2i atlas_pos;

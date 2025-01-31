@@ -220,4 +220,6 @@ tree
 Game initialized
 Engine post init
 Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
+Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
+Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
 SDL2 quit
