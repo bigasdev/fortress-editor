@@ -219,4 +219,12 @@ stamina_potion
 tree
 Game initialized
 Engine post init
+1073742048
+1073742048
+115
+Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
+Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
+Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
+Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
+Exporting assets to: C:\Users\Escritorio2\Documents\.code\orc-village\res\prefabs\map.json
 SDL2 quit
