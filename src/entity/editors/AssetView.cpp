@@ -304,7 +304,7 @@ void AssetView::update() {
   }
 
   if(!asset_cd.has_state("auto_update_time")){
-    auto_update();
+    //auto_update();
   }
 }
 

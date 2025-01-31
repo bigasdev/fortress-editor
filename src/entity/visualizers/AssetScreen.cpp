@@ -43,17 +43,17 @@ void AssetScreen::root() {
        static_cast<int>(g_selected_entity->sprite_size.y * m_zoom)},
       {0, 55, 255, 125}, true);
 
-  g_renderer->draw_rect(
-      {(static_cast<int>(734))-(g_selected_entity->sprite_size.x+g_selected_entity->sprite_offset.x*m_zoom), (static_cast<int>(321))-(g_selected_entity->sprite_size.y+g_selected_entity->sprite_offset.y*m_zoom),
-       static_cast<int>(g_selected_entity->collision_box.x * m_zoom),
-       static_cast<int>(g_selected_entity->collision_box.y * m_zoom)},
-      {0, 255, 0, 255}, false);
-
   g_renderer->draw_from_sheet(
       *g_res->get_texture(g_selected_entity->pallete_name), {(static_cast<float>(734))-(g_selected_entity->sprite_size.x+g_selected_entity->sprite_offset.x*m_zoom), (static_cast<float>(321))-(g_selected_entity->sprite_size.y+g_selected_entity->sprite_offset.y*m_zoom)},
       {g_selected_entity->atlas_pos.x, g_selected_entity->atlas_pos.y,
        g_selected_entity->sprite_size.x, g_selected_entity->sprite_size.y},
       m_zoom);
+
+  g_renderer->draw_rect(
+      {(static_cast<int>(734))-(g_selected_entity->sprite_size.x+g_selected_entity->sprite_offset.x+g_selected_entity->collision_offset.x*m_zoom), (static_cast<int>(321))-(g_selected_entity->sprite_size.y+g_selected_entity->sprite_offset.y+g_selected_entity->collision_offset.y*m_zoom),
+      static_cast<int>(g_selected_entity->collision_box.x * m_zoom),
+      static_cast<int>(g_selected_entity->collision_box.y * m_zoom)},
+      {0, 255, 0, 255}, false);
 }
 
 void AssetScreen::ent() {}
