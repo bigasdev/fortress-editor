@@ -11,21 +11,46 @@ AssetInfo::~AssetInfo() {}
 void AssetInfo::show() {
 
   static char name[128] = "";
+  ImGui::BeginChild("Asset Info", ImVec2(400,50), true);
+  ImGui::Text(" Info");
   ImGui::InputText("Name", name, IM_ARRAYSIZE(name));
   ImGui::SameLine();
   if(ImGui::Button("Rename")) {
     g_selected_entity->name = name;
   }
-  ImGui::InputInt("Size X", &g_selected_entity->sprite_size.x);
-  ImGui::InputInt("Size Y", &g_selected_entity->sprite_size.y);
-  ImGui::InputInt("Position X", &g_selected_entity->atlas_pos.x);
-  ImGui::InputInt("Position Y", &g_selected_entity->atlas_pos.y);
-  ImGui::InputInt("Collision Box X", &g_selected_entity->collision_box.x);
-  ImGui::InputInt("Collision Box Y", &g_selected_entity->collision_box.y);
-  ImGui::InputInt("Collision Offset X", &g_selected_entity->collision_offset.x);
-  ImGui::InputInt("Collision Offset Y", &g_selected_entity->collision_offset.y);
-  ImGui::InputInt("Offset X", &g_selected_entity->sprite_offset.x);
-  ImGui::InputInt("Offset Y", &g_selected_entity->sprite_offset.y);
+  ImGui::EndChild();
+
+  ImGui::BeginChild(" Transform", ImVec2(400, 180), true);
+  ImGui::Text(" Transform");
+  ImGui::PushItemWidth(100);
+  ImGui::Text("Position");
+  ImGui::SameLine(120);
+  ImGui::Text("X");
+  ImGui::SameLine();
+  ImGui::InputInt("##Position X", &g_selected_entity->atlas_pos.x);
+  ImGui::SameLine();
+  ImGui::Text("Y");
+  ImGui::SameLine();
+  ImGui::InputInt("##Position Y", &g_selected_entity->atlas_pos.y);
+  ImGui::Text("Scale");
+  ImGui::SameLine(120);
+  ImGui::Text("X");
+  ImGui::SameLine();
+  ImGui::InputInt("##Size X", &g_selected_entity->sprite_size.x);
+  ImGui::SameLine();
+  ImGui::Text("Y");
+  ImGui::SameLine();
+  ImGui::InputInt("##Size Y", &g_selected_entity->sprite_size.y);
+  ImGui::Text("Sprite Offset");
+  ImGui::SameLine(120);
+  ImGui::Text("X");
+  ImGui::SameLine();
+  ImGui::InputInt("##Offset X", &g_selected_entity->sprite_offset.x);
+  ImGui::SameLine();
+  ImGui::Text("Y");
+  ImGui::SameLine();
+  ImGui::InputInt("##Offset Y", &g_selected_entity->sprite_offset.y);
+  ImGui::PopItemWidth();
 
   ImGui::Text(" Pivot");
 
@@ -50,6 +75,32 @@ void AssetInfo::show() {
   if(ImGui::Button("Bottom Center")) {
     g_selected_entity->sprite_offset = {g_selected_entity->sprite_size.x / 2, 0};
   }
+
+  ImGui::EndChild();
+
+  ImGui::BeginChild(" Collision", ImVec2(400, 70), true);
+  ImGui::Text(" Collision");
+  ImGui::PushItemWidth(100);
+  ImGui::Text("Size");
+  ImGui::SameLine(120);
+  ImGui::Text("X");
+  ImGui::SameLine();
+  ImGui::InputInt("##Collision Box X", &g_selected_entity->collision_box.x);
+  ImGui::SameLine();
+  ImGui::Text("Y");
+  ImGui::SameLine();
+  ImGui::InputInt("##Collision Box Y", &g_selected_entity->collision_box.y);
+  ImGui::Text("Offset");
+  ImGui::SameLine(120);
+  ImGui::Text("X");
+  ImGui::SameLine();
+  ImGui::InputInt("##Collision Offset X", &g_selected_entity->collision_offset.x);
+  ImGui::SameLine();
+  ImGui::Text("Y");
+  ImGui::SameLine();
+  ImGui::InputInt("##Collision Offset Y", &g_selected_entity->collision_offset.y);
+  ImGui::PopItemWidth();
+  ImGui::EndChild();
 }
 
 void AssetInfo::update() {

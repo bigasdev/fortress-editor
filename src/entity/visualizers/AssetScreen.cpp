@@ -1,6 +1,7 @@
 #include "AssetScreen.hpp"
 #include "../../core/Engine.hpp"
 #include "../../core/global.hpp"
+#include "../../renderer/Camera.hpp"
 #include "../../renderer/Renderer.hpp"
 #include "../../res/Res.hpp"
 #include "../../tools/Logger.hpp"
@@ -37,22 +38,31 @@ void AssetScreen::root() {
   if (g_selected_entity == nullptr)
     return;
 
-  g_renderer->draw_rect(
-      {(static_cast<int>(734))-(g_selected_entity->sprite_size.x+g_selected_entity->sprite_offset.x*m_zoom), (static_cast<int>(321))-(g_selected_entity->sprite_size.y+g_selected_entity->sprite_offset.y*m_zoom),
-       static_cast<int>(g_selected_entity->sprite_size.x * m_zoom),
-       static_cast<int>(g_selected_entity->sprite_size.y * m_zoom)},
-      {0, 55, 255, 125}, true);
+  g_renderer->draw_rect({40-g_camera->get_camera_pos().x, -60-g_camera->get_camera_pos().y, g_selected_entity->sprite_size.x*m_zoom, g_selected_entity->sprite_size.y*m_zoom}, {0, 0, 125, 55}, true);
 
   g_renderer->draw_from_sheet(
-      *g_res->get_texture(g_selected_entity->pallete_name), {(static_cast<float>(734))-(g_selected_entity->sprite_size.x+g_selected_entity->sprite_offset.x*m_zoom), (static_cast<float>(321))-(g_selected_entity->sprite_size.y+g_selected_entity->sprite_offset.y*m_zoom)},
+      *g_res->get_texture(g_selected_entity->pallete_name),
+      {static_cast<float>(40) +
+           (
+            g_selected_entity->sprite_offset.x * m_zoom) - g_camera->get_camera_pos().x,
+        static_cast<float>(-60) +
+            (
+             g_selected_entity->sprite_offset.y * m_zoom) - g_camera->get_camera_pos().y},
       {g_selected_entity->atlas_pos.x, g_selected_entity->atlas_pos.y,
        g_selected_entity->sprite_size.x, g_selected_entity->sprite_size.y},
       m_zoom);
 
   g_renderer->draw_rect(
-      {(static_cast<int>(734))-(g_selected_entity->sprite_size.x+g_selected_entity->sprite_offset.x+g_selected_entity->collision_offset.x*m_zoom), (static_cast<int>(321))-(g_selected_entity->sprite_size.y+g_selected_entity->sprite_offset.y+g_selected_entity->collision_offset.y*m_zoom),
-      static_cast<int>(g_selected_entity->collision_box.x * m_zoom),
-      static_cast<int>(g_selected_entity->collision_box.y * m_zoom)},
+      {(static_cast<float>(40)) +
+           (
+            (g_selected_entity->sprite_offset.x +
+            g_selected_entity->collision_offset.x) * m_zoom) - g_camera->get_camera_pos().x,
+       (static_cast<float>(-60)) +
+           (
+            (g_selected_entity->sprite_offset.y +
+            g_selected_entity->collision_offset.y) * m_zoom) - g_camera->get_camera_pos().y,
+       static_cast<int>(g_selected_entity->collision_box.x * m_zoom),
+       static_cast<int>(g_selected_entity->collision_box.y * m_zoom)},
       {0, 255, 0, 255}, false);
 }
 

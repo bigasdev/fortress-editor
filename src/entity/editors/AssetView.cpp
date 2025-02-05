@@ -1,16 +1,19 @@
 #include "AssetView.hpp"
+#include "../../core/EditorDataManager.hpp"
 #include "../../core/Engine.hpp"
+#include "../../core/Timer.hpp"
 #include "../../core/UndoManager.hpp"
 #include "../../core/global.hpp"
-#include "../../core/EditorDataManager.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../renderer/Renderer.hpp"
 #include "../../renderer/Sprite.hpp"
-#include "../../core/Timer.hpp"
 #include "../../res/Res.hpp"
+#include "../../tools/Cooldown.hpp"
 #include "../../tools/ImGuiHelper.hpp"
+#include "../../tools/Logger.hpp"
 #include "../actions/AssetAction.hpp"
 #include "../actions/DeleteAction.hpp"
+#include "Fini.hpp"
 #include "SDL.h"
 #include "SDL_gpu.h"
 #include "cute_aseprite.h"
@@ -18,14 +21,10 @@
 #include <cstdint>
 #include <iostream>
 #include <memory>
-#include "../../tools/Logger.hpp"
-#include "../../tools/Cooldown.hpp"
-#include "Fini.hpp"
 
 #include "../data/EntityData.hpp"
-#include "../editors/InfoBar.hpp"
 #include "../editors/AssetInfo.hpp"
-
+#include "../editors/InfoBar.hpp"
 
 std::unique_ptr<InfoBar> info_bar;
 std::unique_ptr<AssetInfo> asset_info;
@@ -40,7 +39,8 @@ int sprite_x = 8, sprite_y = 8;
 
 Cooldown asset_cd;
 
-AssetView::AssetView(std::map<std::string, Sprite> sprites, std::string project_folder) {
+AssetView::AssetView(std::map<std::string, Sprite> sprites,
+                     std::string project_folder) {
   info_bar = std::make_unique<InfoBar>();
   asset_info = std::make_unique<AssetInfo>(g_selected_entity);
   m_groups.push_back("default");
@@ -48,24 +48,24 @@ AssetView::AssetView(std::map<std::string, Sprite> sprites, std::string project_
   for (auto &[key, value] : sprites) {
     Pallete pallete;
     pallete.sprite = &value;
-    if(project_folder != ""){
+    if (project_folder != "") {
       pallete.ase = cute_aseprite_load_from_file(
-        (project_folder + "/res/" + key + ".aseprite").c_str(), NULL);
-    }else{
+          (project_folder + "/res/" + key + ".aseprite").c_str(), NULL);
+    } else {
       pallete.ase = cute_aseprite_load_from_file(
-        ("res/" + key + ".aseprite").c_str(), NULL);
+          ("res/" + key + ".aseprite").c_str(), NULL);
     }
     m_sprites[key] = pallete;
   }
-  
+
   auto asset_folder = g_fini->get_value<std::string>("last", "asset");
   if (asset_folder != "") {
     g_editor_data_manager->import(m_entities, asset_folder);
   }
-
 }
 
-void AssetView::update_sprite_map(std::string project_folder, std::map<std::string, Sprite> sprites) {
+void AssetView::update_sprite_map(std::string project_folder,
+                                  std::map<std::string, Sprite> sprites) {
   m_sprites.clear();
   for (auto &[key, value] : sprites) {
     Pallete pallete;
@@ -78,8 +78,7 @@ void AssetView::update_sprite_map(std::string project_folder, std::map<std::stri
 
 void AssetView::show() {
   ImGui::SetNextWindowPos(ImVec2(75, 20.0f));
-  ImGui::SetNextWindowSize(ImVec2(320,
-                                  g_engine->get_window_size()->y - 25));
+  ImGui::SetNextWindowSize(ImVec2(320, g_engine->get_window_size()->y - 25));
   ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.05, 0.05, 0.05, 1.0));
   ImGui::Begin(" Assets", nullptr,
                ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
@@ -94,18 +93,15 @@ void AssetView::show() {
   ImGui::PopStyleColor();
   ImGui::End();
 
-  //asset info editor 
-  if(g_selected_entity != nullptr){
-    ImGui::SetNextWindowPos(ImVec2(g_engine->get_window_size()->x - 168, 20.0f));
-    ImGui::SetNextWindowSize(ImVec2(160,
-                                  220));
+  // asset info editor
+  if (g_selected_entity != nullptr) {
+    ImGui::SetNextWindowPos(
+        ImVec2(g_engine->get_window_size()->x - 168, 20.0f), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(420, 220), ImGuiCond_FirstUseEver);
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.05, 0.05, 0.05, 1.0));
-    ImGui::Begin(" Editor", nullptr,
-               ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-                   ImGuiWindowFlags_NoScrollbar);
+    ImGui::Begin(" Editor", nullptr, 0);
 
     asset_info->show();
-
 
     ImGui::PopStyleColor();
     ImGui::End();
@@ -150,10 +146,8 @@ void AssetView::entities() {
               ImVec2(16, 16),
               ImVec2((float)value.sprite_pos.x / x,
                      (float)value.sprite_pos.y / y),
-              ImVec2((float)(value.sprite_pos.x + value.sprite_size.x) /
-                         x,
-                     (float)(value.sprite_pos.y + value.sprite_size.y) /
-                         y));
+              ImVec2((float)(value.sprite_pos.x + value.sprite_size.x) / x,
+                     (float)(value.sprite_pos.y + value.sprite_size.y) / y));
           ImGui::SameLine();
           if (ImGui::Button(key.c_str(), ImVec2(150, 18))) {
             g_selected_entity = &value;
@@ -282,8 +276,8 @@ void AssetView::pallete() {
 void AssetView::update() {
   asset_cd.update(Timer::get_dt());
 
-  if(g_del_pressed){
-    if(g_selected_entity != nullptr){
+  if (g_del_pressed) {
+    if (g_selected_entity != nullptr) {
       auto action = new DeleteAction(g_selected_entity->name, m_entities);
       g_undo_manager->add(action);
       g_selected_entity = nullptr;
@@ -292,30 +286,31 @@ void AssetView::update() {
     }
   }
 
-  if(g_ctrl_pressed && g_s_pressed){
+  if (g_ctrl_pressed && g_s_pressed) {
     g_editor_data_manager->export_(m_entities);
   }
-  if(g_ctrl_pressed && g_o_pressed){
+  if (g_ctrl_pressed && g_o_pressed) {
     g_editor_data_manager->import(m_entities);
     Logger::log("Assets from the asset view");
-    for(auto &asset : m_entities){
+    for (auto &asset : m_entities) {
       Logger::log(asset.first);
     }
   }
 
-  if(!asset_cd.has_state("auto_update_time")){
-    //auto_update();
+  if (!asset_cd.has_state("auto_update_time")) {
+    // auto_update();
   }
 }
 
-void AssetView::draw(){
-  if(asset_cd.has_state("auto_update")){
-    g_renderer->draw_text(vec2{g_engine->get_window_size()->x - 60, 20}, "Saving...", g_res->get_font("arial"));
+void AssetView::draw() {
+  if (asset_cd.has_state("auto_update")) {
+    g_renderer->draw_text(vec2{g_engine->get_window_size()->x - 60, 20},
+                          "Saving...", g_res->get_font("arial"));
   }
 }
 
 void AssetView::auto_update() {
-  if(!asset_cd.has_state("auto_update")){
+  if (!asset_cd.has_state("auto_update")) {
     asset_cd.set_state("auto_update", 1.5);
     asset_cd.set_state("auto_update_time", 30.0);
 
