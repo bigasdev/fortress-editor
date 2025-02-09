@@ -9,6 +9,8 @@
 #include "Res.hpp"
 #include "SDL_render.h"
 #include "cute_aseprite.h"
+#include "../renderer/Sprite.hpp"
+#include "json.hpp"
 
 #include "../tools/Logger.hpp"
 #include <filesystem>
@@ -215,6 +217,65 @@ void Res::load_pallete() {
   GPU_FreeImage(image);
 }
 
+void Res::load_prefabs(std::string path) {
+  auto files = Reader::get_extension_files(path, ".json");
+
+  for (auto file : files) {
+    std::string path = file;
+    std::string file_name = path.substr(path.find_last_of("/\\") + 1);
+    file_name = file_name.substr(0, file_name.find_last_of("."));
+    Logger::log("Loading prefab: " + file_name);
+
+    std::string json = Reader::get_file_contents(file);
+    if (json.empty()) {
+      Logger::error("Failed to read prefab: " + file);
+      continue;
+    }
+
+    auto prefab = nlohmann::json::parse(json);
+
+    // loop through all the keys in the json array
+    // get all of the values from the json and try to create an Sprite from it
+    for (auto &[key, value] : prefab.items()) {
+      try {
+        auto name = value["name"].get<std::string>();
+        auto dst_x = value["atlas_pos_x"].get<float>();
+        auto dst_y = value["atlas_pos_y"].get<float>();
+        auto wid = value["sprite_size_x"].get<int>();
+        auto hei = value["sprite_size_y"].get<int>();
+        auto col_wid = value["collision_box_x"].get<int>();
+        auto col_hei = value["collision_box_y"].get<int>();
+        auto col_x = value["collision_offset_x"].get<int>();
+        auto col_y = value["collision_offset_y"].get<int>();
+        auto offset_x = value["sprite_offset_x"].get<int>();
+        auto offset_y = value["sprite_offset_y"].get<int>();
+        auto file_name = value["atlas_name"].get<std::string>();
+
+        auto spr = Sprite();
+        spr.sheet = file_name;
+        spr.dst_x = dst_x;
+        spr.dst_y = dst_y;
+        spr.col_wid = col_wid;
+        spr.col_hei = col_hei;
+        spr.col_x = col_x;
+        spr.col_y = col_y;
+        spr.wid = wid;
+        spr.hei = hei;
+        spr.spr_x = offset_x;
+        spr.spr_y = offset_y;
+
+        m_sprites.insert(std::make_pair(name, spr));
+
+
+        Logger::log("Prefab loaded: " + name);
+      } catch (nlohmann::json::exception &e) {
+        Logger::error("Failed to load prefab: " + file + " " + e.what());
+      }
+    }
+    // m_prefabs.insert(std::make_pair(file_name, file));
+  }
+}
+
 // FIX: To my older self..
 //  this shader part needs to be rewritten to easily load more shaders, for now
 //  its hard Loading remember for every frag we need a vert (and we can change
@@ -304,6 +365,8 @@ void Res::load_shaders() {
 // FIX: needs to be rewrite later, this is just returning the light shader for
 // now
 Uint32 Res::get_shader_id() { return m_shaders_id[0]; }
+
+std::map<std::string, Sprite> Res::get_sprites() { return m_sprites; }
 // same as the above
 GPU_ShaderBlock Res::get_shader_block() { return m_shader_blocks[0]; }
 

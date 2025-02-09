@@ -20,6 +20,7 @@
 #include "SDL_gpu.h"
 #include "SDL_keycode.h"
 #include "json.hpp"
+#include <cmath>
 #include <fstream>
 #include <iomanip>
 #include <memory>
@@ -113,6 +114,7 @@ void Game::init() {
   if (project_folder != "") {
     g_res->reset_aseprites();
     g_res->load_aseprites(project_folder + "/res/");
+    g_res->load_prefabs(project_folder + "/res/prefabs/");
     sprite_map.clear();
   }
 
@@ -157,7 +159,6 @@ void Game::fixed_update(double tmod) {}
 
 void Game::update(double dt) {
   m_cooldown->update(dt);
-  m_sprite_animator->update(dt);
 
   mouse_not_clicked = !mouse_clicked;
 

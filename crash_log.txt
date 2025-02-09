@@ -77,6 +77,23 @@ Aseprite: items_atlas
 Aseprite: logo
 Aseprite: ui
 Aseprite: weapons
+Loading prefab: map
+Prefab loaded: axe_16
+Prefab loaded: axe_8
+Prefab loaded: backpack_icon
+Prefab loaded: boots
+Prefab loaded: cock
+Prefab loaded: coin
+Prefab loaded: health_potion
+Prefab loaded: house
+Prefab loaded: orc
+Prefab loaded: pickaxe_16
+Prefab loaded: pickaxe_8
+Prefab loaded: rock
+Prefab loaded: rock_1
+Prefab loaded: rock_2
+Prefab loaded: stamina_potion
+Prefab loaded: tree
 character_atlas
 concept
 concept_map
@@ -273,4 +290,5 @@ stamina_potion
 tree
 Game initialized
 Engine post init
+ERROR: Texture axe_16 not found!
 ERROR: Signal: 11

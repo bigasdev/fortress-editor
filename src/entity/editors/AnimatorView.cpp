@@ -36,21 +36,23 @@ void AnimatorView::assets_child() {
   }
 
   for(auto asset : g_res->get_sprites()) {
-    auto handle = GPU_GetTextureHandle(*g_res->get_texture(asset.first));
+    auto handle = GPU_GetTextureHandle(*g_res->get_texture(asset.second.sheet));
     
-    int sprite_x = asset.second.dst_x;
-    int sprite_y = asset.second.dst_y;
+    int sprite_x = asset.second.dst_x * asset.second.wid;
+    int sprite_y = asset.second.dst_y * asset.second.hei;
     int sprite_width = asset.second.wid;
     int sprite_height = asset.second.hei;
     int atlas_size = 500;
 
-    ImVec2 uv0 = ImVec2((float)sprite_x / 400, (float)sprite_y / 250);
+    ImVec2 uv0 = ImVec2((float)sprite_x / atlas_size, (float)sprite_y / atlas_size);
 
-    ImVec2 uv1 = ImVec2((float)(sprite_x + sprite_width) / 400,
-                        (float)(sprite_y + sprite_height) / 250);
+    ImVec2 uv1 = ImVec2((float)(sprite_x + sprite_width) / atlas_size,
+                        (float)(sprite_y + sprite_height) / atlas_size);
 
-    if (ImGui::ImageButton(asset.first.c_str(), (void *)(intptr_t)handle, ImVec2(48, 48))) {
+
+    if (ImGui::ImageButton(asset.first.c_str(), (void *)(intptr_t)handle, ImVec2(48, 48), uv0, uv1)) {
     }
+    ImGui::Text(asset.first.c_str());
   }
   ImGui::EndChild();
 }
