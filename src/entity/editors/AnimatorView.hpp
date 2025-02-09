@@ -1,6 +1,10 @@
 #pragma once 
 
 #include "IEditor.hpp"
+#include <map>
+#include <string>
+
+class Sprite;
 
 
 class AnimatorView : public IEditor
@@ -15,4 +19,6 @@ public:
     void assets_child();
 
 private:
+    std::map<std::string, Sprite> m_sprites;
+    Sprite* m_selected_sprite = nullptr;
 };

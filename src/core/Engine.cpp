@@ -47,7 +47,8 @@ void Engine::init() {
 #endif
 
   R_ASSERT(init == 0);
-
+  
+  Logger::log("Loading started...");
   if (init == 0) {
     Logger::log("SDL2 initialized");
     Logger::log_group("SDL2 version", SDL_GetRevision());
@@ -65,6 +66,8 @@ void Engine::init() {
 
   GPU_SetInitWindow(SDL_GetWindowID(m_sdl_window));
 
+  Logger::log("Loading 25%...");
+
   m_sdl_renderer =
       SDL_CreateRenderer(m_sdl_window, -1, SDL_RENDERER_ACCELERATED);
   R_ASSERT(m_sdl_renderer != nullptr);
@@ -73,6 +76,8 @@ void Engine::init() {
   R_ASSERT(m_gpu != nullptr);
 
   GPU_SetWindowResolution(m_window_size.x, m_window_size.y);
+
+  Logger::log("Loading 50%...");
 
   if (m_renderer != nullptr && m_gpu != nullptr) {
     Logger::log("SDL2 renderer created");
@@ -93,29 +98,37 @@ void Engine::init() {
 
   TTF_Init();
 
+  Logger::log("Loading 75%...");
+
   R_ASSERT(m_sdl_window != nullptr);
 
   if (m_sdl_window != nullptr) {
     Logger::log("SDL2 window created");
   }
 
+  m_sound_manager = new SoundManager();
+  g_sound_manager = m_sound_manager;
+  m_res = new Res(m_sdl_renderer);
+  if (m_res != nullptr) {
+    Logger::log("Res created");
+    m_res->init();
+  }
+
+  Logger::log("Loading 100%...");
+
   m_running = true;
 }
 
 void Engine::post_init() {
-  if (m_loaded) {
+  if (m_loaded || !m_running) {
     return;
   }
 
   m_profiler = new Profiler();
   m_renderer = new Renderer(m_gpu);
-  m_sound_manager = new SoundManager();
   m_input_manager = new InputManager();
-  g_sound_manager = m_sound_manager;
   g_input_manager = m_input_manager;
 
-  m_res = new Res(m_sdl_renderer);
-  m_res->init();
 
   m_renderer->init_shader(m_res->get_shaders());
 

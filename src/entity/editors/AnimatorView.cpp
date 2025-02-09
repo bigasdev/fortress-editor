@@ -4,13 +4,17 @@
 #include "../../core/Engine.hpp"
 #include "../../core/global.hpp"
 #include "../../res/Res.hpp"
+#include "../../tools/Logger.hpp"
 #include "../../tools/ImGuiHelper.hpp"
 #include "../../renderer/Sprite.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "SDL_gpu.h"
 
 
-AnimatorView::AnimatorView() {}
+AnimatorView::AnimatorView() {
+  m_sprites = g_res->get_sprites();
+  m_selected_sprite = nullptr;
+}
 
 void AnimatorView::show() {
   ImGui::SetNextWindowPos(ImVec2(75, 20.0f));
@@ -28,6 +32,10 @@ void AnimatorView::show() {
 }
 
 void AnimatorView::assets_child() {
+  if(m_sprites.empty()){
+    return;
+  }
+
   ImGui::BeginChild(" Assets", ImVec2(300, g_engine->get_window_size()->y - 35), true);
   //change to a real search later
   ImGui::InputText("##Search", "Search...", IM_ARRAYSIZE("Search"));
@@ -35,7 +43,7 @@ void AnimatorView::assets_child() {
   if (ImGui::Button("", ImVec2(26, 20))) {
   }
 
-  for(auto asset : g_res->get_sprites()) {
+  for(auto asset : m_sprites){ 
     auto handle = GPU_GetTextureHandle(*g_res->get_texture(asset.second.sheet));
     
     int sprite_x = asset.second.dst_x * asset.second.wid;
@@ -50,14 +58,19 @@ void AnimatorView::assets_child() {
                         (float)(sprite_y + sprite_height) / atlas_size);
 
 
-    if (ImGui::ImageButton(asset.first.c_str(), (void *)(intptr_t)handle, ImVec2(48, 48), uv0, uv1)) {
+    if (ImGui::ImageButton(asset.first.c_str(), (void *)(intptr_t)handle, ImVec2(32, 32), uv0, uv1)) {
+      m_selected_sprite = &asset.second;
     }
     ImGui::Text(asset.first.c_str());
   }
   ImGui::EndChild();
 }
 
-void AnimatorView::update() {}
+void AnimatorView::update() {
+  if(m_selected_sprite != nullptr){
+    Logger::log("test");
+  }
+}
 
 void AnimatorView::dispose() {}
 
