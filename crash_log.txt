@@ -1,7 +1,5 @@
 SDL2 initialized
 SDL2 version: SDL-release-2.28.4-0-gcc016b004
-SDL2 renderer created
-SDL2 GPU created
 SDL2 image initialized
 SDL2 mixer initialized
 SDL2 window created
@@ -118,6 +116,15 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+boots
+cock
 coin
 Importing asset: 
 Adding action to undo stack
@@ -126,6 +133,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 Importing asset: 
@@ -135,6 +143,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -145,6 +154,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -156,6 +166,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -168,6 +179,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -181,6 +193,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -195,6 +208,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -210,6 +224,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -226,6 +241,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -243,6 +259,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -256,4 +273,4 @@ stamina_potion
 tree
 Game initialized
 Engine post init
-ERROR: Signal: 22
+ERROR: Signal: 11

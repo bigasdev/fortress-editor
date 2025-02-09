@@ -3,7 +3,11 @@
 #include <iostream>
 #include "../../core/Engine.hpp"
 #include "../../core/global.hpp"
+#include "../../res/Res.hpp"
+#include "../../tools/ImGuiHelper.hpp"
+#include "../../renderer/Sprite.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
+#include "SDL_gpu.h"
 
 
 AnimatorView::AnimatorView() {}
@@ -29,6 +33,24 @@ void AnimatorView::assets_child() {
   ImGui::InputText("##Search", "Search...", IM_ARRAYSIZE("Search"));
   ImGui::SameLine();
   if (ImGui::Button("", ImVec2(26, 20))) {
+  }
+
+  for(auto asset : g_res->get_sprites()) {
+    auto handle = GPU_GetTextureHandle(*g_res->get_texture(asset.first));
+    
+    int sprite_x = asset.second.dst_x;
+    int sprite_y = asset.second.dst_y;
+    int sprite_width = asset.second.wid;
+    int sprite_height = asset.second.hei;
+    int atlas_size = 500;
+
+    ImVec2 uv0 = ImVec2((float)sprite_x / 400, (float)sprite_y / 250);
+
+    ImVec2 uv1 = ImVec2((float)(sprite_x + sprite_width) / 400,
+                        (float)(sprite_y + sprite_height) / 250);
+
+    if (ImGui::ImageButton(asset.first.c_str(), (void *)(intptr_t)handle, ImVec2(48, 48))) {
+    }
   }
   ImGui::EndChild();
 }

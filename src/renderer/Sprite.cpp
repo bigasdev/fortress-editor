@@ -2,7 +2,7 @@
 #include "../tools/Logger.hpp"
 #include <utility>
 
-SpriteAnimator::SpriteAnimator(Sprite spr){
+SpriteAnimator::SpriteAnimator(Sprite* spr){
   m_spr = spr;
 }
 
@@ -27,10 +27,8 @@ void SpriteAnimator::update(double dt){
       }
     }
     //animation moves only in the horizontal, no need for vertical support yet
-    m_spr.dst_x = m_current_frame.x + (m_current_frame.frame * m_spr.wid);
-    m_spr.dst_y = m_current_frame.y;
-
-    Logger::log("Frame " + std::to_string(m_current_frame.frame) + " " + std::to_string(m_current_frame.max_frames));
+    m_spr->dst_x = m_current_frame.x + m_current_frame.frame;
+    m_spr->dst_y = m_current_frame.y;
   }
 
   //loop through the frames and check if the state is true

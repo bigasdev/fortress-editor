@@ -23,9 +23,14 @@ struct Sprite{
   //positions 
 
   //basically an offset,this won't take the collisions into account
+  std::string sheet = "";
   float spr_x = 0.0f, spr_y = 0.0f;
 
   //scale
+
+  //collision stuff 
+  float col_wid = 16, col_hei = 16;
+  float col_x = 0.0f, col_y = 0.0f;
 
   //used to determine the position of the sprite in the Atlas
   float dst_x = 0, dst_y = 0;
@@ -52,13 +57,13 @@ struct Sprite{
 
 class SpriteAnimator{
   public:
-    SpriteAnimator(Sprite spr);
+    SpriteAnimator(Sprite* spr);
     ~SpriteAnimator();
 
     void update(double dt);
     void register_anim(SpriteFrame frame);
   private:
-    Sprite m_spr;
+    Sprite* m_spr;
     std::vector<SpriteFrame> m_frames;
     SpriteFrame m_current_frame;
     float m_timer = 0;

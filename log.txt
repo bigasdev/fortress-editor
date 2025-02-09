@@ -116,6 +116,15 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+boots
+cock
 coin
 Importing asset: 
 Adding action to undo stack
@@ -124,6 +133,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 Importing asset: 
@@ -133,6 +143,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -143,6 +154,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -154,6 +166,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -166,6 +179,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -179,6 +193,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -193,6 +208,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -208,6 +224,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -224,6 +241,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
@@ -241,6 +259,7 @@ axe_16
 axe_8
 backpack_icon
 boots
+cock
 coin
 health_potion
 house
