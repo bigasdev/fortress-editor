@@ -26,6 +26,7 @@ void AnimatorView::show() {
 
   //
   assets_child();
+  animator_child();
 
   ImGui::PopStyleColor();
   ImGui::End();
@@ -43,7 +44,7 @@ void AnimatorView::assets_child() {
   if (ImGui::Button("", ImVec2(26, 20))) {
   }
 
-  for(auto asset : m_sprites){ 
+  for(auto& asset : m_sprites){ 
     auto handle = GPU_GetTextureHandle(*g_res->get_texture(asset.second.sheet));
     
     int sprite_x = asset.second.dst_x * asset.second.wid;
@@ -66,10 +67,29 @@ void AnimatorView::assets_child() {
   ImGui::EndChild();
 }
 
-void AnimatorView::update() {
-  if(m_selected_sprite != nullptr){
-    Logger::log("test");
+void AnimatorView::animator_child() {
+  if(m_selected_sprite == nullptr){
+    return;
   }
+  ImGui::SetNextWindowPos(ImVec2(395, 20.0f));
+  ImGui::SetNextWindowSize(ImVec2(g_engine->get_window_size()->x - 420, g_engine->get_window_size()->y - 25));
+  ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.05, 0.05, 0.05, 1.0));
+  ImGui::Begin("@ Animator", nullptr,
+               ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+                   ImGuiWindowFlags_NoScrollbar);
+  
+  //thils will be a loop of the animations later 
+  ImGui::BeginChild("Animation 1", ImVec2(ImGui::GetContentRegionAvail().x, 80), true);
+  ImGui::Image((void *)(intptr_t)GPU_GetTextureHandle(*g_res->get_texture(m_selected_sprite->sheet)), ImVec2(32, 32));
+  ImGui::Text(m_selected_sprite->sheet.c_str());
+  ImGui::Text("Sprite size: %f x %f", m_selected_sprite->wid, m_selected_sprite->hei);
+  ImGui::EndChild();
+
+  ImGui::PopStyleColor();
+  ImGui::End();
+}
+
+void AnimatorView::update() {
 }
 
 void AnimatorView::dispose() {}

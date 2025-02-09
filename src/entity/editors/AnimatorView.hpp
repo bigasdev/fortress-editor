@@ -17,6 +17,7 @@ public:
     void draw() override;
 
     void assets_child();
+    void animator_child();
 
 private:
     std::map<std::string, Sprite> m_sprites;
