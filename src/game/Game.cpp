@@ -36,14 +36,6 @@
 #include "../entity/editors/MainMenu.hpp"
 #include "../entity/editors/SideMenu.hpp"
 
-struct Animation {
-  std::string name;
-  int starting_x = 0;
-  int starting_y = 0;
-  int frames = 0;
-  float frame_speed = 0.16f;
-};
-
 struct Asset {
   char asset_name[128] = "asset";
   std::string file_name;
