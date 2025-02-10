@@ -296,4 +296,4 @@ stamina_potion
 tree
 Game initialized
 Engine post init
-ERROR: Signal: 22
+ERROR: Signal: 11

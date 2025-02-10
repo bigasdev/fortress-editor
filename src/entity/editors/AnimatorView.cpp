@@ -77,12 +77,47 @@ void AnimatorView::animator_child() {
   ImGui::Begin("@ Animator", nullptr,
                ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
                    ImGuiWindowFlags_NoScrollbar);
+
+  //this could be refactored later
+  int frame_size_x = 100;
+  int frame_size_y = 100;
   
   //thils will be a loop of the animations later 
-  ImGui::BeginChild("Animation 1", ImVec2(ImGui::GetContentRegionAvail().x, 80), true);
+  ImGui::BeginChild("Animation 1", ImVec2(ImGui::GetContentRegionAvail().x, 120), true);
+  ImGui::BeginChild("Sprite", ImVec2(frame_size_x, frame_size_y), true);
   ImGui::Image((void *)(intptr_t)GPU_GetTextureHandle(*g_res->get_texture(m_selected_sprite->sheet)), ImVec2(32, 32));
+  ImGui::EndChild();
+  ImGui::SameLine();
+  ImGui::BeginChild("Sprite Info", ImVec2(frame_size_x, frame_size_y), true);
   ImGui::Text(m_selected_sprite->sheet.c_str());
-  ImGui::Text("Sprite size: %f x %f", m_selected_sprite->wid, m_selected_sprite->hei);
+  ImGui::Text("Size: %dx%d", m_selected_sprite->wid, m_selected_sprite->hei);
+  ImGui::EndChild();
+  ImGui::SameLine();
+  ImGui::BeginChild("Sprite Position X", ImVec2(frame_size_x, frame_size_y), true);
+  ImGui::Text("X");
+  ImGui::InputFloat("##X", &m_selected_sprite->dst_x);
+  ImGui::EndChild();
+  ImGui::SameLine();
+  ImGui::BeginChild("Sprite Position Y", ImVec2(frame_size_x, frame_size_y), true);
+  ImGui::Text("Y");
+  ImGui::InputFloat("##Y", &m_selected_sprite->dst_y);
+  ImGui::EndChild();
+  ImGui::SameLine();
+  /*ImGui::InputInt("Frames", nullptr);
+  ImGui::SameLine();
+  ImGui::Checkbox("Loop", nullptr);
+  ImGui::SameLine();
+  ImGui::Checkbox("Block Transition", nullptr);*/
+  ImGui::EndChild();
+
+  ImGui::SetNextWindowPos(ImVec2(ImGui::GetCursorScreenPos().x, ImGui::GetContentRegionAvail().y + 10));
+  ImGui::BeginChild("Create animation", ImVec2(ImGui::GetContentRegionAvail().x - 10, 120), true);
+  
+  static char animation_name[128] = "";
+  ImGui::InputText("Animation Name", animation_name, IM_ARRAYSIZE(animation_name));
+  if(ImGui::Button("Create", ImVec2(ImGui::GetContentRegionAvail().x - 10, 30))){
+  }
+
   ImGui::EndChild();
 
   ImGui::PopStyleColor();
