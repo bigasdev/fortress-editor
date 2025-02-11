@@ -291,6 +291,4 @@ Animator: stamina_potion
 Animator: tree
 Game initialized
 Engine post init
-101
-115
 SDL2 quit

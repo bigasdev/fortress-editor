@@ -3,12 +3,14 @@
 #include "Fini.hpp"
 #include "json.hpp"
 #include "../entity/data/EntityData.hpp"
+#include "../entity/editors/AnimatorView.hpp"
 #include "../tools/Logger.hpp"
 #include <fstream>
 
 #include "UndoManager.hpp"
 #include "global.hpp"
 #include "../entity/actions/AssetAction.hpp"
+#include "../renderer/Sprite.hpp"
 
 EditorDataManager::EditorDataManager(){
 }
@@ -130,3 +132,58 @@ void EditorDataManager::auto_save(std::map<std::string, EntityData> assets){
 
   export_(assets, m_current_path);
 }
+
+void EditorDataManager::export_animators(std::map<std::string, Animator> animators, std::string path){
+  if(path == "" && m_current_path == ""){
+    path = Data_Loader::load_folder("Select a folder to save the animators");
+  }else{
+    path = m_current_path;
+  }
+  Logger::log("Exporting animators to: " + path);
+
+  g_fini->set_value("last", "animator", path);
+
+  nlohmann::json j;
+  for (auto &animator : animators) {
+    nlohmann::json animator_j;
+    animator_j["name"] = animator.first;
+    animator_j["sprite_name"] = animator.second.sprite->sheet;
+
+    nlohmann::json animations_j;
+    for(auto &animation : animator.second.animations){
+      nlohmann::json animation_j;
+      animation_j["name"] = animation.first;
+      animation_j["x"] = animation.second.x;
+      animation_j["y"] = animation.second.y;
+      animation_j["frames"] = animation.second.frames;
+      animation_j["loop"] = animation.second.loop;
+      animation_j["block_transition"] = animation.second.block_transition;
+
+      animations_j.push_back(animation_j);
+    }
+
+    animator_j["animations"] = animations_j;
+    j.push_back(animator_j);
+  }
+  std::ofstream o;
+  
+  if(path == m_current_path){
+    std::ofstream o(path);
+    o << std::setw(4) << j << std::endl;
+    o.close();
+  }
+
+  if (path == "") {
+    std::ofstream o("res/animators.json");
+    o << std::setw(4) << j << std::endl;
+    o.close();
+  } else {
+    std::ofstream o(path + "/animators.json");
+    o << std::setw(4) << j << std::endl;
+    o.close();
+  }
+}
+
+
+
+

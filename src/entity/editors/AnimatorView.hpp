@@ -7,6 +7,7 @@
 class Sprite;
 
 struct Animation{
+  std::string parent;
   std::string name;
   int x, y, frames = 4;
   bool loop = true;
@@ -14,6 +15,7 @@ struct Animation{
 };
 
 struct Animator{
+  std::string name;
   Sprite* sprite = nullptr;
 
   std::map<std::string, Animation> animations;
@@ -37,7 +39,7 @@ public:
 private:
     std::map<std::string, Sprite> m_sprites;
 
-    Animator m_selected_animator;
+    Animator* m_selected_animator = nullptr;
 
     std::map<std::string, Animator> m_animators;
 };

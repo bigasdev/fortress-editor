@@ -2,6 +2,8 @@
 
 #include "../../core/Engine.hpp"
 #include "../../core/global.hpp"
+#include "../../core/InputManager.hpp"
+#include "../../core/EditorDataManager.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../renderer/Sprite.hpp"
 #include "../../res/Res.hpp"
@@ -72,7 +74,8 @@ void AnimatorView::assets_child() {
     if (ImGui::ImageButton(asset.first.c_str(), (void *)(intptr_t)handle,
                            ImVec2(32, 32), uv0, uv1)) {
 
-      m_selected_animator = m_animators[asset.first];
+      m_selected_animator = &m_animators[asset.first];
+      m_selected_animator->name = asset.first;
     }
     ImGui::Text(asset.first.c_str());
   }
@@ -80,7 +83,10 @@ void AnimatorView::assets_child() {
 }
 
 void AnimatorView::animator_child() {
-  if (m_selected_animator.sprite == nullptr) {
+  if(m_selected_animator == nullptr){
+    return;
+  }
+  if (m_selected_animator->sprite == nullptr) {
     return;
   }
   ImGui::SetNextWindowPos(ImVec2(395, 20.0f));
@@ -95,12 +101,12 @@ void AnimatorView::animator_child() {
   int frame_size_x = 100;
   int frame_size_y = 100;
 
-  for (auto &anim : m_selected_animator.animations) {
+  for (auto &anim : m_selected_animator->animations) {
     ImGui::BeginChild("Animation 1",
                       ImVec2(ImGui::GetContentRegionAvail().x, 120), true);
     ImGui::BeginChild("Sprite", ImVec2(frame_size_x, frame_size_y), true);
     ImGui::Image((void *)(intptr_t)GPU_GetTextureHandle(
-                     *g_res->get_texture(m_selected_animator.sprite->sheet)),
+                     *g_res->get_texture(m_selected_animator->sprite->sheet)),
                  ImVec2(32, 32));
     ImGui::EndChild();
     ImGui::SameLine();
@@ -141,8 +147,9 @@ void AnimatorView::animator_child() {
   if (ImGui::Button("Create",
                     ImVec2(ImGui::GetContentRegionAvail().x - 10, 30))) {
     Animation anim;
+    anim.parent = m_selected_animator->name;
     anim.name = animation_name;
-    m_selected_animator.animations[animation_name] = anim;
+    m_selected_animator->animations[animation_name] = anim;
   }
 
   ImGui::EndChild();
@@ -151,7 +158,13 @@ void AnimatorView::animator_child() {
   ImGui::End();
 }
 
-void AnimatorView::update() {}
+void AnimatorView::update() {
+  if(g_ctrl_pressed and g_s_pressed){
+    g_editor_data_manager->export_animators(m_animators);
+    g_s_pressed = false;
+    g_ctrl_pressed = false;
+  }
+}
 
 void AnimatorView::dispose() {}
 

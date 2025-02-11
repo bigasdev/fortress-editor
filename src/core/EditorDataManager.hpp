@@ -4,6 +4,7 @@
 #include <map>
 
 class EntityData;
+class Animator;
 
 class EditorDataManager{
   public:
@@ -14,6 +15,8 @@ class EditorDataManager{
     void import(std::map<std::string, EntityData>& assets, std::string path = "");
     void export_(std::map<std::string, EntityData> assets, std::string path = "");
     void auto_save(std::map<std::string, EntityData> assets);
+
+    void export_animators(std::map<std::string, Animator> animators, std::string path = "");
 
 private:
     std::string m_current_path;
