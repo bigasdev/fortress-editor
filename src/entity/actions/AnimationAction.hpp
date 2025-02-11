@@ -1,21 +1,22 @@
-#pragma once 
+#pragma once
 
 #include "IAction.hpp"
 
-#include <string>
+#include "../editors/AnimatorView.hpp"
 #include <map>
+#include <string>
 
-class Animation;
-class Animator;
-
-class AnimationAction :  public IAction{
+class AnimationAction : public IAction {
 public:
-  AnimationAction(Animation* animation, std::map<std::string, Animator> animators) : m_animation(animation), m_animators(animators) {}
+  AnimationAction(Animation animation,
+                  std::map<std::string, Animator> &animators)
+      : m_animation(animation), m_animators(animators) {}
   ~AnimationAction();
 
   void execute() override;
   void undo() override;
+
 private:
-  Animation* m_animation;
-  std::map<std::string, Animator> m_animators;
+  Animation m_animation;
+  std::map<std::string, Animator> &m_animators;
 };
