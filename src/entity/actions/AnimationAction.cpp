@@ -9,6 +9,7 @@ AnimationAction::~AnimationAction() {}
 
 void AnimationAction::execute() {
   m_animators[m_animation.name].animations[m_animation.name] = m_animation;
+  Logger::log("Adding animation " + m_animation.name);
 }
 
 void AnimationAction::undo() {

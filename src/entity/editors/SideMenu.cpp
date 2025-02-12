@@ -14,7 +14,7 @@ GPU_TextureHandle t;
 // NOTE: Remember this is how we can load images to the dear imgui, we load from
 // gpu and then get the texture handle
 SideMenu::SideMenu() {
-  sdl_img = GPU_LoadImage("res/sprites/icons/global.png");
+  sdl_img = GPU_LoadImage("res/sprites/icons/assets.png");
   GPU_SetImageFilter(sdl_img, GPU_FILTER_NEAREST);
   t = GPU_GetTextureHandle(sdl_img);
   if (sdl_img == nullptr) {

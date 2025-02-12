@@ -151,6 +151,7 @@ void AnimatorView::animator_child() {
     Animation anim;
     anim.parent = m_selected_animator->name;
     anim.name = animation_name;
+    m_selected_animator->animations[animation_name] = anim;
     AnimationAction *action = new AnimationAction(anim, m_animators);
     g_undo_manager->add(action);
   }
