@@ -9,8 +9,8 @@
 class AnimationAction : public IAction {
 public:
   AnimationAction(Animation animation,
-                  std::map<std::string, Animator> &animators)
-      : m_animation(animation), m_animators(animators) {}
+                  Animator &selected_animator)
+      : m_animation(animation), m_selected_animator(m_selected_animator) {}
   ~AnimationAction();
 
   void execute() override;
@@ -18,5 +18,5 @@ public:
 
 private:
   Animation m_animation;
-  std::map<std::string, Animator> &m_animators;
+  Animator m_selected_animator;
 };
