@@ -81,8 +81,7 @@ void AssetView::show() {
   ImGui::SetNextWindowSize(ImVec2(320, g_engine->get_window_size()->y - 25));
   ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.05, 0.05, 0.05, 1.0));
   ImGui::Begin(" Assets", nullptr,
-               ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-                   ImGuiWindowFlags_NoScrollbar);
+               ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove );
   info_bar->show();
 
 
@@ -112,8 +111,7 @@ void AssetView::show() {
 // Entity child view is where we have the groups of the entities
 //
 void AssetView::entities() {
-  ImGui::SetNextWindowPos(ImVec2(85, g_engine->get_window_size()->y - 430));
-  ImGui::BeginChild("Entities", ImVec2(300, 150), true);
+  ImGui::BeginChild("Entities", ImVec2(300, 400), true);
   ImGui::Text("  Entities");
   ImGui::BeginTabBar("Groups");
   if (ImGui::Button("", ImVec2(26, 20))) {
@@ -149,7 +147,7 @@ void AssetView::entities() {
               ImVec2((float)(value.sprite_pos.x + value.sprite_size.x) / x,
                      (float)(value.sprite_pos.y + value.sprite_size.y) / y));
           ImGui::SameLine();
-          if (ImGui::Button(key.c_str(), ImVec2(150, 18))) {
+          if (ImGui::Button(key.c_str(), ImVec2(250, 18))) {
             g_selected_entity = &value;
           }
         }
@@ -168,8 +166,7 @@ void AssetView::entities() {
 int spr_pos_x = 0;
 int spr_pos_y = 0;
 void AssetView::atlas() {
-  ImGui::SetNextWindowPos(ImVec2(85, g_engine->get_window_size()->y - 270));
-  ImGui::BeginChild("Atlas", ImVec2(300, 150), true);
+  ImGui::BeginChild("Atlas", ImVec2(300, 350), true);
   ImGui::Text("  Atlas");
   ImGui::SameLine();
   if (ImGui::Button("", ImVec2(24, 20))) {
@@ -241,8 +238,7 @@ void AssetView::atlas() {
 // to selection
 //
 void AssetView::pallete() {
-  ImGui::SetNextWindowPos(ImVec2(85, g_engine->get_window_size()->y - 110));
-  ImGui::BeginChild(" Pallete", ImVec2(300, 100), true);
+  ImGui::BeginChild(" Pallete", ImVec2(300, 130), true);
   ImGui::Text(" Pallete");
   ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.0f, 0.0f));
   for (auto &[key, value] : m_sprites) {
@@ -251,7 +247,7 @@ void AssetView::pallete() {
       ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 1.0);
     }
 
-    if (ImGui::Button((" " + key).c_str(), ImVec2(150, 18))) {
+    if (ImGui::Button((" " + key).c_str(), ImVec2(270, 18))) {
       m_selected_pallete = key;
       break;
     }
