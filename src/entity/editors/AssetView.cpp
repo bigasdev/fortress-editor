@@ -25,9 +25,11 @@
 #include "../data/EntityData.hpp"
 #include "../editors/AssetInfo.hpp"
 #include "../editors/InfoBar.hpp"
+#include "FloatingButtons.hpp"
 
 std::unique_ptr<InfoBar> info_bar;
 std::unique_ptr<AssetInfo> asset_info;
+std::unique_ptr<FloatingButtons> floating_buttons;
 std::map<std::string, Pallete> m_sprites;
 std::map<std::string, EntityData> m_entities;
 
@@ -43,6 +45,7 @@ AssetView::AssetView(std::map<std::string, Sprite> sprites,
                      std::string project_folder) {
   info_bar = std::make_unique<InfoBar>();
   asset_info = std::make_unique<AssetInfo>(g_selected_entity);
+  floating_buttons = std::make_unique<FloatingButtons>();
   m_groups.push_back("default");
 
   for (auto &[key, value] : sprites) {
@@ -82,7 +85,9 @@ void AssetView::show() {
   ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.05, 0.05, 0.05, 1.0));
   ImGui::Begin(" Assets", nullptr,
                ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove );
+
   info_bar->show();
+  floating_buttons->show();
 
 
   entities();
