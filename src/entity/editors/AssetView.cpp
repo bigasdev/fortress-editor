@@ -83,8 +83,8 @@ void AssetView::show() {
   ImGui::Begin(" Assets", nullptr,
                ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
                    ImGuiWindowFlags_NoScrollbar);
-
   info_bar->show();
+
 
   entities();
   atlas();

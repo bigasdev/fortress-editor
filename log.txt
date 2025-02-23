@@ -92,11 +92,19 @@ Prefab loaded: backpack_icon
 Prefab loaded: boots
 Prefab loaded: cock
 Prefab loaded: coin
+Prefab loaded: grass_0
+Prefab loaded: grass_1
+Prefab loaded: grass_2
+Prefab loaded: grass_3
+Prefab loaded: grass_4
+Prefab loaded: grass_road
+Prefab loaded: grass_road1
 Prefab loaded: health_potion
 Prefab loaded: house
 Prefab loaded: orc
 Prefab loaded: pickaxe_16
 Prefab loaded: pickaxe_8
+Prefab loaded: plant_tile
 Prefab loaded: rock
 Prefab loaded: rock_1
 Prefab loaded: rock_2
@@ -160,6 +168,104 @@ backpack_icon
 boots
 cock
 coin
+grass_0
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+boots
+cock
+coin
+grass_0
+grass_1
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+boots
+cock
+coin
+grass_0
+grass_1
+grass_2
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+boots
+cock
+coin
+grass_0
+grass_1
+grass_2
+grass_3
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+boots
+cock
+coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+boots
+cock
+coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+boots
+cock
+coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+boots
+cock
+coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
 health_potion
 Importing asset: 
 Adding action to undo stack
@@ -170,6 +276,13 @@ backpack_icon
 boots
 cock
 coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
 health_potion
 house
 Importing asset: 
@@ -181,6 +294,13 @@ backpack_icon
 boots
 cock
 coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
 health_potion
 house
 orc
@@ -193,6 +313,13 @@ backpack_icon
 boots
 cock
 coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
 health_potion
 house
 orc
@@ -206,6 +333,13 @@ backpack_icon
 boots
 cock
 coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
 health_potion
 house
 orc
@@ -220,11 +354,41 @@ backpack_icon
 boots
 cock
 coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
 health_potion
 house
 orc
 pickaxe_16
 pickaxe_8
+plant_tile
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+boots
+cock
+coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
+health_potion
+house
+orc
+pickaxe_16
+pickaxe_8
+plant_tile
 rock
 Importing asset: 
 Adding action to undo stack
@@ -235,11 +399,19 @@ backpack_icon
 boots
 cock
 coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
 health_potion
 house
 orc
 pickaxe_16
 pickaxe_8
+plant_tile
 rock
 rock_1
 Importing asset: 
@@ -251,11 +423,19 @@ backpack_icon
 boots
 cock
 coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
 health_potion
 house
 orc
 pickaxe_16
 pickaxe_8
+plant_tile
 rock
 rock_1
 rock_2
@@ -268,11 +448,19 @@ backpack_icon
 boots
 cock
 coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
 health_potion
 house
 orc
 pickaxe_16
 pickaxe_8
+plant_tile
 rock
 rock_1
 rock_2
@@ -286,11 +474,19 @@ backpack_icon
 boots
 cock
 coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
 health_potion
 house
 orc
 pickaxe_16
 pickaxe_8
+plant_tile
 rock
 rock_1
 rock_2
@@ -302,11 +498,19 @@ Animator: backpack_icon
 Animator: boots
 Animator: cock
 Animator: coin
+Animator: grass_0
+Animator: grass_1
+Animator: grass_2
+Animator: grass_3
+Animator: grass_4
+Animator: grass_road
+Animator: grass_road1
 Animator: health_potion
 Animator: house
 Animator: orc
 Animator: pickaxe_16
 Animator: pickaxe_8
+Animator: plant_tile
 Animator: rock
 Animator: rock_1
 Animator: rock_2
@@ -314,6 +518,4 @@ Animator: stamina_potion
 Animator: tree
 Game initialized
 Engine post init
-Adding action to undo stack
-Adding animation l
 SDL2 quit
