@@ -60,8 +60,9 @@ void Engine::init() {
   SDL_WindowFlags window_flags =
       (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI |
                         SDL_WINDOW_RESIZABLE);
-  m_sdl_window = SDL_CreateWindow("Game", 1920 - WIN_WIDTH, 1080 - WIN_HEIGHT,
+  m_sdl_window = SDL_CreateWindow("rog_editor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                   WIN_WIDTH, WIN_HEIGHT, window_flags);
+  SDL_SetWindowMinimumSize(m_sdl_window, 1024, 576);
   m_window_size = {WIN_WIDTH, WIN_HEIGHT};
 
   GPU_SetInitWindow(SDL_GetWindowID(m_sdl_window));

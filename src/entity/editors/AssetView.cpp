@@ -46,6 +46,7 @@ AssetView::AssetView(std::map<std::string, Sprite> sprites,
   info_bar = std::make_unique<InfoBar>();
   asset_info = std::make_unique<AssetInfo>(g_selected_entity);
   floating_buttons = std::make_unique<FloatingButtons>();
+  g_floating_buttons = floating_buttons.get();
   m_groups.push_back("default");
 
   for (auto &[key, value] : sprites) {

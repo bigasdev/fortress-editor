@@ -3,8 +3,8 @@
 #include "../../imgui/imgui.h"
 
 FloatingButtons::FloatingButtons() {
-  m_buttons.push_back({"hide_grid", ""});
-  m_buttons.push_back({"hide_cbox", ""});
+  m_buttons.push_back({"hide_grid", ","});
+  m_buttons.push_back({"hide_cbox", "."});
 }
 
 void FloatingButtons::show() {

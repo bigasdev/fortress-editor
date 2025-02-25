@@ -13,6 +13,7 @@ class UndoManager;
 class EntityData;
 class EditorDataManager;
 class Fini;
+class FloatingButtons;
 
 extern Engine* g_engine;
 extern EditorDataManager* g_editor_data_manager;
@@ -24,6 +25,7 @@ extern SoundManager* g_sound_manager;
 extern InputManager* g_input_manager;
 extern UndoManager* g_undo_manager;
 extern Fini* g_fini;
+extern FloatingButtons* g_floating_buttons;
 
 // variables 
 extern EntityData* g_selected_entity;

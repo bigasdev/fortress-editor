@@ -10,6 +10,7 @@ SoundManager* g_sound_manager;
 InputManager* g_input_manager;
 UndoManager* g_undo_manager;
 Fini* g_fini;
+FloatingButtons* g_floating_buttons;
 
 EntityData* g_selected_entity;
 
