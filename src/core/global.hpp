@@ -36,5 +36,7 @@ extern bool g_ctrl_pressed;
 extern bool g_s_pressed;
 extern bool g_o_pressed;
 extern bool g_del_pressed;
+extern bool g_plus_pressed;
+extern bool g_minus_pressed;
 
 #endif

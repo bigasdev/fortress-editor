@@ -20,4 +20,6 @@ bool g_ctrl_pressed;
 bool g_s_pressed;
 bool g_o_pressed;
 bool g_del_pressed;
+bool g_plus_pressed;
+bool g_minus_pressed;
 

@@ -6,14 +6,33 @@
 #include "../../renderer/Renderer.hpp"
 #include "../../res/Res.hpp"
 #include "../../tools/Logger.hpp"
+#include "Fini.hpp"
 #include "../data/EntityData.hpp"
 
-AssetScreen::AssetScreen() {}
+AssetScreen::AssetScreen() {
+  m_zoom = g_fini->get_value<int>("settings", "zoom");
+}
 
 AssetScreen::~AssetScreen() {}
 
 void AssetScreen::update() {
   if (g_selected_entity != nullptr) {
+    if(g_ctrl_pressed and g_plus_pressed){
+      m_zoom++;
+
+      g_ctrl_pressed = false;
+      g_plus_pressed = false;
+      g_fini->set_value("settings", "zoom", m_zoom);
+    }
+
+    if(g_ctrl_pressed and g_minus_pressed){
+      if(m_zoom > 1) m_zoom--;
+
+      g_ctrl_pressed = false;
+      g_minus_pressed = false;
+      g_fini->set_value("settings", "zoom", m_zoom);
+    }
+
   }
 }
 

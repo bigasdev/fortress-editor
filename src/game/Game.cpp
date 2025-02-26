@@ -141,6 +141,8 @@ void Game::init() {
   g_input_manager->bind_keyboard(SDLK_LCTRL, &g_ctrl_pressed);
   g_input_manager->bind_keyboard(SDLK_RETURN, &g_enter_pressed);
   g_input_manager->bind_keyboard(SDLK_DELETE, &g_del_pressed);
+  g_input_manager->bind_keyboard(SDLK_EQUALS, &g_plus_pressed);
+  g_input_manager->bind_keyboard(SDLK_MINUS, &g_minus_pressed);
 
 
   side_menu = std::make_unique<SideMenu>();
