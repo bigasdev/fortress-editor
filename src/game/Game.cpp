@@ -97,6 +97,10 @@ void Game::init() {
   fini = new Fini("res/config.ini");
   fini->initialize_value("last", "folder", "");
   fini->initialize_value("last", "asset", "");
+  fini->initialize_value("settings", "grid_size", 16);
+  fini->initialize_value("settings", "hide_grid", false);
+  fini->initialize_value("settings", "hide_cbox", false);
+  fini->initialize_value("settings", "zoom", 1.0f);
   g_fini = fini;
 
   project_folder = fini->get_value<std::string>("last", "folder");

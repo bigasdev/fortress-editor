@@ -34,6 +34,7 @@ std::map<std::string, Pallete> m_sprites;
 std::map<std::string, EntityData> m_entities;
 
 std::string m_selected_pallete;
+std::string m_selected_group;
 static char m_search_entity[256] = "";
 
 // settings
@@ -48,6 +49,11 @@ AssetView::AssetView(std::map<std::string, Sprite> sprites,
   floating_buttons = std::make_unique<FloatingButtons>();
   g_floating_buttons = floating_buttons.get();
   m_groups.push_back("default");
+
+  auto groups = g_fini->get_keys("groups");
+  for (auto group : groups) {
+    m_groups.push_back(group);
+  }
 
   for (auto &[key, value] : sprites) {
     Pallete pallete;
@@ -129,6 +135,7 @@ void AssetView::entities() {
     ImGui::InputText("Group Name", group_name, IM_ARRAYSIZE(group_name));
     if (ImGui::Button("Create", ImVec2(120, 0)) || g_enter_pressed) {
       m_groups.push_back(group_name);
+      g_fini->set_value("groups", group_name, group_name);
       auto_update();
       ImGui::CloseCurrentPopup();
     }
@@ -139,6 +146,7 @@ void AssetView::entities() {
   ImGui::SameLine();
   for (auto group : m_groups) {
     if (ImGui::BeginTabItem(group.c_str())) {
+      m_selected_group = group;
       for (auto &[key, value] : m_entities) {
         if (value.group == group) {
           auto asset = *g_res->get_texture(value.pallete_name);
@@ -224,7 +232,7 @@ void AssetView::atlas() {
         EntityData data;
         data.name = entity_name;
         data.pallete_name = m_selected_pallete;
-        data.group = "default";
+        data.group = m_selected_group;
         data.sprite_size = {sprite_x, sprite_y};
         data.sprite_pos = {spr_pos_x, spr_pos_y};
         data.atlas_pos = {spr_pos_x / sprite_x, spr_pos_y / sprite_y};

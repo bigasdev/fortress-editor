@@ -39,7 +39,7 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
     Logger::log("Importing asset: ");
     EntityData entity;
     entity.name = asset["name"];
-    entity.group = "default";
+    entity.group = asset["group"];
     entity.pallete_name = asset["atlas_name"];
     entity.atlas_pos.x = asset["atlas_pos_x"];
     entity.atlas_pos.y = asset["atlas_pos_y"];
@@ -92,6 +92,7 @@ void EditorDataManager::export_(std::map<std::string, EntityData> assets, std::s
     nlohmann::json asset_j;
     
     asset_j["name"] = asset.second.name;
+    asset_j["group"] = asset.second.group;
     asset_j["atlas_name"] = asset.second.pallete_name;
     asset_j["atlas_pos_x"] = asset.second.atlas_pos.x;
     asset_j["atlas_pos_y"] = asset.second.atlas_pos.y;

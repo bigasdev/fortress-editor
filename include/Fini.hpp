@@ -72,6 +72,15 @@ public:
     ini[section][key] = value;
   }
 
+  //get all the keys in a section 
+  std::vector<std::string> get_keys(std::string section) {
+    std::vector<std::string> keys;
+    for (auto& key : ini[section]) {
+      keys.push_back(key.first);
+    }
+    return keys;
+  }
+
 private:
   ini::IniFile ini;
   std::string filename = "fini.ini";

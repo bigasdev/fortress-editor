@@ -41,6 +41,7 @@ void AssetScreen::root() {
   if (g_selected_entity == nullptr)
     return;
 
+  //FIX: need to figure out what are those magic numbers
   g_renderer->draw_rect({40-g_camera->get_camera_pos().x, -60-g_camera->get_camera_pos().y, g_selected_entity->sprite_size.x*m_zoom, g_selected_entity->sprite_size.y*m_zoom}, {0, 0, 125, 55}, true);
 
   g_renderer->draw_from_sheet(
