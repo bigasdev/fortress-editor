@@ -98,8 +98,7 @@ void Game::init() {
   fini->initialize_value("last", "folder", "");
   fini->initialize_value("last", "asset", "");
   fini->initialize_value("settings", "grid_size", 16);
-  fini->initialize_value("settings", "hide_grid", false);
-  fini->initialize_value("settings", "hide_cbox", false);
+  fini->initialize_value("settings", "zoom", 1.0f);
   fini->initialize_value("settings", "zoom", 1.0f);
   g_fini = fini;
 

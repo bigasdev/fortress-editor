@@ -1,10 +1,17 @@
 #include "FloatingButtons.hpp"
 
 #include "../../imgui/imgui.h"
+#include "Fini.hpp"
+#include "../../core/global.hpp"
 
 FloatingButtons::FloatingButtons() {
   m_buttons.push_back({"hide_grid", ","});
   m_buttons.push_back({"hide_cbox", "."});
+
+  for (auto &button : m_buttons) {
+    g_fini->initialize_value("settings", button.name, false);
+    button.is_pressed = g_fini->get_value<bool>("settings", button.name);
+  }
 }
 
 void FloatingButtons::show() {
@@ -18,6 +25,7 @@ void FloatingButtons::show() {
   for (auto &button : m_buttons) {
     if (ImGui::Button(button.display.c_str(), ImVec2(30,30))) {
       button.is_pressed = !button.is_pressed;
+      g_fini->set_value("settings", button.name, button.is_pressed);
     }
   }
   ImGui::PopStyleColor(2);
