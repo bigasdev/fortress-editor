@@ -19,6 +19,10 @@ Loading font: code8
 Loaded font: res/font\code8.ttf
 Loading font: gohu11
 Loaded font: res/font\gohu11.ttf
+Loading font: gohufont-11
+Loaded font: res/font\gohufont-11.ttf
+Loading font: gohufont-14
+Loaded font: res/font\gohufont-14.ttf
 Loading font: jetbrains
 Loaded font: res/font\jetbrains.ttf
 Loading font: Licence
@@ -67,6 +71,7 @@ Game:1
 1
 C:\Users\gusta\.code\orc-village/res/character_atlas.aseprite
 C:\Users\gusta\.code\orc-village/res/concept.aseprite
+C:\Users\gusta\.code\orc-village/res/concept_1x1.aseprite
 C:\Users\gusta\.code\orc-village/res/concept_map.aseprite
 C:\Users\gusta\.code\orc-village/res/concept_sketches.aseprite
 C:\Users\gusta\.code\orc-village/res/concept_ui.aseprite
@@ -78,6 +83,7 @@ Finished aseprite load!
 ------------
 Aseprite: character_atlas
 Aseprite: concept
+Aseprite: concept_1x1
 Aseprite: concept_map
 Aseprite: concept_sketches
 Aseprite: concept_ui
@@ -89,6 +95,7 @@ Loading prefab: map
 Prefab loaded: axe_16
 Prefab loaded: axe_8
 Prefab loaded: backpack_icon
+Prefab loaded: big_world
 Prefab loaded: boots
 Prefab loaded: cock
 Prefab loaded: coin
@@ -101,7 +108,9 @@ Prefab loaded: grass_road
 Prefab loaded: grass_road1
 Prefab loaded: health_potion
 Prefab loaded: house
+Prefab loaded: mage
 Prefab loaded: orc
+Prefab loaded: orc_mage
 Prefab loaded: pickaxe_16
 Prefab loaded: pickaxe_8
 Prefab loaded: plant_tile
@@ -112,6 +121,7 @@ Prefab loaded: stamina_potion
 Prefab loaded: tree
 character_atlas
 concept
+concept_1x1
 concept_map
 concept_sketches
 concept_ui
@@ -141,6 +151,14 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+big_world
 boots
 Importing asset: 
 Adding action to undo stack
@@ -148,6 +166,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 Importing asset: 
@@ -156,6 +175,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -165,6 +185,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -175,6 +196,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -186,6 +208,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -198,6 +221,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -211,6 +235,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -225,6 +250,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -240,6 +266,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -256,6 +283,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -273,6 +301,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -291,6 +320,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -303,6 +333,27 @@ grass_road
 grass_road1
 health_potion
 house
+mage
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+big_world
+boots
+cock
+coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
+health_potion
+house
+mage
 orc
 Importing asset: 
 Adding action to undo stack
@@ -310,6 +361,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -322,7 +374,31 @@ grass_road
 grass_road1
 health_potion
 house
+mage
 orc
+orc_mage
+Importing asset: 
+Adding action to undo stack
+Assets from the data manager
+axe_16
+axe_8
+backpack_icon
+big_world
+boots
+cock
+coin
+grass_0
+grass_1
+grass_2
+grass_3
+grass_4
+grass_road
+grass_road1
+health_potion
+house
+mage
+orc
+orc_mage
 pickaxe_16
 Importing asset: 
 Adding action to undo stack
@@ -330,6 +406,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -342,7 +419,9 @@ grass_road
 grass_road1
 health_potion
 house
+mage
 orc
+orc_mage
 pickaxe_16
 pickaxe_8
 Importing asset: 
@@ -351,6 +430,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -363,7 +443,9 @@ grass_road
 grass_road1
 health_potion
 house
+mage
 orc
+orc_mage
 pickaxe_16
 pickaxe_8
 plant_tile
@@ -373,6 +455,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -385,7 +468,9 @@ grass_road
 grass_road1
 health_potion
 house
+mage
 orc
+orc_mage
 pickaxe_16
 pickaxe_8
 plant_tile
@@ -396,6 +481,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -408,7 +494,9 @@ grass_road
 grass_road1
 health_potion
 house
+mage
 orc
+orc_mage
 pickaxe_16
 pickaxe_8
 plant_tile
@@ -420,6 +508,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -432,7 +521,9 @@ grass_road
 grass_road1
 health_potion
 house
+mage
 orc
+orc_mage
 pickaxe_16
 pickaxe_8
 plant_tile
@@ -445,6 +536,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -457,7 +549,9 @@ grass_road
 grass_road1
 health_potion
 house
+mage
 orc
+orc_mage
 pickaxe_16
 pickaxe_8
 plant_tile
@@ -471,6 +565,7 @@ Assets from the data manager
 axe_16
 axe_8
 backpack_icon
+big_world
 boots
 cock
 coin
@@ -483,7 +578,9 @@ grass_road
 grass_road1
 health_potion
 house
+mage
 orc
+orc_mage
 pickaxe_16
 pickaxe_8
 plant_tile
@@ -495,6 +592,7 @@ tree
 Animator: axe_16
 Animator: axe_8
 Animator: backpack_icon
+Animator: big_world
 Animator: boots
 Animator: cock
 Animator: coin
@@ -507,7 +605,9 @@ Animator: grass_road
 Animator: grass_road1
 Animator: health_potion
 Animator: house
+Animator: mage
 Animator: orc
+Animator: orc_mage
 Animator: pickaxe_16
 Animator: pickaxe_8
 Animator: plant_tile
@@ -518,4 +618,1241 @@ Animator: stamina_potion
 Animator: tree
 Game initialized
 Engine post init
-ERROR: Signal: 22
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+Animation: t32
+X: 373289104
+Y: 38
+SDL2 quit
+ERROR: Signal: 11

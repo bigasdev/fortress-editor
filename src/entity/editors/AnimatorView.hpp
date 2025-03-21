@@ -9,7 +9,7 @@ class Sprite;
 struct Animation{
   std::string parent;
   std::string name;
-  int x, y, frames = 4;
+  int x = 0, y = 0, frames = 4;
   bool loop = true;
   bool block_transition = false;
 };
@@ -42,4 +42,8 @@ private:
     Animator* m_selected_animator = nullptr;
 
     std::map<std::string, Animator> m_animators;
+
+    int m_current_frame = 0;
+    float m_current_timer = 0;
+    float m_frame_time = 0.46f;
 };

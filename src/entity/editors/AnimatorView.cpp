@@ -13,6 +13,7 @@
 #include "../../core/UndoManager.hpp"
 #include "SDL_gpu.h"
 #include <iostream>
+#include "../../core/Timer.hpp"
 
 AnimatorView::AnimatorView() {
   m_sprites = g_res->get_sprites();
@@ -77,6 +78,7 @@ void AnimatorView::assets_child() {
                            ImVec2(32, 32), uv0, uv1)) {
 
       m_selected_animator = &m_animators[asset.first];
+      m_selected_animator->sprite = &asset.second;
       m_selected_animator->name = asset.first;
     }
     ImGui::Text(asset.first.c_str());
@@ -103,37 +105,63 @@ void AnimatorView::animator_child() {
   int frame_size_x = 100;
   int frame_size_y = 100;
 
-  for (auto &anim : m_selected_animator->animations) {
-    ImGui::BeginChild("Animation 1",
+  for (auto& [name, animation] : m_selected_animator->animations) {
+    auto handle = GPU_GetTextureHandle(*g_res->get_texture(m_selected_animator->sprite->sheet));
+
+    int sprite_x = (m_selected_animator->sprite->dst_x + animation.x + m_current_frame )* m_selected_animator->sprite->wid;
+    int sprite_y = (m_selected_animator->sprite->dst_y + animation.y) * m_selected_animator->sprite->hei;
+    int sprite_width = m_selected_animator->sprite->wid;
+    int sprite_height = m_selected_animator->sprite->hei;
+    int atlas_size = 500;
+
+    ImVec2 uv0 =
+        ImVec2((float)sprite_x / atlas_size, (float)sprite_y / atlas_size);
+
+    ImVec2 uv1 = ImVec2((float)(sprite_x + sprite_width) / atlas_size,
+                        (float)(sprite_y + sprite_height) / atlas_size);
+    
+    ImGui::BeginChild(name.c_str(),
                       ImVec2(ImGui::GetContentRegionAvail().x, 120), true);
-    ImGui::BeginChild("Sprite", ImVec2(frame_size_x, frame_size_y), true);
-    ImGui::Image((void *)(intptr_t)GPU_GetTextureHandle(
-                     *g_res->get_texture(m_selected_animator->sprite->sheet)),
-                 ImVec2(32, 32));
+    ImGui::BeginChild((name + "_Sprite").c_str(), ImVec2(frame_size_x, frame_size_y), true);
+    ImGui::Image((void *)(intptr_t)handle,
+                 ImVec2(64, 64), uv0, uv1);
     ImGui::EndChild();
     ImGui::SameLine();
     ImGui::BeginChild("Sprite Info", ImVec2(frame_size_x, frame_size_y), true);
-    ImGui::Text(anim.first.c_str());
+    ImGui::Text(name.c_str());
     ImGui::EndChild();
     ImGui::SameLine();
     ImGui::BeginChild("Sprite Position X", ImVec2(frame_size_x, frame_size_y),
                       true);
     ImGui::Text("X");
-    ImGui::InputInt("##X", &anim.second.x);
+    ImGui::InputInt("##X", &animation.x);
     ImGui::EndChild();
     ImGui::SameLine();
     ImGui::BeginChild("Sprite Position Y", ImVec2(frame_size_x, frame_size_y),
                       true);
     ImGui::Text("Y");
-    ImGui::InputInt("##Y", &anim.second.y);
+    ImGui::InputInt("##Y", &animation.y);
     ImGui::EndChild();
     ImGui::SameLine();
-    ImGui::InputInt("Frames", &anim.second.frames);
-    ImGui::SameLine();
-    ImGui::Checkbox("Loop", &anim.second.loop);
-    ImGui::SameLine();
-    ImGui::Checkbox("Block Transition", &anim.second.block_transition);
+    ImGui::BeginChild("Frames", ImVec2(100, frame_size_y),
+                      true);
+    ImGui::InputInt("Frames", &animation.frames);
     ImGui::EndChild();
+    ImGui::SameLine();
+    ImGui::BeginChild("Loop", ImVec2(70, frame_size_y),
+                      true);
+    ImGui::Checkbox("Loop", &animation.loop);
+    ImGui::EndChild();
+    ImGui::SameLine();
+    ImGui::BeginChild("Block_Transition", ImVec2(70, frame_size_y),
+                      true);
+    ImGui::Checkbox("Block Transition", &animation.block_transition);
+    ImGui::EndChild();
+    ImGui::EndChild();
+
+    if(m_current_frame > animation.frames){
+      m_current_frame = 0;
+    }
   }
 
   // thils will be a loop of the animations later
@@ -151,6 +179,8 @@ void AnimatorView::animator_child() {
     Animation anim;
     anim.parent = m_selected_animator->name;
     anim.name = animation_name;
+    anim.x = 0;
+    anim.y = 0;
     m_selected_animator->animations[animation_name] = anim;
     //AnimationAction *action = new AnimationAction(anim, m_animators);
     //g_undo_manager->add(action);
@@ -168,6 +198,15 @@ void AnimatorView::update() {
     g_s_pressed = false;
     g_ctrl_pressed = false;
   }
+
+  float dt = Timer::get_dt();
+  m_current_timer += dt;
+
+  if(m_current_timer > m_frame_time){
+    m_current_frame++;
+    m_current_timer = 0;
+  }
+
 }
 
 void AnimatorView::dispose() {}
