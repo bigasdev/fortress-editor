@@ -9,6 +9,7 @@
 
 #include "UndoManager.hpp"
 #include "global.hpp"
+#include "../res/Res.hpp"
 #include "../entity/actions/AssetAction.hpp"
 #include "../renderer/Sprite.hpp"
 
@@ -135,14 +136,11 @@ void EditorDataManager::auto_save(std::map<std::string, EntityData> assets){
 }
 
 void EditorDataManager::export_animators(std::map<std::string, Animator> animators, std::string path){
-  if(path == "" && m_current_path == ""){
+  if(path == ""){
     path = Data_Loader::load_folder("Select a folder to save the animators");
-  }else{
-    path = m_current_path;
   }
-  Logger::log("Exporting animators to: " + path);
+  Logger::log("Exporting animators to: " + path + "/res/animations/");
 
-  g_fini->set_value("last", "animator", path);
 
   nlohmann::json j;
   for (auto &animator : animators) {
@@ -179,10 +177,49 @@ void EditorDataManager::export_animators(std::map<std::string, Animator> animato
     o << std::setw(4) << j << std::endl;
     o.close();
   } else {
-    std::ofstream o(path + "/animators.json");
+    std::ofstream o(path + "/res/animations/animations.json");
     o << std::setw(4) << j << std::endl;
     o.close();
   }
+
+  g_fini->set_value("last", "animator", path + "/res/animations/animations.json");
+}
+
+std::map<std::string, Animator> EditorDataManager::import_animators(std::string path){
+  if(path == ""){
+    path = Data_Loader::load_file("json");
+  }
+  Logger::log("Importing animators from: " + path);
+  m_current_path = path;
+
+  std::ifstream i(path);
+  nlohmann::json j;
+  i >> j;
+
+  std::map<std::string, Animator> animators;
+  for (auto &animator : j) {
+    Logger::log("Importing animator: ");
+    Animator anim;
+    anim.name = animator["name"];
+    anim.sprite = g_res->get_sprite(animator["sprite_name"]);
+
+    for(auto &animation : animator["animations"]){
+      Animation anima;
+      anima.name = animation["name"];
+      anima.x = animation["x"];
+      anima.y = animation["y"];
+      anima.frames = animation["frames"];
+      anima.loop = animation["loop"];
+      anima.block_transition = animation["block_transition"];
+
+      anim.animations[anima.name] = anima;
+    }
+
+    animators[anim.name] = anim;
+  }
+
+  i.close();
+  return animators;
 }
 
 

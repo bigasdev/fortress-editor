@@ -14,6 +14,7 @@
 #include "SDL_gpu.h"
 #include <iostream>
 #include "../../core/Timer.hpp"
+#include "Fini.hpp"
 
 AnimatorView::AnimatorView() {
   m_sprites = g_res->get_sprites();
@@ -22,6 +23,11 @@ AnimatorView::AnimatorView() {
     Animator anim;
     anim.sprite = &sprite.second;
     m_animators[sprite.first] = anim;
+  }
+
+  auto anim_json = g_fini->get_value<std::string>("last", "animator");
+  if(anim_json != ""){
+    m_animators = g_editor_data_manager->import_animators(anim_json);
   }
 
   // Log test for the animators
@@ -98,8 +104,7 @@ void AnimatorView::animator_child() {
                                   g_engine->get_window_size()->y - 25));
   ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.05, 0.05, 0.05, 1.0));
   ImGui::Begin("@ Animator", nullptr,
-               ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-                   ImGuiWindowFlags_NoScrollbar);
+               ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove );
 
   // this could be refactored later
   int frame_size_x = 100;
@@ -108,7 +113,7 @@ void AnimatorView::animator_child() {
   for (auto& [name, animation] : m_selected_animator->animations) {
     auto handle = GPU_GetTextureHandle(*g_res->get_texture(m_selected_animator->sprite->sheet));
 
-    int sprite_x = (m_selected_animator->sprite->dst_x + animation.x + m_current_frame )* m_selected_animator->sprite->wid;
+    int sprite_x = (m_selected_animator->sprite->dst_x + animation.x + animation.current_frame )* m_selected_animator->sprite->wid;
     int sprite_y = (m_selected_animator->sprite->dst_y + animation.y) * m_selected_animator->sprite->hei;
     int sprite_width = m_selected_animator->sprite->wid;
     int sprite_height = m_selected_animator->sprite->hei;
@@ -127,6 +132,14 @@ void AnimatorView::animator_child() {
                  ImVec2(64, 64), uv0, uv1);
     ImGui::EndChild();
     ImGui::SameLine();
+    ImGui::BeginChild("Sprite animation state", ImVec2(220, frame_size_y), true);
+    ImGui::Text("Current Frame: %d", animation.current_frame);
+    ImGui::Text("Current Timer: %f", animation.current_timer);
+    if(ImGui::Button(("Play##" + animation.name).c_str())){
+      animation.is_playing = !animation.is_playing;
+    }
+    ImGui::EndChild();
+    ImGui::SameLine();
     ImGui::BeginChild("Sprite Info", ImVec2(frame_size_x, frame_size_y), true);
     ImGui::Text(name.c_str());
     ImGui::EndChild();
@@ -134,40 +147,44 @@ void AnimatorView::animator_child() {
     ImGui::BeginChild("Sprite Position X", ImVec2(frame_size_x, frame_size_y),
                       true);
     ImGui::Text("X");
-    ImGui::InputInt("##X", &animation.x);
+    ImGui::InputInt(("X##" + animation.name).c_str(), &animation.x);
     ImGui::EndChild();
     ImGui::SameLine();
     ImGui::BeginChild("Sprite Position Y", ImVec2(frame_size_x, frame_size_y),
                       true);
     ImGui::Text("Y");
-    ImGui::InputInt("##Y", &animation.y);
+    ImGui::InputInt(("Y##" + animation.name).c_str(), &animation.y);
     ImGui::EndChild();
     ImGui::SameLine();
     ImGui::BeginChild("Frames", ImVec2(100, frame_size_y),
                       true);
-    ImGui::InputInt("Frames", &animation.frames);
+    ImGui::InputInt(("Frames##" + animation.name).c_str(), &animation.frames);
     ImGui::EndChild();
     ImGui::SameLine();
     ImGui::BeginChild("Loop", ImVec2(70, frame_size_y),
                       true);
-    ImGui::Checkbox("Loop", &animation.loop);
+    ImGui::Checkbox(("Loop##" + animation.name).c_str(), &animation.loop);
     ImGui::EndChild();
     ImGui::SameLine();
     ImGui::BeginChild("Block_Transition", ImVec2(70, frame_size_y),
                       true);
-    ImGui::Checkbox("Block Transition", &animation.block_transition);
+    ImGui::Checkbox(("Block Transition##" + animation.name).c_str(), &animation.block_transition);
+    ImGui::EndChild();
+    ImGui::SameLine();
+    ImGui::BeginChild("Delete", ImVec2(70, frame_size_y),
+                      true);
+    if(ImGui::Button(("Delete##" + animation.name).c_str())){
+      animation.should_delete = true;
+    }
     ImGui::EndChild();
     ImGui::EndChild();
 
-    if(m_current_frame > animation.frames){
-      m_current_frame = 0;
-    }
   }
 
   // thils will be a loop of the animations later
 
   ImGui::SetNextWindowPos(ImVec2(ImGui::GetCursorScreenPos().x,
-                                 ImGui::GetContentRegionAvail().y + 10));
+                                 ImGui::GetContentRegionMax().y - 40));
   ImGui::BeginChild("Create animation",
                     ImVec2(ImGui::GetContentRegionAvail().x - 10, 120), true);
 
@@ -179,8 +196,13 @@ void AnimatorView::animator_child() {
     Animation anim;
     anim.parent = m_selected_animator->name;
     anim.name = animation_name;
+    anim.frames = 4;
     anim.x = 0;
     anim.y = 0;
+    anim.current_frame = 0;
+    anim.current_timer = 0;
+    anim.is_playing = true;
+    anim.should_delete = false;
     m_selected_animator->animations[animation_name] = anim;
     //AnimationAction *action = new AnimationAction(anim, m_animators);
     //g_undo_manager->add(action);
@@ -194,19 +216,28 @@ void AnimatorView::animator_child() {
 
 void AnimatorView::update() {
   if(g_ctrl_pressed and g_s_pressed){
-    g_editor_data_manager->export_animators(m_animators);
+    g_editor_data_manager->export_animators(m_animators, g_fini->get_value<std::string>("last", "folder"));
     g_s_pressed = false;
     g_ctrl_pressed = false;
   }
 
   float dt = Timer::get_dt();
-  m_current_timer += dt;
 
-  if(m_current_timer > m_frame_time){
-    m_current_frame++;
-    m_current_timer = 0;
+  if(m_selected_animator != nullptr){
+    for(auto& [name, animation] : m_selected_animator->animations){
+      if(animation.is_playing){
+        if(animation.current_timer > m_frame_time){
+          animation.current_frame++;
+          animation.current_timer = 0;
+        }
+        animation.current_timer += dt;
+
+        if(animation.current_frame > animation.frames){
+          animation.current_frame = 0;
+        }
+      }
+    }
   }
-
 }
 
 void AnimatorView::dispose() {}

@@ -12,6 +12,11 @@ struct Animation{
   int x = 0, y = 0, frames = 4;
   bool loop = true;
   bool block_transition = false;
+  int current_frame = 0;
+  float current_timer = 0;
+
+  bool is_playing = true;
+  bool should_delete = false;
 };
 
 struct Animator{
@@ -43,7 +48,5 @@ private:
 
     std::map<std::string, Animator> m_animators;
 
-    int m_current_frame = 0;
-    float m_current_timer = 0;
-    float m_frame_time = 0.46f;
+    float m_frame_time = 0.32f;
 };

@@ -3,8 +3,6 @@ SDL2 initialized
 SDL2 version: SDL-release-2.28.4-0-gcc016b004
 Loading 25%...
 Loading 50%...
-SDL2 renderer created
-SDL2 GPU created
 SDL2 image initialized
 SDL2 mixer initialized
 Loading 75%...
@@ -623,6 +621,35 @@ rock_2
 stamina_potion
 test
 tree
+Importing animators from: C:\Users\gusta\.code\orc-village/res/animations/animations.json
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
+Importing animator: 
 Animator: axe_16
 Animator: axe_8
 Animator: backpack_icon
@@ -653,5 +680,4 @@ Animator: test
 Animator: tree
 Game initialized
 Engine post init
-101
 SDL2 quit
