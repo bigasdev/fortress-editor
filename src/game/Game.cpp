@@ -32,6 +32,7 @@
 // Components
 #include "../entity/visualizers/AssetScreen.hpp"
 #include "../entity/editors/AssetView.hpp"
+#include "../entity/editors/DBView.hpp"
 #include "../entity/editors/AnimatorView.hpp"
 #include "../entity/editors/MainMenu.hpp"
 #include "../entity/editors/SideMenu.hpp"
@@ -74,6 +75,7 @@ UndoManager *m_undo_manager;
 std::unique_ptr<SideMenu> side_menu;
 std::unique_ptr<MainMenu> main_menu;
 std::unique_ptr<AssetView> asset_view;
+std::unique_ptr<DBView> db_view;
 std::unique_ptr<AnimatorView> animator_view;
 std::unique_ptr<AssetScreen> asset_screen;
 
@@ -148,6 +150,7 @@ void Game::init() {
   side_menu = std::make_unique<SideMenu>();
   main_menu = std::make_unique<MainMenu>();
   asset_view = std::make_unique<AssetView>(sprite_map, project_folder);
+  db_view = std::make_unique<DBView>();
   animator_view = std::make_unique<AnimatorView>();
   asset_screen = std::make_unique<AssetScreen>();
 }
@@ -200,6 +203,10 @@ void Game::update(double dt) {
   if (side_menu->get_state() == State::ANIMATOR) {
     animator_view->update();
   }
+
+  if(side_menu->get_state() == State::DB){
+    db_view->update();
+  }
 }
 
 void Game::post_update(double dt) {
@@ -228,6 +235,10 @@ void Game::draw_ui() {
   if (side_menu->get_state() == State::ANIMATOR) {
     animator_view->draw();
   }
+
+  if(side_menu->get_state() == State::DB){
+    db_view->draw();
+  } 
 }
 
 void Game::imgui_assets() {}
@@ -255,6 +266,10 @@ void Game::imgui_map() {
 
   if (side_menu->get_state() == State::ANIMATOR) {
     animator_view->show();
+  }
+
+  if(side_menu->get_state() == State::DB){
+    db_view->show();
   }
 
   if (side_menu->get_state() == State::NONE) {

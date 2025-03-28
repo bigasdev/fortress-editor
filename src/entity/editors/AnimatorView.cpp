@@ -60,12 +60,25 @@ void AnimatorView::assets_child() {
   ImGui::BeginChild(" Assets",
                     ImVec2(300, g_engine->get_window_size()->y - 35), true);
   // change to a real search later
-  ImGui::InputText("##Search", "Search...", IM_ARRAYSIZE("Search"));
+  static char entity_search[128] = "";
+  ImGui::InputText("##Search", entity_search, IM_ARRAYSIZE(entity_search));
   ImGui::SameLine();
   if (ImGui::Button("", ImVec2(26, 20))) {
   }
 
+  int idx = 1;
+
   for (auto &asset : m_sprites) {
+    if(asset.first.find(entity_search) == std::string::npos){
+      continue;
+    }
+    
+    if (idx == 5) {
+      ImGui::NewLine();
+      idx = 1;
+    }
+
+    ImGui::BeginChild(asset.first.c_str(), ImVec2(64, 70), true);
     auto handle = GPU_GetTextureHandle(*g_res->get_texture(asset.second.sheet));
 
     int sprite_x = asset.second.dst_x * asset.second.wid;
@@ -88,6 +101,9 @@ void AnimatorView::assets_child() {
       m_selected_animator->name = asset.first;
     }
     ImGui::Text(asset.first.c_str());
+    ImGui::EndChild();
+    if(idx > 0) ImGui::SameLine();
+    idx++;
   }
   ImGui::EndChild();
 }
@@ -220,6 +236,17 @@ void AnimatorView::update() {
     g_s_pressed = false;
     g_ctrl_pressed = false;
   }
+
+  if(m_selected_animator != nullptr){
+    for(auto it = m_selected_animator->animations.cbegin(); it != m_selected_animator->animations.cend();){
+      if(it->second.should_delete){
+        it = m_selected_animator->animations.erase(it);
+      }else{
+        ++it;
+      }
+    }
+  }
+
 
   float dt = Timer::get_dt();
 

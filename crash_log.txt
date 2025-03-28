@@ -621,6 +621,63 @@ rock_2
 stamina_potion
 test
 tree
+Importing animators from: C:\Users\gusta\.code\orc-village/res/animations/animations.json
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite concept_sketches not found!
+Importing animator: 
+ERROR: Sprite concept_sketches not found!
+Importing animator: 
+ERROR: Sprite concept_sketches not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
+Importing animator: 
+ERROR: Sprite  not found!
 Animator: axe_16
 Animator: axe_8
 Animator: backpack_icon
@@ -651,5 +708,7 @@ Animator: test
 Animator: tree
 Game initialized
 Engine post init
-101
+1073742048
+115
+Exporting animators to: C:\Users\gusta\.code\orc-village/res/animations/
 ERROR: Signal: 11

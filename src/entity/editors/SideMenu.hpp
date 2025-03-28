@@ -5,6 +5,7 @@
 enum State{
   ASSET,
   ANIMATOR,
+  DB,
   NONE
 };
 

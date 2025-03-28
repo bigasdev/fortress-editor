@@ -54,8 +54,11 @@ void SideMenu::show() {
 
     m_state = State::ASSET;
   }
-  if (ImGui::ImageButton("none", (void *)(intptr_t)t, ImVec2(48, 48))) {
+  if (ImGui::ImageButton("animator", (void *)(intptr_t)t, ImVec2(48, 48))) {
     m_state = State::ANIMATOR;
+  }
+  if (ImGui::ImageButton("db", (void *)(intptr_t)t, ImVec2(48, 48))) {
+    m_state = State::DB;
   }
   ImGui::PopStyleVar();
   ImGui::PopStyleVar();

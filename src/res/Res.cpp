@@ -388,6 +388,15 @@ void Res::reset_aseprites() {
   m_aseprite_files.clear();
 }
 
+Sprite *Res::get_sprite(std::string name) {
+  try {
+    return &m_sprites.at(name);
+  } catch (const std::out_of_range &e) {
+    Logger::error("Sprite " + std::string(name) + " not found!");
+    return nullptr;
+  }
+}
+
 void Res::update() {
 #if _DEBUG
   for (auto f : m_aseprite_files) {
@@ -401,3 +410,4 @@ void Res::update() {
   }
 #endif
 }
+

@@ -49,4 +49,7 @@ private:
     std::map<std::string, Animator> m_animators;
 
     float m_frame_time = 0.32f;
+
+
+    std::string m_search;
 };

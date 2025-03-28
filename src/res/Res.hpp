@@ -49,7 +49,7 @@ public:
   std::map<std::string, Sprite> get_sprites();
   Uint32 get_shader_id();
   GPU_ShaderBlock get_shader_block();
-  Sprite* get_sprite(std::string name) { return &m_sprites[name]; }
+  Sprite* get_sprite(std::string name);
 
   void create_asset_data(std::string file, std::string name, std::string folder);
   void reset_aseprites();
