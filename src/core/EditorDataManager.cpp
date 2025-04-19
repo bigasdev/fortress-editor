@@ -72,6 +72,8 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
               continue;
           }
 
+          if(line.find("[[NotSerializable]]") != std::string::npos) continue;
+
           if (line.find(";") != std::string::npos && line.find("(") == std::string::npos) {
               auto type_end = line.find(' ');
               auto var_start = line.find_last_of(' ', line.find(';')) + 1;
@@ -81,7 +83,11 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
                   std::string var_name = line.substr(type_end + 1, line.find('=') - (type_end + 1) - 1);
                   Logger::log(var_name);
                   var_name = std::regex_replace(var_name, std::regex(";"), ""); // Trim trailing spaces
-                  data.variables.push_back({var_type, var_name});
+                  Component var;
+                  var.name = var_name;
+                  var.val[0] = '\0'; 
+
+                  data.variables.push_back({var_type, var});
               }
           }
       }

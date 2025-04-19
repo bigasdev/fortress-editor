@@ -82,10 +82,34 @@ character_atlas
 items_atlas
 Importing assets from: C:\Users\gusta\.code\rog\res\prefabs\map.json
 Importing asset: 
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
 Adding action to undo stack
 Assets from the data manager
 bigas
 Importing asset: 
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
 Adding action to undo stack
 Assets from the data manager
 bigas
@@ -94,4 +118,4 @@ Animator: bigas
 Animator: health_potion
 Game initialized
 Engine post init
-ERROR: Signal: 11
+ERROR: Signal: 22

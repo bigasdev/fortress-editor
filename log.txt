@@ -84,8 +84,6 @@ Importing assets from: C:\Users\gusta\.code\rog\res\prefabs\map.json
 Importing asset: 
 std::string
 name
-Sprite
-spr;
 vec2
 pos
 vec2
@@ -102,8 +100,6 @@ bigas
 Importing asset: 
 std::string
 name
-Sprite
-spr;
 vec2
 pos
 vec2
@@ -122,4 +118,8 @@ Animator: bigas
 Animator: health_potion
 Game initialized
 Engine post init
+101
+115
+101
+115
 SDL2 quit

@@ -36,10 +36,10 @@ void AssetInfo::show() {
         system(command.c_str());
       }
       ImGui::PopID();
-      for(auto &var : component.second.variables) {
-        ImGui::Text(var.first.c_str());
+      for(auto& var : component.second.variables) {
+        ImGui::Text(var.second.name.c_str());
         ImGui::SameLine();
-        ImGui::Text(var.second.c_str());
+        ImGui::InputText(("##" + var.second.name).c_str(), var.second.val, IM_ARRAYSIZE(var.second.val));
       }
     }
   }
