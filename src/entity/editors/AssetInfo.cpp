@@ -22,19 +22,26 @@ void AssetInfo::show() {
   }
   ImGui::EndChild();
 
-  ImGui::BeginChild("&Components", ImVec2(400, 50), true);
+  ImGui::BeginChild("&Components", ImVec2(400, 200), true);
   ImGui::Text(" Components");
   //components section 
   for(auto &component : g_selected_entity->components) {
     if (ImGui::Checkbox(("##Active" + component.second.name).c_str(), &component.second.is_active)) {
     }
     ImGui::SameLine(); 
-    ImGui::PushID(&component); 
-    if (ImGui::Selectable(component.second.name.c_str())) {
-      /*auto command = "start cmd /k nvim " + g_folder_path + "/src/components/" + component.second.name + ".hpp";
-      system(command.c_str());*/
+    if (ImGui::CollapsingHeader(component.second.name.c_str())) {
+      ImGui::PushID(component.second.name.c_str());
+      if (ImGui::Button("  Edit")) {
+        auto command = "start cmd /k nvim " + g_folder_path + "/src/components/" + component.second.name + ".hpp";
+        system(command.c_str());
+      }
+      ImGui::PopID();
+      for(auto &var : component.second.variables) {
+        ImGui::Text(var.first.c_str());
+        ImGui::SameLine();
+        ImGui::Text(var.second.c_str());
+      }
     }
-    ImGui::PopID();
   }
   ImGui::EndChild();
 
