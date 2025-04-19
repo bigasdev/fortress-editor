@@ -19,6 +19,6 @@ class EditorDataManager{
     void export_animators(std::map<std::string, Animator> animators, std::string path = "");
     std::map<std::string, Animator> import_animators(std::string path = "");
 
-private:
     std::string m_current_path;
+private:
 };

@@ -2,6 +2,8 @@
 
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../data/EntityData.hpp"
+#include "DataLoader.hpp"
+#include "../../core/EditorDataManager.hpp"
 #include "../../core/global.hpp"
 
 AssetInfo::AssetInfo(EntityData* entity_data) : m_entity_data(entity_data) {}
@@ -19,6 +21,18 @@ void AssetInfo::show() {
     g_selected_entity->name = name;
   }
   ImGui::EndChild();
+
+  ImGui::BeginChild("&Components", ImVec2(400, 50), true);
+  ImGui::Text(" Components");
+  //components section 
+  auto components = Data_Loader::get_files(g_folder_path + "/src/components/", ".hpp");
+  for(auto &component : components) {
+    bool is_selected = false;
+    if(ImGui::Checkbox(component.c_str(), &is_selected)) {
+    }
+  }
+  ImGui::EndChild();
+
 
   ImGui::BeginChild(" Transform", ImVec2(400, 180), true);
   ImGui::Text(" Transform");
@@ -75,6 +89,7 @@ void AssetInfo::show() {
   if(ImGui::Button("Bottom Center")) {
     g_selected_entity->sprite_offset = {g_selected_entity->sprite_size.x / 2, 0};
   }
+
 
   ImGui::EndChild();
 

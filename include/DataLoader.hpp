@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SDL.h>              
 #include <tinyfiledialogs.h>
+#include <vector>
+#include <filesystem>
 
 class Data_Loader {
 public:
@@ -23,6 +25,16 @@ public:
             return "";
         }
         return folder;
+    }
+
+    static std::vector<std::string> get_files(const std::string &folder, const std::string &extension) {
+        std::vector<std::string> files;
+        for (const auto &entry : std::filesystem::directory_iterator(folder)) {
+            if (entry.is_regular_file() && entry.path().extension() == extension) {
+                files.push_back(entry.path().filename().string());
+            }
+        }
+        return files;
     }
 
     // save a file with specific extension

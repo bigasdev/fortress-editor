@@ -1,4 +1,5 @@
 #pragma once 
+#include <string>
 #ifndef GLOBAL_HPP
 #define GLOBAL_HPP
 
@@ -29,6 +30,7 @@ extern FloatingButtons* g_floating_buttons;
 
 // variables 
 extern EntityData* g_selected_entity;
+extern std::string g_folder_path;
 
 extern bool g_controller_connected;
 extern bool g_enter_pressed;

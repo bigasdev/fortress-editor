@@ -98,6 +98,7 @@ void Game::init() {
   // initial settings to get last folder and asset
   fini = new Fini("res/config.ini");
   fini->initialize_value("last", "folder", "");
+  g_folder_path = fini->get_value<std::string>("last", "folder");
   fini->initialize_value("last", "asset", "");
   fini->initialize_value("settings", "grid_size", 16);
   fini->initialize_value("settings", "zoom", 1.0f);

@@ -13,6 +13,7 @@ Fini* g_fini;
 FloatingButtons* g_floating_buttons;
 
 EntityData* g_selected_entity;
+std::string g_folder_path;
 
 bool g_controller_connected;
 bool g_enter_pressed;
