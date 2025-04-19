@@ -26,8 +26,15 @@ void AssetInfo::show() {
   ImGui::Text(" Components");
   //components section 
   for(auto &component : g_selected_entity->components) {
-    if(ImGui::Checkbox(component.second.name.c_str(), &component.second.is_active)) {
+    if (ImGui::Checkbox(("##Active" + component.second.name).c_str(), &component.second.is_active)) {
     }
+    ImGui::SameLine(); 
+    ImGui::PushID(&component); 
+    if (ImGui::Selectable(component.second.name.c_str())) {
+      /*auto command = "start cmd /k nvim " + g_folder_path + "/src/components/" + component.second.name + ".hpp";
+      system(command.c_str());*/
+    }
+    ImGui::PopID();
   }
   ImGui::EndChild();
 
