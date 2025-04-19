@@ -25,10 +25,8 @@ void AssetInfo::show() {
   ImGui::BeginChild("&Components", ImVec2(400, 50), true);
   ImGui::Text(" Components");
   //components section 
-  auto components = Data_Loader::get_files(g_folder_path + "/src/components/", ".hpp");
-  for(auto &component : components) {
-    bool is_selected = false;
-    if(ImGui::Checkbox(component.c_str(), &is_selected)) {
+  for(auto &component : g_selected_entity->components) {
+    if(ImGui::Checkbox(component.second.name.c_str(), &component.second.is_active)) {
     }
   }
   ImGui::EndChild();

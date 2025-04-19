@@ -2,14 +2,13 @@
 #include "IData.hpp"
 #include "../../tools/Common.hpp"
 #include <string>
+#include <unordered_map>
+#include "ComponentData.hpp"
+#include <vector>
 
 class EntityData : public IData
 {
 public:
-    EntityData();
-    virtual void update();
-    virtual void dispose();
-
     std::string name;
     std::string pallete_name;
     std::string group;
@@ -19,5 +18,7 @@ public:
     vec2i sprite_pos;
     vec2i sprite_offset;
     vec2i atlas_pos;
+
+    std::unordered_map<std::string, ComponentData> components;
 private:
 };

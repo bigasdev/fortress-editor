@@ -53,6 +53,18 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
     entity.sprite_offset.x = asset["sprite_offset_x"];
     entity.sprite_offset.y = asset["sprite_offset_y"];
 
+    auto components = Data_Loader::get_files(g_folder_path + "/src/components/", ".hpp");
+    for(auto &component : components) {
+      ComponentData data;
+      auto name = component.substr(0, component.find_last_of('.'));
+      data.name = name;
+      if(data.name == "ComponentStore" || data.name == "IComponent") continue;
+      if(data.name == "SpriteComponent" || data.name == "TransformComponent"){
+        data.is_active = true;
+      }
+      entity.components[name] = data;
+    }
+
     if(entity.sprite_size.x > 0){
       entity.sprite_pos.x = entity.atlas_pos.x * entity.sprite_size.x;
     }else{
