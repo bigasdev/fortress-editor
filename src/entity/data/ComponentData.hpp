@@ -7,6 +7,8 @@
 struct Component{
   std::string name;
   char val[128] = "";
+  char val_1[128] = "";
+  char val_2[128] = "";
 };
 
 class ComponentData : public IData

@@ -86,6 +86,8 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
                   Component var;
                   var.name = var_name;
                   var.val[0] = '\0'; 
+                  var.val_1[0] = '\0';
+                  var.val_2[0] = '\0';
 
                   data.variables.push_back({var_type, var});
               }
@@ -147,6 +149,26 @@ void EditorDataManager::export_(std::map<std::string, EntityData> assets, std::s
     asset_j["collision_offset_y"] = asset.second.collision_offset.y;
     asset_j["sprite_offset_x"] = asset.second.sprite_offset.x;
     asset_j["sprite_offset_y"] = asset.second.sprite_offset.y;
+
+    for(auto& component : asset.second.components) {
+      nlohmann::json component_j;
+      component_j["name"] = component.first;
+      component_j["is_active"] = component.second.is_active;
+      nlohmann::json variables_j;
+      for(auto& var : component.second.variables) {
+        nlohmann::json var_j;
+        var_j["name"] = var.second.name;
+        var_j["type"] = var.first;
+        if(var.first == "vec2"){
+          var_j["val"] = "{" + std::string(var.second.val_1) + ", " + std::string(var.second.val_2) + "}";
+        }else{
+          var_j["val"] = var.second.val;
+        }
+        variables_j.push_back(var_j);
+      }
+      component_j["variables"] = variables_j;
+      asset_j["components"].push_back(component_j);
+    }
 
     j.push_back(asset_j);
   }

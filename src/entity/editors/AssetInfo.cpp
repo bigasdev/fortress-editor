@@ -37,6 +37,20 @@ void AssetInfo::show() {
       }
       ImGui::PopID();
       for(auto& var : component.second.variables) {
+        if(var.first == "vec2"){
+          ImGui::Text(var.second.name.c_str());
+          ImGui::SameLine();
+          ImGui::InputText(("##" + var.second.name).c_str(), var.second.val_1, IM_ARRAYSIZE(var.second.val_1));
+          ImGui::SameLine();
+          ImGui::InputText(("##1" + var.second.name).c_str(), var.second.val_2, IM_ARRAYSIZE(var.second.val_2));
+          char formattedValue[128];
+          std::snprintf(formattedValue, sizeof(formattedValue), "{%s, %s}", var.second.val_1, var.second.val_2);
+          for (int i = 0; i < sizeof(var.second.val); ++i) {
+            var.second.val[i] = formattedValue[i];
+          }
+          continue;
+        }
+
         ImGui::Text(var.second.name.c_str());
         ImGui::SameLine();
         ImGui::InputText(("##" + var.second.name).c_str(), var.second.val, IM_ARRAYSIZE(var.second.val));
