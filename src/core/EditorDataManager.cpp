@@ -88,10 +88,17 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
       ComponentData data;
       auto name = component.substr(0, component.find_last_of('.'));
       data.name = name;
+      // loading values from the saved json
+      auto cp = std::find_if(entity_components.begin(), entity_components.end(), [name](const nlohmann::basic_json<>& obj) {
+          return obj["name"].get<std::string>() == name;
+      });
 
       if(data.name == "ComponentStore" || data.name == "IComponent") continue;
       if(data.name == "SpriteComponent" || data.name == "TransformComponent"){
         data.is_active = true;
+      }
+      if(cp != entity_components.end()){
+        data.is_active = (*cp)["is_active"];
       }
       std::ifstream file(g_folder_path + "/src/components/" + component);
       std::string line;
@@ -119,10 +126,6 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
                   var.val_1[0] = '\0';
                   var.val_2[0] = '\0';
 
-                  // loading values from the saved json
-                  auto cp = std::find_if(entity_components.begin(), entity_components.end(), [name](const nlohmann::basic_json<>& obj) {
-                      return obj["name"].get<std::string>() == name;
-                  });
 
                   if (cp != entity_components.end()) {
                       auto var_json = (*cp)["variables"];

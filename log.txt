@@ -84,6 +84,9 @@ Importing assets from: C:\Users\gusta\.code\rog\res\prefabs\map.json
 Importing asset: 
 Importing component: TransformComponent
 Importing component: SpriteComponent
+Importing component: PlayerMoveComponent
+float
+speed
 std::string
 name
 vec2
@@ -102,6 +105,9 @@ bigas
 Importing asset: 
 Importing component: TransformComponent
 Importing component: SpriteComponent
+Importing component: PlayerMoveComponent
+float
+speed
 std::string
 name
 vec2
