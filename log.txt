@@ -128,7 +128,4 @@ Animator: bigas
 Animator: health_potion
 Game initialized
 Engine post init
-Reloading Prefab Editor
-Reloading Prefab Editor
-Reloading Prefab Editor
 SDL2 quit

@@ -35,6 +35,7 @@
 #include "../entity/editors/AssetView.hpp"
 #include "../entity/editors/AnimatorView.hpp"
 #include "../entity/editors/PrefabEditor.hpp"
+#include "../entity/editors/TabsWindowEditor.hpp"
 #include "../entity/editors/MainMenu.hpp"
 #include "../entity/editors/SideMenu.hpp"
 
@@ -81,6 +82,7 @@ std::unique_ptr<AssetView> asset_view;
 std::unique_ptr<AnimatorView> animator_view;
 std::unique_ptr<AssetScreen> asset_screen;
 std::unique_ptr<PrefabEditor> prefab_editor;
+std::unique_ptr<TabsWindowEditor> tabs_window_editor;
 
 Game::Game() {}
 
@@ -161,17 +163,21 @@ void Game::init() {
   asset_view = std::make_unique<AssetView>(sprite_map, project_folder);
   animator_view = std::make_unique<AnimatorView>();
   prefab_editor = std::make_unique<PrefabEditor>();
+  tabs_window_editor = std::make_unique<TabsWindowEditor>();
+  tabs_window_editor->block_close = true;
   g_editor_manager->add_editor(std::move(side_menu));
   g_editor_manager->add_editor(std::move(main_menu));
   g_editor_manager->add_editor(std::move(asset_view));
   g_editor_manager->add_editor(std::move(animator_view));
   g_editor_manager->add_editor(std::move(prefab_editor));
+  g_editor_manager->add_editor(std::move(tabs_window_editor));
 
   //FIX: ADD THIS TO THE ASSET VIEW EDITOR
   //asset_screen = std::make_unique<AssetScreen>();
 
   g_editor_manager->open_editor<SideMenu>();
   g_editor_manager->open_editor<MainMenu>();
+  g_editor_manager->open_editor<TabsWindowEditor>();
 }
 
 void Game::fixed_update(double tmod) {}

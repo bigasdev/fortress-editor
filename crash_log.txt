@@ -128,4 +128,4 @@ Animator: bigas
 Animator: health_potion
 Game initialized
 Engine post init
-ERROR: Signal: 11
+ERROR: Signal: 22
