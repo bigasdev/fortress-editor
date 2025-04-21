@@ -23,6 +23,7 @@ public:
     void update() override;
     void dispose() override;
     void draw() override;
+    void reload() override;
     void update_sprite_map(std::string project_folder, std::map<std::string, Sprite> sprites);
     void auto_update();
 private:

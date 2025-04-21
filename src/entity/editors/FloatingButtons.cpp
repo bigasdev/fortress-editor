@@ -42,3 +42,8 @@ void FloatingButtons::dispose() {}
 
 void FloatingButtons::draw() {}
 
+void FloatingButtons::reload() {
+  for (auto &button : m_buttons) {
+    button.is_pressed = g_fini->get_value<bool>("settings", button.name);
+  }
+}

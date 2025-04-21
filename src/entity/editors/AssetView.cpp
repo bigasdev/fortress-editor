@@ -333,6 +333,10 @@ void AssetView::auto_update() {
   }
 }
 
+void AssetView::reload(){
+
+}
+
 void AssetView::dispose() {
   for (auto &[key, value] : m_sprites) {
     cute_aseprite_free(value.ase);

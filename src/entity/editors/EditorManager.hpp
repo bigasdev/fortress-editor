@@ -23,6 +23,7 @@ public:
             if (auto specific_editor = std::dynamic_pointer_cast<T>(editor)) {
                 specific_editor->is_open = true;
                 specific_editor->open();
+                m_selected_editor = specific_editor;
                 return;
             }
         }
@@ -32,6 +33,9 @@ public:
         for (const auto& editor : m_editors) {
             if (auto specific_editor = std::dynamic_pointer_cast<T>(editor)) {
                 specific_editor->is_open = false;
+                if (specific_editor == m_selected_editor) {
+                    m_selected_editor = nullptr;
+                }
                 return;
             }
         }
@@ -42,6 +46,7 @@ public:
             if (auto specific_editor = std::dynamic_pointer_cast<T>(editor)) {
                 specific_editor->is_open = true;
                 specific_editor->open();
+                m_selected_editor = specific_editor;
             } else {
                 if (!editor->block_close) {
                     editor->is_open = false;
@@ -49,15 +54,23 @@ public:
             }
         }
     }
+    std::vector<std::shared_ptr<IEditor>> get_editors() {
+        return m_editors;
+    }
+    std::shared_ptr<IEditor> get_selected_editor() {
+        return m_selected_editor;
+    }
     void close_all() {
         for (const auto& editor : m_editors) {
             editor->is_open = false;
+            m_selected_editor = nullptr;
         }
     }
 
     void add_editor(std::shared_ptr<IEditor> editor) {
         m_editors.push_back(editor);
     }
+
 
     void show() {
         for (const auto& editor : m_editors) {
@@ -91,4 +104,5 @@ public:
 
 private:
     std::vector<std::shared_ptr<IEditor>> m_editors;
+    std::shared_ptr<IEditor> m_selected_editor = nullptr;
 };

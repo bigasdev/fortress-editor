@@ -3,6 +3,7 @@
 #include "../../core/global.hpp"
 #include "AssetView.hpp"
 #include "AnimatorView.hpp"
+#include "PrefabEditor.hpp"
 #include "EditorManager.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../res/Res.hpp"
@@ -58,6 +59,7 @@ void SideMenu::show() {
 
 
   if (ImGui::ImageButton("##prefabs", (void *)(intptr_t)t, ImVec2(48, 48))) {
+    g_editor_manager->open_and_close_all<PrefabEditor>();
   }
   if (ImGui::ImageButton("assets", (void *)(intptr_t)t, ImVec2(48, 48))) {
     g_editor_manager->open_and_close_all<AssetView>();
@@ -78,3 +80,5 @@ void SideMenu::dispose() {
 }
 
 void SideMenu::draw() {}
+
+void SideMenu::reload() {}

@@ -20,6 +20,7 @@ public:
   void update() override;
   void dispose() override;
   void draw() override;
+  void reload() override;
 
   bool is_pressed(std::string name) {
     for (auto &button : m_buttons) {

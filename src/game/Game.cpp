@@ -34,6 +34,7 @@
 #include "../entity/visualizers/AssetScreen.hpp"
 #include "../entity/editors/AssetView.hpp"
 #include "../entity/editors/AnimatorView.hpp"
+#include "../entity/editors/PrefabEditor.hpp"
 #include "../entity/editors/MainMenu.hpp"
 #include "../entity/editors/SideMenu.hpp"
 
@@ -79,6 +80,7 @@ std::unique_ptr<MainMenu> main_menu;
 std::unique_ptr<AssetView> asset_view;
 std::unique_ptr<AnimatorView> animator_view;
 std::unique_ptr<AssetScreen> asset_screen;
+std::unique_ptr<PrefabEditor> prefab_editor;
 
 Game::Game() {}
 
@@ -158,10 +160,12 @@ void Game::init() {
   main_menu->block_close = true;
   asset_view = std::make_unique<AssetView>(sprite_map, project_folder);
   animator_view = std::make_unique<AnimatorView>();
+  prefab_editor = std::make_unique<PrefabEditor>();
   g_editor_manager->add_editor(std::move(side_menu));
   g_editor_manager->add_editor(std::move(main_menu));
   g_editor_manager->add_editor(std::move(asset_view));
   g_editor_manager->add_editor(std::move(animator_view));
+  g_editor_manager->add_editor(std::move(prefab_editor));
 
   //FIX: ADD THIS TO THE ASSET VIEW EDITOR
   //asset_screen = std::make_unique<AssetScreen>();

@@ -273,3 +273,5 @@ void AnimatorView::update() {
 void AnimatorView::dispose() {}
 
 void AnimatorView::draw() {}
+
+void AnimatorView::reload() {}

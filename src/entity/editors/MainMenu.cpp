@@ -1,5 +1,7 @@
 #include "MainMenu.hpp"
 #include "../../imgui/imgui.h"
+#include "../../core/global.hpp"
+#include "EditorManager.hpp"
 
 MainMenu::MainMenu() {}
 
@@ -38,6 +40,18 @@ void MainMenu::show() {
     ImGui::EndMenu();
   }
 
+  if (ImGui::BeginMenu("Reload")) {
+    if (ImGui::MenuItem("Current Editor")) {
+      g_editor_manager->get_selected_editor()->reload();
+    }
+    if (ImGui::MenuItem("All Editors")) {
+      for (auto &editor : g_editor_manager->get_editors()) {
+        editor->reload();
+      }
+    }
+    ImGui::EndMenu();
+  }
+
   ImGui::EndMainMenuBar();
 }
 
@@ -46,3 +60,5 @@ void MainMenu::update() {}
 void MainMenu::dispose() {}
 
 void MainMenu::draw() {}
+
+void MainMenu::reload() {}

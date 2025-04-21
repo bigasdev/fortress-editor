@@ -155,4 +155,7 @@ void AssetInfo::dispose() {
 void AssetInfo::draw() {
 }
 
+void AssetInfo::reload() {
+}
+
 

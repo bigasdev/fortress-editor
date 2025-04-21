@@ -57,3 +57,5 @@ void InfoBar::update() {}
 void InfoBar::dispose() {}
 
 void InfoBar::draw() {}
+
+void InfoBar::reload() {}

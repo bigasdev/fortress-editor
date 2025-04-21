@@ -36,6 +36,7 @@ public:
     void update() override;
     void dispose() override;
     void draw() override;
+    void reload() override;
 
     void assets_child();
     void animator_child();

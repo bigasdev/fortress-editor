@@ -1,15 +1,10 @@
-#pragma once 
+#pragma once
 
 #include "IEditor.hpp"
 
-class EntityData;
-
-class AssetInfo : public IEditor
-{
+class PrefabEditor : public IEditor {
 public:
-    AssetInfo(EntityData* entity_data);
-    ~AssetInfo();
-
+    PrefabEditor();
     void open() override;
     void show() override;
     void update() override;
@@ -17,5 +12,4 @@ public:
     void draw() override;
     void reload() override;
 private:
-    EntityData* m_entity_data;
 };
