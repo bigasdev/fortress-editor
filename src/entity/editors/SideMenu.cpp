@@ -1,6 +1,9 @@
 #include "SideMenu.hpp"
 #include "../../core/Engine.hpp"
 #include "../../core/global.hpp"
+#include "AssetView.hpp"
+#include "AnimatorView.hpp"
+#include "EditorManager.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../res/Res.hpp"
 #include "SDL.h"
@@ -55,14 +58,12 @@ void SideMenu::show() {
 
 
   if (ImGui::ImageButton("##prefabs", (void *)(intptr_t)t, ImVec2(48, 48))) {
-    m_state = State::PREFAB;
   }
   if (ImGui::ImageButton("assets", (void *)(intptr_t)t, ImVec2(48, 48))) {
-
-    m_state = State::ASSET;
+    g_editor_manager->open_and_close_all<AssetView>();
   }
   if (ImGui::ImageButton("animator", (void *)(intptr_t)t, ImVec2(48, 48))) {
-    m_state = State::ANIMATOR;
+    g_editor_manager->open_and_close_all<AnimatorView>();
   }
   ImGui::PopStyleVar();
   ImGui::PopStyleVar();

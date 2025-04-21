@@ -153,7 +153,9 @@ void Game::init() {
 
   //editors
   side_menu = std::make_unique<SideMenu>();
+  side_menu->block_close = true;
   main_menu = std::make_unique<MainMenu>();
+  main_menu->block_close = true;
   asset_view = std::make_unique<AssetView>(sprite_map, project_folder);
   animator_view = std::make_unique<AnimatorView>();
   g_editor_manager->add_editor(std::move(side_menu));

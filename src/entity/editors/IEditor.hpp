@@ -10,4 +10,5 @@ public:
     virtual ~IEditor(){}
 
     bool is_open = false; 
+    bool block_close = false;
 };

@@ -28,13 +28,24 @@ public:
         }
     }
     template<typename T>
+    void close_editor() {
+        for (const auto& editor : m_editors) {
+            if (auto specific_editor = std::dynamic_pointer_cast<T>(editor)) {
+                specific_editor->is_open = false;
+                return;
+            }
+        }
+    }
+    template<typename T>
     void open_and_close_all() {
         for (const auto& editor : m_editors) {
             if (auto specific_editor = std::dynamic_pointer_cast<T>(editor)) {
                 specific_editor->is_open = true;
                 specific_editor->open();
             } else {
-                editor->is_open = false;
+                if (!editor->block_close) {
+                    editor->is_open = false;
+                }
             }
         }
     }

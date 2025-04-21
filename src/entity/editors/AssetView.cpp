@@ -44,7 +44,9 @@ int sprite_x = 8, sprite_y = 8;
 Cooldown asset_cd;
 
 void AssetView::open(){
-
+  g_editor_manager->open_editor<InfoBar>();
+  g_editor_manager->open_editor<AssetInfo>();
+  g_editor_manager->open_editor<FloatingButtons>();
 }
 
 AssetView::AssetView(std::map<std::string, Sprite> sprites,
@@ -101,9 +103,6 @@ void AssetView::show() {
   ImGui::Begin(" Assets", nullptr,
                ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove );
 
-  info_bar->show();
-  floating_buttons->show();
-
 
   entities();
   atlas();
@@ -119,8 +118,6 @@ void AssetView::show() {
     ImGui::SetNextWindowSize(ImVec2(420, 220), ImGuiCond_FirstUseEver);
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.05, 0.05, 0.05, 1.0));
     ImGui::Begin(" Editor", nullptr, 0);
-
-    asset_info->show();
 
     ImGui::PopStyleColor();
     ImGui::End();
