@@ -7,6 +7,8 @@
 #include "../tools/Logger.hpp"
 #include <fstream>
 #include <regex>
+#include <string>
+#include <vector>
 
 #include "UndoManager.hpp"
 #include "global.hpp"
@@ -54,11 +56,39 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
     entity.sprite_offset.x = asset["sprite_offset_x"];
     entity.sprite_offset.y = asset["sprite_offset_y"];
 
+    auto entity_components = asset["components"].get<std::vector<nlohmann::json>>();
+    for(auto &component : entity_components) {
+      Logger::log("Importing component: " + component["name"].get<std::string>());
+      /*ComponentData data;
+      data.name = component["name"];
+      data.is_active = component["is_active"];
+
+      nlohmann::json variables_j = component["variables"];
+      for(auto& var : variables_j) {
+        Component var_data;
+        var_data.name = var["name"];
+        var_data.val[0] = '\0'; 
+        var_data.val_1[0] = '\0';
+        var_data.val_2[0] = '\0';
+
+        if(var["type"] == "vec2"){
+          std::string val = var["val"];
+          sscanf(val.c_str(), "{%[^,], %[^}]}", var_data.val_1, var_data.val_2);
+        }else{
+          std::string val = var["val"];
+          strcpy(var_data.val, val.c_str());
+        }
+        data.variables.push_back({var["type"], var_data});
+      }
+      entity.components[data.name] = data;*/
+    }
+
     auto components = Data_Loader::get_files(g_folder_path + "/src/components/", ".hpp");
     for(auto &component : components) {
       ComponentData data;
       auto name = component.substr(0, component.find_last_of('.'));
       data.name = name;
+
       if(data.name == "ComponentStore" || data.name == "IComponent") continue;
       if(data.name == "SpriteComponent" || data.name == "TransformComponent"){
         data.is_active = true;
@@ -72,7 +102,7 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
               continue;
           }
 
-          if(line.find("[[NotSerializable]]") != std::string::npos) continue;
+          if(line.find("[[NotSerializable]]") != std::string::npos || line.find("void") != std::string::npos || line.find("this->name") != std::string::npos) continue;
 
           if (line.find(";") != std::string::npos && line.find("(") == std::string::npos) {
               auto type_end = line.find(' ');
@@ -88,6 +118,28 @@ void EditorDataManager::import(std::map<std::string, EntityData>& assets, std::s
                   var.val[0] = '\0'; 
                   var.val_1[0] = '\0';
                   var.val_2[0] = '\0';
+
+                  // loading values from the saved json
+                  auto cp = std::find_if(entity_components.begin(), entity_components.end(), [name](const nlohmann::basic_json<>& obj) {
+                      return obj["name"].get<std::string>() == name;
+                  });
+
+                  if (cp != entity_components.end()) {
+                      auto var_json = (*cp)["variables"];
+                      for (auto& v : var_json) {
+                          if (v["name"] == var_name) {
+                              std::string type = v["type"];
+                              if (type == "vec2") {
+                                  std::string val = v["val"];
+                                  sscanf(val.c_str(), "{%[^,], %[^}]}", var.val_1, var.val_2);
+                              } else {
+                                  std::string val = v["val"];
+                                  strcpy(var.val, val.c_str());
+                              }
+                              var.name = var_name;
+                          }
+                      }
+                  }
 
                   data.variables.push_back({var_type, var});
               }

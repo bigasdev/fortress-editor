@@ -82,6 +82,8 @@ character_atlas
 items_atlas
 Importing assets from: C:\Users\gusta\.code\rog\res\prefabs\map.json
 Importing asset: 
+Importing component: TransformComponent
+Importing component: SpriteComponent
 std::string
 name
 vec2
@@ -98,6 +100,8 @@ Adding action to undo stack
 Assets from the data manager
 bigas
 Importing asset: 
+Importing component: TransformComponent
+Importing component: SpriteComponent
 std::string
 name
 vec2
@@ -118,29 +122,4 @@ Animator: bigas
 Animator: health_potion
 Game initialized
 Engine post init
-115
-101
-115
-101
-101
-45
-112
-111
-111
-115
-101
-115
-101
-115
-1073742048
-1073742048
-1073742048
-115
-Exporting assets to: C:\Users\gusta\.code\rog\res\prefabs\map.json
-Exporting assets to: C:\Users\gusta\.code\rog\res\prefabs\map.json
-Exporting assets to: C:\Users\gusta\.code\rog\res\prefabs\map.json
-Exporting assets to: C:\Users\gusta\.code\rog\res\prefabs\map.json
-Exporting assets to: C:\Users\gusta\.code\rog\res\prefabs\map.json
-Exporting assets to: C:\Users\gusta\.code\rog\res\prefabs\map.json
-Exporting assets to: C:\Users\gusta\.code\rog\res\prefabs\map.json
 SDL2 quit
