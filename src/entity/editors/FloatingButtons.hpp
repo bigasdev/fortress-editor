@@ -15,6 +15,7 @@ class FloatingButtons : public IEditor
 public:
   FloatingButtons();
 
+  void open() override;
   void show() override;
   void update() override;
   void dispose() override;

@@ -18,6 +18,7 @@ class AssetView : public IEditor
 public:
     AssetView(std::map<std::string, Sprite> sprites, std::string project_folder = "");
 
+    void open() override;
     void show() override;
     void update() override;
     void dispose() override;

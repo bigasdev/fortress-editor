@@ -28,11 +28,11 @@
 
 // Systems
 #include "../core/UndoManager.hpp"
+#include "../entity/editors/EditorManager.hpp"
 
 // Components
 #include "../entity/visualizers/AssetScreen.hpp"
 #include "../entity/editors/AssetView.hpp"
-#include "../entity/editors/DBView.hpp"
 #include "../entity/editors/AnimatorView.hpp"
 #include "../entity/editors/MainMenu.hpp"
 #include "../entity/editors/SideMenu.hpp"
@@ -67,6 +67,7 @@ bool z_pressed = false;
 bool load_assets = false;
 
 // Systems
+std::unique_ptr<EditorManager> m_editor_manager;
 SpriteAnimator *m_sprite_animator;
 Fini *fini;
 UndoManager *m_undo_manager;
@@ -74,8 +75,8 @@ UndoManager *m_undo_manager;
 // Components
 std::unique_ptr<SideMenu> side_menu;
 std::unique_ptr<MainMenu> main_menu;
+// Editors
 std::unique_ptr<AssetView> asset_view;
-std::unique_ptr<DBView> db_view;
 std::unique_ptr<AnimatorView> animator_view;
 std::unique_ptr<AssetScreen> asset_screen;
 
@@ -92,6 +93,8 @@ void Game::init() {
   m_editor_data_manager = std::make_unique<EditorDataManager>();
   g_editor_data_manager = m_editor_data_manager.get();
   g_undo_manager = m_undo_manager;
+  m_editor_manager = std::make_unique<EditorManager>();
+  g_editor_manager = m_editor_manager.get();
 
   //
 
@@ -148,12 +151,21 @@ void Game::init() {
   g_input_manager->bind_keyboard(SDLK_MINUS, &g_minus_pressed);
 
 
+  //editors
   side_menu = std::make_unique<SideMenu>();
   main_menu = std::make_unique<MainMenu>();
   asset_view = std::make_unique<AssetView>(sprite_map, project_folder);
-  db_view = std::make_unique<DBView>();
   animator_view = std::make_unique<AnimatorView>();
-  asset_screen = std::make_unique<AssetScreen>();
+  g_editor_manager->add_editor(std::move(side_menu));
+  g_editor_manager->add_editor(std::move(main_menu));
+  g_editor_manager->add_editor(std::move(asset_view));
+  g_editor_manager->add_editor(std::move(animator_view));
+
+  //FIX: ADD THIS TO THE ASSET VIEW EDITOR
+  //asset_screen = std::make_unique<AssetScreen>();
+
+  g_editor_manager->open_editor<SideMenu>();
+  g_editor_manager->open_editor<MainMenu>();
 }
 
 void Game::fixed_update(double tmod) {}
@@ -195,19 +207,7 @@ void Game::update(double dt) {
     ctrl_pressed = false;
   }
 
-  // components updates
-  if (side_menu->get_state() == State::ASSET) {
-    asset_screen->update();
-    asset_view->update();
-  }
-
-  if (side_menu->get_state() == State::ANIMATOR) {
-    animator_view->update();
-  }
-
-  if(side_menu->get_state() == State::DB){
-    db_view->update();
-  }
+  g_editor_manager->update();
 }
 
 void Game::post_update(double dt) {
@@ -216,30 +216,19 @@ void Game::post_update(double dt) {
 }
 
 void Game::draw_root() {
-  if (side_menu->get_state() == State::ASSET) {
+  /*if (side_menu->get_state() == State::ASSET) {
     asset_screen->root();
-  }
+  }*/
 }
 
 void Game::draw_ent() {
-  if (side_menu->get_state() == State::ASSET) {
+  /*if (side_menu->get_state() == State::ASSET) {
     asset_screen->ent();
-  }
+  }*/
 }
 
 void Game::draw_ui() {
-  if (side_menu->get_state() == State::ASSET) {
-    asset_screen->ui();
-    asset_view->draw();
-  }
-
-  if (side_menu->get_state() == State::ANIMATOR) {
-    animator_view->draw();
-  }
-
-  if(side_menu->get_state() == State::DB){
-    db_view->draw();
-  } 
+  g_editor_manager->draw();
 }
 
 void Game::imgui_assets() {}
@@ -257,24 +246,8 @@ void Game::imgui_map() {
                    ImGuiWindowFlags_NoMouseInputs |
                    ImGuiWindowFlags_NoScrollbar);
 
-  side_menu->show();
-  //
-  main_menu->show();
+  g_editor_manager->show();
 
-  if (side_menu->get_state() == State::ASSET) {
-    asset_view->show();
-  }
-
-  if (side_menu->get_state() == State::ANIMATOR) {
-    animator_view->show();
-  }
-
-  if(side_menu->get_state() == State::DB){
-    db_view->show();
-  }
-
-  if (side_menu->get_state() == State::NONE) {
-  }
   ImGui::PopStyleColor();
   ImGui::End();
 }

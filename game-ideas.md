@@ -17,3 +17,7 @@ Today i learned that i can use selectable to do some pretty nice button/interact
     }
     ImGui::PopID();
  \\
+
+#### 21/04 What is in my mind 
+Today i will start the rework for the fortress-editor, the focus is to have it more scalable and looking more like an editor since now i have the prefabs,
+will heavily steal things from murder engine

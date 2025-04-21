@@ -8,6 +8,7 @@ class InfoBar : public IEditor{
 public:
   InfoBar();
 
+  void open() override;
   void show() override;
   void update() override;
   void dispose() override;

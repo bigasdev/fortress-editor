@@ -22,6 +22,7 @@
 #include <iostream>
 #include <memory>
 
+#include "EditorManager.hpp"
 #include "../data/EntityData.hpp"
 #include "../editors/AssetInfo.hpp"
 #include "../editors/InfoBar.hpp"
@@ -42,11 +43,18 @@ int sprite_x = 8, sprite_y = 8;
 
 Cooldown asset_cd;
 
+void AssetView::open(){
+
+}
+
 AssetView::AssetView(std::map<std::string, Sprite> sprites,
                      std::string project_folder) {
   info_bar = std::make_unique<InfoBar>();
   asset_info = std::make_unique<AssetInfo>(g_selected_entity);
   floating_buttons = std::make_unique<FloatingButtons>();
+  g_editor_manager->add_editor(std::move(info_bar));
+  g_editor_manager->add_editor(std::move(asset_info));
+  g_editor_manager->add_editor(std::move(floating_buttons));
   g_floating_buttons = floating_buttons.get();
   m_groups.push_back("default");
 

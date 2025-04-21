@@ -14,6 +14,9 @@ FloatingButtons::FloatingButtons() {
   }
 }
 
+void FloatingButtons::open() {
+}
+
 void FloatingButtons::show() {
   ImGui::SetNextWindowPos(ImVec2(395, 20));
   ImGui::SetNextWindowSize(ImVec2(34, 66));

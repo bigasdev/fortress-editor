@@ -31,6 +31,7 @@ class AnimatorView : public IEditor
 {
 public:
     AnimatorView();
+    void open() override;
     void show() override;
     void update() override;
     void dispose() override;

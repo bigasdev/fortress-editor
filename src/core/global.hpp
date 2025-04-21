@@ -12,11 +12,13 @@ class Cooldown;
 class InputManager;
 class UndoManager;
 class EntityData;
+class EditorManager;
 class EditorDataManager;
 class Fini;
 class FloatingButtons;
 
 extern Engine* g_engine;
+extern EditorManager* g_editor_manager;
 extern EditorDataManager* g_editor_data_manager;
 extern Res* g_res;
 extern Renderer* g_renderer;

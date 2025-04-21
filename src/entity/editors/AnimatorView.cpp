@@ -36,6 +36,9 @@ AnimatorView::AnimatorView() {
   }
 }
 
+void AnimatorView::open() {
+}
+
 void AnimatorView::show() {
   ImGui::SetNextWindowPos(ImVec2(75, 20.0f));
   ImGui::SetNextWindowSize(ImVec2(320, g_engine->get_window_size()->y - 25));

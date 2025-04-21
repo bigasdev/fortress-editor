@@ -3,6 +3,9 @@
 
 MainMenu::MainMenu() {}
 
+void MainMenu::open() {
+}
+
 void MainMenu::show() {
   ImGui::BeginMainMenuBar();
   if (ImGui::BeginMenu("File")) {

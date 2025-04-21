@@ -7,6 +7,9 @@
 
 InfoBar::InfoBar() {}
 
+void InfoBar::open() {
+}
+
 void InfoBar::show() {
   ImGui::SetNextWindowPos(ImVec2(400, g_engine->get_window_size()->y - 50));
   ImGui::SetNextWindowSize(ImVec2(800, 50));

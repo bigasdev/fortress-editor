@@ -1,6 +1,7 @@
 #include "global.hpp"
 
 Engine* g_engine;
+EditorManager* g_editor_manager;
 EditorDataManager* g_editor_data_manager;
 Res* g_res;
 Renderer* g_renderer;

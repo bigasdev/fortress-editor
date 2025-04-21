@@ -10,8 +10,10 @@ AssetInfo::AssetInfo(EntityData* entity_data) : m_entity_data(entity_data) {}
 
 AssetInfo::~AssetInfo() {}
 
-void AssetInfo::show() {
+void AssetInfo::open() {
+}
 
+void AssetInfo::show() {
   static char name[128] = "";
   ImGui::BeginChild("Asset Info", ImVec2(400,50), true);
   ImGui::Text(" Info");

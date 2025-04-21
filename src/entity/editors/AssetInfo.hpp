@@ -10,6 +10,7 @@ public:
     AssetInfo(EntityData* entity_data);
     ~AssetInfo();
 
+    void open() override;
     void show() override;
     void update() override;
     void dispose() override;

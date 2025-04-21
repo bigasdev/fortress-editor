@@ -24,6 +24,10 @@ SideMenu::SideMenu() {
   }
 }
 
+void SideMenu::open(){
+
+}
+
 void SideMenu::show() {
   ImGui::SetNextWindowPos(ImVec2(0, 18.5f));
   ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
@@ -50,15 +54,15 @@ void SideMenu::show() {
                       (float)(sprite_y + sprite_height) / 250);
 
 
+  if (ImGui::ImageButton("##prefabs", (void *)(intptr_t)t, ImVec2(48, 48))) {
+    m_state = State::PREFAB;
+  }
   if (ImGui::ImageButton("assets", (void *)(intptr_t)t, ImVec2(48, 48))) {
 
     m_state = State::ASSET;
   }
   if (ImGui::ImageButton("animator", (void *)(intptr_t)t, ImVec2(48, 48))) {
     m_state = State::ANIMATOR;
-  }
-  if (ImGui::ImageButton("db", (void *)(intptr_t)t, ImVec2(48, 48))) {
-    m_state = State::DB;
   }
   ImGui::PopStyleVar();
   ImGui::PopStyleVar();

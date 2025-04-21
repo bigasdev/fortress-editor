@@ -6,6 +6,7 @@ class MainMenu : public IEditor{
 public:
   MainMenu();
 
+  void open() override;
   void show() override;
   void update() override;
   void dispose() override;
