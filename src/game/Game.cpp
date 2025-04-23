@@ -25,6 +25,7 @@
 #include <iomanip>
 #include <memory>
 #include <string>
+#include "../tools/FUtils.hpp"
 
 // Systems
 #include "../core/UndoManager.hpp"
@@ -100,6 +101,7 @@ void Game::init() {
   m_editor_manager = std::make_unique<EditorManager>();
   g_editor_manager = m_editor_manager.get();
 
+
   //
 
   // initial settings to get last folder and asset
@@ -117,11 +119,16 @@ void Game::init() {
   // this will crash if the saved folder or assets are not found anymore
   // FIX:
   if (project_folder != "") {
-    g_res->reset_aseprites();
-    g_res->load_aseprites(project_folder + "/res/");
-    g_res->load_prefabs(project_folder + "/res/prefabs/");
-    sprite_map.clear();
+    if(!FUtils::folder_exists(project_folder)){
+      Logger::error("Project folder not found: " + project_folder);
+    }else{
+      g_res->reset_aseprites();
+      g_res->load_aseprites(project_folder + "/res/");
+      g_res->load_prefabs(project_folder + "/res/prefabs/");
+      sprite_map.clear();
+    }
   }
+  Logger::log("Game init");
 
   asset_folder = fini->get_value<std::string>("last", "asset");
   if (asset_folder != "") {

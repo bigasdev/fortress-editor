@@ -69,63 +69,14 @@ No joysticks connected!
 
 Game:1
 1
-C:\Users\gusta\.code\rog/res/character_atlas.aseprite
-C:\Users\gusta\.code\rog/res/items_atlas.aseprite
-Finished aseprite load!
-------------
-Aseprite: character_atlas
-Aseprite: items_atlas
-Loading prefab: map
-Prefab loaded: bigas
-Prefab loaded: health_potion
+ERROR: Project folder not found: C:\Users\gusta\.code\rog
+Game init
 character_atlas
-items_atlas
-Importing assets from: C:\Users\gusta\.code\rog\res\prefabs\map.json
-Importing asset: 
-Importing component: TransformComponent
-Importing component: SpriteComponent
-Importing component: PlayerMoveComponent
-float
-speed
-std::string
-name
-vec2
-pos
-vec2
-scale
-float
-rotation
-bool
-flip_x
-bool
-flip_y
-Adding action to undo stack
-Assets from the data manager
-bigas
-Importing asset: 
-Importing component: TransformComponent
-Importing component: SpriteComponent
-Importing component: PlayerMoveComponent
-float
-speed
-std::string
-name
-vec2
-pos
-vec2
-scale
-float
-rotation
-bool
-flip_x
-bool
-flip_y
-Adding action to undo stack
-Assets from the data manager
-bigas
-health_potion
-Animator: bigas
-Animator: health_potion
+concept
+item_atlas
+logo
+rog_editor_ui
+ui
 Game initialized
 Engine post init
 SDL2 quit

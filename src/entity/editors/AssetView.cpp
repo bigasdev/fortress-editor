@@ -21,6 +21,7 @@
 #include <cstdint>
 #include <iostream>
 #include <memory>
+#include "../../tools/FUtils.hpp"
 
 #include "EditorManager.hpp"
 #include "../data/EntityData.hpp"
@@ -69,18 +70,27 @@ AssetView::AssetView(std::map<std::string, Sprite> sprites,
     Pallete pallete;
     pallete.sprite = &value;
     if (project_folder != "") {
-      pallete.ase = cute_aseprite_load_from_file(
-          (project_folder + "/res/" + key + ".aseprite").c_str(), NULL);
+      if(FUtils::file_exists(project_folder + "/res/" + key + ".aseprite")){
+        Logger::log("Loading pallete: " + project_folder + "/res/" + key + ".aseprite");
+        pallete.ase = cute_aseprite_load_from_file(
+            (project_folder + "/res/" + key + ".aseprite").c_str(), NULL);
+      }
     } else {
-      pallete.ase = cute_aseprite_load_from_file(
-          ("res/" + key + ".aseprite").c_str(), NULL);
+      if(FUtils::file_exists("res/" + key + ".aseprite")){
+        Logger::log("Loading pallete: " + std::string("res/") + key + ".aseprite");
+        pallete.ase = cute_aseprite_load_from_file(
+            ("res/" + key + ".aseprite").c_str(), NULL);
+      }
     }
     m_sprites[key] = pallete;
   }
 
   auto asset_folder = g_fini->get_value<std::string>("last", "asset");
   if (asset_folder != "") {
-    g_editor_data_manager->import(m_entities, asset_folder);
+    if(FUtils::file_exists(asset_folder)){
+      Logger::log("Loading assets from: " + asset_folder);
+      g_editor_data_manager->import(m_entities, asset_folder);
+    }
   }
 }
 
