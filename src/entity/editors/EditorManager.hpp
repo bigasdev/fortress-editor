@@ -9,7 +9,7 @@ public:
     ~EditorManager() = default;
 
     template<typename T>
-    T get_editor() {
+    std::shared_ptr<T> get_editor() {
         for (const auto& editor : m_editors) {
             if (auto specific_editor = std::dynamic_pointer_cast<T>(editor)) {
                 return specific_editor;
@@ -53,6 +53,7 @@ public:
                 }
             }
         }
+
     }
     std::vector<std::shared_ptr<IEditor>> get_editors() {
         return m_editors;
