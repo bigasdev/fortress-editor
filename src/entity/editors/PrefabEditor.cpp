@@ -91,7 +91,7 @@ void PrefabEditor::show() {
       return;
     }
 
-    //tab->is_open = !tab->is_open;
+    tab->is_open = !tab->is_open;
   }
   ImGui::PopStyleColor(4);
 

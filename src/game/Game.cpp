@@ -171,20 +171,19 @@ void Game::init() {
   animator_view = std::make_unique<AnimatorView>();
   tabs_window_editor = std::make_unique<TabsWindowEditor>();
   tabs_window_editor->block_close = true;
-  prefab_editor = std::make_unique<PrefabEditor>();
+
   g_editor_manager->add_editor(std::move(side_menu));
   g_editor_manager->add_editor(std::move(main_menu));
   g_editor_manager->add_editor(std::move(asset_view));
   g_editor_manager->add_editor(std::move(animator_view));
-  g_editor_manager->add_editor(std::move(prefab_editor));
   g_editor_manager->add_editor(std::move(tabs_window_editor));
-
-  //FIX: ADD THIS TO THE ASSET VIEW EDITOR
-  //asset_screen = std::make_unique<AssetScreen>();
 
   g_editor_manager->open_editor<SideMenu>();
   g_editor_manager->open_editor<MainMenu>();
   g_editor_manager->open_editor<TabsWindowEditor>();
+
+  prefab_editor = std::make_unique<PrefabEditor>();
+  g_editor_manager->add_editor(std::move(prefab_editor));
 }
 
 void Game::fixed_update(double tmod) {}
