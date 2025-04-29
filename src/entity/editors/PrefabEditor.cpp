@@ -13,7 +13,7 @@ bool test = false;
 ImVec2 p_mouse_pos = ImVec2(0, 0);
 
 PrefabEditor::PrefabEditor() {
-  auto game_profile_tab = std::make_shared<GameProfileTab>("Game Profile Tab");
+  auto game_profile_tab = std::make_shared<GameProfileTab>("Game Profile");
   g_editor_manager->get_editor<TabsWindowEditor>()->add_tab("Game Profile", game_profile_tab);
 }
 

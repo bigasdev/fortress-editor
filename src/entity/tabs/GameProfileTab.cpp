@@ -3,6 +3,7 @@
 #include "../../imgui/imgui_impl_opengl3.h"
 
 #include "../../tools/Logger.hpp"
+#include "TabUtils.hpp"
 
 GameProfileTab::GameProfileTab(const std::string& _name) {
   name = _name;
@@ -12,16 +13,7 @@ void GameProfileTab::open() {
 }
 
 void GameProfileTab::show() {
-  ImGui::BeginChild(name.c_str(), ImVec2(150, 50), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
-  ImGui::Text(name.c_str());
-  ImGui::SameLine();
-  ImGui::SetCursorPosX(ImGui::CalcTextSize(name.c_str()).x + 10);
-  ImGui::PushID(name.c_str());
-  if (ImGui::Button("")) {
-    is_open = !is_open;
-  }
-  ImGui::PopID();
-  ImGui::EndChild();
+  TabUtils::tab("Game Profile");
 }
 
 void GameProfileTab::update() {

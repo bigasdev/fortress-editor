@@ -28,7 +28,9 @@ public:
     std::shared_ptr<ITab> get_tab(const std::string& name) {
         return m_tabs[name];
     }
+    void select_tab(const std::string& name);
 
 private:
     std::map<std::string, std::shared_ptr<ITab>> m_tabs;
+    std::string m_selected_tab = "";
 };

@@ -82,4 +82,14 @@ rog_editor_ui
 ui
 Game initialized
 Engine post init
+Right click on tab Game Profile
+Right click on tab Game Profile
+Right click on tab Game Profile
+Right click on tab Game Profile
+Tab Game Profile is now closed
+Right click on tab Game Profile
+Right click on tab Game Profile
+Right click on tab Game Profile
+Right click on tab Game Profile
+Right click on tab Game Profile
 SDL2 quit

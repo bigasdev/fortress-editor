@@ -13,6 +13,7 @@ public:
     virtual void save() = 0;
 
     bool is_open = false;
+    bool is_visible = false;
     bool is_dirty = false;
     std::string name = "Tab";
 };
