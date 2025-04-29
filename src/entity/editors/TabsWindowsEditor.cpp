@@ -4,12 +4,6 @@
 #include "../../entity/tabs/BaseTab.hpp"
 
 TabsWindowEditor::TabsWindowEditor() {
-  m_tabs["Asset"] = std::make_shared<BaseTab>("Asset");
-  m_tabs["Asset"]->is_open = true;
-  m_tabs["Animator"] = std::make_shared<BaseTab>("Animator");
-  m_tabs["Animator"]->is_open = true;
-  m_tabs["Prefab"] = std::make_shared<BaseTab>("Prefab");
-  m_tabs["Settings"] = std::make_shared<BaseTab>("Settings");
 }
 
 void TabsWindowEditor::open() {

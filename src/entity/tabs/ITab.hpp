@@ -1,5 +1,6 @@
 #pragma once 
 
+#include <string>
 class ITab{
 public:
     virtual ~ITab(){}
@@ -13,4 +14,5 @@ public:
 
     bool is_open = false;
     bool is_dirty = false;
+    std::string name = "Tab";
 };

@@ -3,11 +3,11 @@
 #include "ITab.hpp"
 #include <string>
 
-class BaseTab : public ITab
+class GameProfileTab : public ITab
 {
 public:
-    BaseTab() = default;
-    BaseTab(const std::string& _name);
+    GameProfileTab() = default;
+    GameProfileTab(const std::string& _name);
 
     void open() override;
     void show() override;

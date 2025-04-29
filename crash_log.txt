@@ -51,6 +51,7 @@ Loading sound: victory
 SoundManager::load_sound: loaded sound victory
 res/character_atlas.aseprite
 res/concept.aseprite
+res/fortress_atlas.aseprite
 res/item_atlas.aseprite
 res/logo.aseprite
 res/rog_editor_ui.aseprite
@@ -59,6 +60,7 @@ Finished aseprite load!
 ------------
 Aseprite: character_atlas
 Aseprite: concept
+Aseprite: fortress_atlas
 Aseprite: item_atlas
 Aseprite: logo
 Aseprite: rog_editor_ui
@@ -73,10 +75,9 @@ ERROR: Project folder not found: C:\Users\gusta\.code\rog
 Game init
 character_atlas
 concept
+fortress_atlas
 item_atlas
 logo
 rog_editor_ui
 ui
-Game initialized
-Engine post init
 ERROR: Signal: 11

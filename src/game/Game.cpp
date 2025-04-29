@@ -169,9 +169,9 @@ void Game::init() {
   main_menu->block_close = true;
   asset_view = std::make_unique<AssetView>(sprite_map, project_folder);
   animator_view = std::make_unique<AnimatorView>();
-  prefab_editor = std::make_unique<PrefabEditor>();
   tabs_window_editor = std::make_unique<TabsWindowEditor>();
   tabs_window_editor->block_close = true;
+  prefab_editor = std::make_unique<PrefabEditor>();
   g_editor_manager->add_editor(std::move(side_menu));
   g_editor_manager->add_editor(std::move(main_menu));
   g_editor_manager->add_editor(std::move(asset_view));
