@@ -24,6 +24,16 @@ void TabsWindowEditor::show() {
     }
     ImGui::SameLine();
   }
+  ImGui::NewLine();
+  if(m_selected_tab != ""){
+    ImGui::BeginChild("Tab", ImVec2(0, 0), true);
+    auto tab = m_tabs[m_selected_tab];
+
+    if(tab){
+      tab->draw();
+    }
+    ImGui::EndChild();
+  }
   ImGui::EndChild();
   ImGui::End();
 }
@@ -45,11 +55,6 @@ void TabsWindowEditor::dispose() {
 }
 
 void TabsWindowEditor::draw() {
-  for (auto& tab : m_tabs) {
-    if (tab.second->is_open) {
-      tab.second->draw();
-    }
-  }
 }
 
 void TabsWindowEditor::reload() {
@@ -57,5 +62,16 @@ void TabsWindowEditor::reload() {
     if (tab.second->is_open) {
       tab.second->reload();
     }
+  }
+}
+
+void TabsWindowEditor::select_tab(const std::string& name) {
+  m_selected_tab = name;
+}
+
+//checks if the open tab is with the same name so we can close it 
+void TabsWindowEditor::unselect_tab(const std::string& name) {
+  if (m_selected_tab == name) {
+    m_selected_tab = "";
   }
 }

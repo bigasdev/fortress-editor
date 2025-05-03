@@ -23,6 +23,7 @@ void GameProfileTab::dispose() {
 }
 
 void GameProfileTab::draw() {
+  ImGui::Text("Game Profile Tab");
 }
 
 void GameProfileTab::reload() {

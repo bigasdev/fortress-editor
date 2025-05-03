@@ -184,6 +184,8 @@ void Game::init() {
 
   prefab_editor = std::make_unique<PrefabEditor>();
   g_editor_manager->add_editor(std::move(prefab_editor));
+
+  g_editor_manager->open_editor<PrefabEditor>();
 }
 
 void Game::fixed_update(double tmod) {}

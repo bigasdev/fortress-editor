@@ -92,6 +92,7 @@ void PrefabEditor::show() {
     }
 
     tab->is_open = !tab->is_open;
+    g_editor_manager->get_editor<TabsWindowEditor>()->unselect_tab("Game Profile");
   }
   ImGui::PopStyleColor(4);
 
