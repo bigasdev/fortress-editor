@@ -257,7 +257,6 @@ int x = 16;
 int y = 16;
 void Game::imgui_map() {
   ImGui::SetNextWindowPos(ImVec2(0, 0));
-  ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1, 0.1, 0.1, 0.0));
   ImGui::SetNextWindowSize(
       ImVec2(g_engine->get_window_size()->x, g_engine->get_window_size()->y));
   ImGui::Begin("Workspace", nullptr,
@@ -268,7 +267,6 @@ void Game::imgui_map() {
 
   g_editor_manager->show();
 
-  ImGui::PopStyleColor();
   ImGui::End();
 }
 
