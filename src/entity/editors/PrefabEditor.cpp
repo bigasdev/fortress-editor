@@ -5,6 +5,7 @@
 #include "../../entity/editors/EditorManager.hpp"
 #include "../../entity/editors/TabsWindowEditor.hpp"
 #include "../../entity/tabs/GameProfileTab.hpp"
+#include "../../entity/tabs/EditorProfileTab.hpp"
 #include "../../tools/Logger.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
 #include <iostream>
@@ -14,7 +15,9 @@ ImVec2 p_mouse_pos = ImVec2(0, 0);
 
 PrefabEditor::PrefabEditor() {
   auto game_profile_tab = std::make_shared<GameProfileTab>("Game Profile");
+  auto editor_profile_tab = std::make_shared<EditorProfileTab>("Editor Profile");
   g_editor_manager->get_editor<TabsWindowEditor>()->add_tab("Game Profile", game_profile_tab);
+  g_editor_manager->get_editor<TabsWindowEditor>()->add_tab("Editor Profile", editor_profile_tab);
 }
 
 void PrefabEditor::open() {
@@ -84,6 +87,16 @@ void PrefabEditor::show() {
   ImGui::PushStyleColor(ImGuiCol_ButtonHovered , ImVec4(0.1, 0.1, 0.1, 0.0));
   ImGui::PushStyleColor(ImGuiCol_ButtonActive , ImVec4(0.1, 0.1, 0.1, 0.0));
   ImGui::PushStyleColor(ImGuiCol_Text , ImVec4(0.25, 0.55, 0.94, 1.0));
+  if(ImGui::Button(" Editor Profile")){
+    auto tab = g_editor_manager->get_editor<TabsWindowEditor>()->get_tab("Editor Profile");
+    if(tab == nullptr){
+      Logger::log("Editor Profile Tab not found");
+      return;
+    }
+
+    tab->is_open = !tab->is_open;
+    g_editor_manager->get_editor<TabsWindowEditor>()->unselect_tab("Editor Profile");
+  }
   if(ImGui::Button(" Game Profile")){
     auto tab = g_editor_manager->get_editor<TabsWindowEditor>()->get_tab("Game Profile");
     if(tab == nullptr){

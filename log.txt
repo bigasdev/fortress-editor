@@ -82,4 +82,10 @@ rog_editor_ui
 ui
 Game initialized
 Engine post init
+Tab Game Profile is now closed
+Tab Editor Profile is now closed
+Tab Editor Profile is now closed
+Tab Game Profile is now closed
+Tab Editor Profile is now closed
+Tab Game Profile is now closed
 SDL2 quit
