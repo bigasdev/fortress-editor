@@ -39,9 +39,11 @@ void TabsWindowEditor::show() {
 }
 
 void TabsWindowEditor::update() {
-  for (auto& tab : m_tabs) {
-    if (tab.second->is_open) {
-      tab.second->update();
+  if(m_selected_tab != ""){
+    auto tab = m_tabs[m_selected_tab];
+
+    if(tab){
+      tab->update();
     }
   }
 }
