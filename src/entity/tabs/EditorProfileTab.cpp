@@ -1,9 +1,9 @@
 #include "EditorProfileTab.hpp"
 
-#include "../../imgui/imgui_impl_opengl3.h"
 #include "../../tools/Logger.hpp"
 #include "../../core/global.hpp"
 #include "../../core/EditorDataManager.hpp"
+#include "../../imgui/ImGuiUtils.hpp"
 #include "TabUtils.hpp"
 
 EditorProfileTab::EditorProfileTab(const std::string& _name) {
@@ -40,12 +40,11 @@ void EditorProfileTab::dispose() {
 }
 
 void EditorProfileTab::draw() {
-  ImGui::Text("Editor Profile Tab");
   if(ImGui::Button("Save")) {
     save();
   }
-  ImGui::InputText("Folder path", &m_folder_path[0], 256);
-  ImGui::InputText("Current path", &m_current_path[0], 256);
+  ImGuiUtils::header_input_text("Folder path", m_folder_path);
+  ImGuiUtils::header_input_text("Current path", m_current_path);
 }
 
 void EditorProfileTab::reload() {
