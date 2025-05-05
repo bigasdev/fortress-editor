@@ -4,8 +4,6 @@
 #include "../../core/global.hpp"
 #include "../../entity/editors/EditorManager.hpp"
 #include "../../entity/editors/TabsWindowEditor.hpp"
-#include "../../entity/tabs/GameProfileTab.hpp"
-#include "../../entity/tabs/EditorProfileTab.hpp"
 #include "../../tools/Logger.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
 #include <iostream>
@@ -14,10 +12,6 @@ bool test = false;
 ImVec2 p_mouse_pos = ImVec2(0, 0);
 
 PrefabEditor::PrefabEditor() {
-  auto game_profile_tab = std::make_shared<GameProfileTab>("Game Profile");
-  auto editor_profile_tab = std::make_shared<EditorProfileTab>("Editor Profile");
-  g_editor_manager->get_editor<TabsWindowEditor>()->add_tab("Game Profile", game_profile_tab);
-  g_editor_manager->get_editor<TabsWindowEditor>()->add_tab("Editor Profile", editor_profile_tab);
 }
 
 void PrefabEditor::open() {
@@ -94,7 +88,7 @@ void PrefabEditor::show() {
       return;
     }
 
-    tab->is_open = !tab->is_open;
+    g_editor_manager->get_editor<TabsWindowEditor>()->open_tab("Editor Profile");
     g_editor_manager->get_editor<TabsWindowEditor>()->unselect_tab("Editor Profile");
   }
   if(ImGui::Button(" Game Profile")){
@@ -104,7 +98,7 @@ void PrefabEditor::show() {
       return;
     }
 
-    tab->is_open = !tab->is_open;
+    g_editor_manager->get_editor<TabsWindowEditor>()->open_tab("Game Profile");
     g_editor_manager->get_editor<TabsWindowEditor>()->unselect_tab("Game Profile");
   }
   ImGui::PopStyleColor(4);
@@ -118,6 +112,7 @@ void PrefabEditor::update(){
 }
 
 void PrefabEditor::dispose() {
+  Logger::log("Prefab Editor disposed");
 }
 
 void PrefabEditor::draw() {

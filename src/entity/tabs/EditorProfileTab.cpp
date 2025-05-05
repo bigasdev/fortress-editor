@@ -40,11 +40,14 @@ void EditorProfileTab::dispose() {
 }
 
 void EditorProfileTab::draw() {
-  if(ImGui::Button("Save")) {
+  if(ImGui::Button("Save Asset")) {
     save();
   }
-  ImGuiUtils::header_input_text("Folder path", m_folder_path);
-  ImGuiUtils::header_input_text("Current path", m_current_path);
+  ImGui::SameLine();
+  if(ImGui::Button("Open Folder")) {
+  }
+  ImGuiUtils::header_input_text(" Folder path", &m_folder_path);
+  ImGuiUtils::header_input_text(" Current path", &m_current_path);
 }
 
 void EditorProfileTab::reload() {

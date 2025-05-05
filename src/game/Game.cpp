@@ -322,4 +322,6 @@ void Game::load(std::string file_path) {
   }
 }
 
-void Game::clean() { delete fini; }
+void Game::clean() {
+  g_editor_manager->dispose();
+}

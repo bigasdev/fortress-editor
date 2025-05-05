@@ -1,5 +1,6 @@
 #pragma once
 #include "IEditor.hpp"
+#include <iostream>
 #include <memory>
 #include <vector>
 
@@ -88,11 +89,11 @@ public:
         }
     }
     void dispose() {
-        for (const auto& editor : m_editors) {
-            if (editor->is_open) {
-                editor->dispose();
-            }
+      for (const auto& editor : m_editors) {
+        if(editor) {
+          editor->dispose();
         }
+      }
     }
     void draw() {
         for (const auto& editor : m_editors) {

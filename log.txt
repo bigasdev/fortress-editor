@@ -82,4 +82,6 @@ rog_editor_ui
 ui
 Game initialized
 Engine post init
+TabsWindowEditor disposed
+Prefab Editor disposed
 SDL2 quit

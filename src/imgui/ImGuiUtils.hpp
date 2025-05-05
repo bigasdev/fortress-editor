@@ -7,5 +7,5 @@ class ImGuiUtils
 {
   public:
 
-      static void header_input_text(const std::string& header, std::string text);
+      static void header_input_text(const std::string& header, std::string* text);
 };

@@ -2,8 +2,38 @@
 
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../entity/tabs/BaseTab.hpp"
+#include "../../core/global.hpp"
+#include "../../entity/editors/EditorManager.hpp"
+#include "../../entity/tabs/GameProfileTab.hpp"
+#include "../../entity/tabs/EditorProfileTab.hpp"
+#include "Fini.hpp"
+#include "../../tools/Logger.hpp"
+#include <vector>
+
+Fini* tabs_fini = nullptr;
 
 TabsWindowEditor::TabsWindowEditor() {
+  auto game_profile_tab = std::make_shared<GameProfileTab>("Game Profile");
+  auto editor_profile_tab = std::make_shared<EditorProfileTab>("Editor Profile");
+  add_tab("Game Profile", game_profile_tab);
+  add_tab("Editor Profile", editor_profile_tab);
+
+  tabs_fini = new Fini("res/tabs.ini");
+  tabs_fini->load();
+
+  for(auto& tab : m_tabs) {
+    tabs_fini->initialize_value("tabs", tab.first, false);
+
+    auto is_open = tabs_fini->get_value<bool>("tabs", tab.first);
+    if(is_open) {
+      tab.second->is_open = true;
+      tab.second->open();
+    } else {
+      tab.second->is_open = false;
+    }
+  }
+
+  tabs_fini->save();
 }
 
 void TabsWindowEditor::open() {
@@ -49,11 +79,14 @@ void TabsWindowEditor::update() {
 }
 
 void TabsWindowEditor::dispose() {
+  Logger::log("TabsWindowEditor disposed");
+  std::cout << "TabsWindowEditor disposed" << std::endl;
   for (auto& tab : m_tabs) {
     if (tab.second->is_open) {
       tab.second->dispose();
     }
   }
+  tabs_fini->save();
 }
 
 void TabsWindowEditor::draw() {
@@ -65,6 +98,14 @@ void TabsWindowEditor::reload() {
       tab.second->reload();
     }
   }
+}
+
+void TabsWindowEditor::open_tab(const std::string& name) {
+    auto tab = m_tabs[name];
+    if (tab) {
+        tab->is_open = !tab->is_open;
+    }
+    tabs_fini->set_value("tabs", name, tab->is_open);
 }
 
 void TabsWindowEditor::select_tab(const std::string& name) {

@@ -254,8 +254,8 @@ void Engine::draw() {
 
 void Engine::quit() {
   m_game->clean();
-  SDL_DestroyWindow(SDL_GetWindowFromID(GPU_GetInitWindow()));
-  SDL_Quit();
   Logger::log("SDL2 quit");
   Logger::write_to_file("log.txt");
+  SDL_DestroyWindow(SDL_GetWindowFromID(GPU_GetInitWindow()));
+  SDL_Quit();
 }
