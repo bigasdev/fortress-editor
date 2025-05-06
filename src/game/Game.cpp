@@ -87,6 +87,8 @@ Game::~Game() {
 }
 
 void Game::init() {
+  g_editor_folder_path = FUtils::get_current_path();
+
   m_camera = new Camera(g_engine->get_window_size());
   m_cooldown = new Cooldown();
   m_undo_manager = new UndoManager();
@@ -112,7 +114,6 @@ void Game::init() {
 
   project_folder = fini->get_value<std::string>("last", "folder");
   //get this runtime path
-  g_editor_folder_path = FUtils::get_current_path();
 
   // this will crash if the saved folder or assets are not found anymore
   // FIX:

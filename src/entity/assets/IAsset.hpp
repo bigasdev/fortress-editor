@@ -6,6 +6,7 @@
 struct IData{
     std::string name;
     std::string value;
+    std::string value_buffer;
 };
 
 struct Asset{

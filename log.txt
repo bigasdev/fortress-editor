@@ -80,9 +80,9 @@ item_atlas
 logo
 rog_editor_ui
 ui
+ERROR: Asset with name Editor Profile already exists.
 Game initialized
 Engine post init
-Saving Editor Profile Asset C:\Users\Escritorio2\Documents\.code\rog-editor/res/editor_profile.json
 TabsWindowEditor disposed
 Prefab Editor disposed
 SDL2 quit

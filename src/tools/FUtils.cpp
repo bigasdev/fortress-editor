@@ -29,3 +29,13 @@ bool FUtils::is_empty(const std::string &path) {
 std::string FUtils::get_current_path() {
   return std::filesystem::current_path().string();
 }
+
+std::vector<std::string> FUtils::get_files_in_folder(const std::string &path) {
+  std::vector<std::string> files;
+  for (const auto &entry : std::filesystem::directory_iterator(path)) {
+    if (entry.is_regular_file()) {
+      files.push_back(entry.path().string());
+    }
+  }
+  return files;
+}

@@ -4,6 +4,7 @@
 //check if something can be saved, if something is corrupted etc 
 
 #include <string>
+#include <vector>
 
 class FUtils
 {
@@ -13,4 +14,5 @@ class FUtils
         static bool is_corrupted(const std::string& path);
         static bool is_empty(const std::string& path);
         static std::string get_current_path();
+        static std::vector<std::string> get_files_in_folder(const std::string& path);
 };
