@@ -30,15 +30,9 @@ void EditorProfileTab::dispose() {
 void EditorProfileTab::draw() {
   if(m_asset == nullptr) {
     m_asset = g_asset_manager->get_asset("Editor Profile");
+    return;
   }
-  if(ImGui::Button("Save Asset")) {
-    save();
-    m_asset->is_dirty = false;
-    g_asset_manager->save_asset("Editor Profile", m_asset->file_path);
-  }
-  ImGui::SameLine();
-  if(ImGui::Button("Open Folder")) {
-  }
+  TabUtils::asset_header(m_asset);
   ImGuiUtils::header_input_text(" Folder path", &m_asset->data["folder_path"].value);
   ImGuiUtils::header_input_text(" Current path", &m_asset->data["current_path"].value);
 }

@@ -62,6 +62,10 @@ void AssetManager::save_asset(const std::string& name, const std::string& file_p
 
         std::ofstream o(file_path);
         o << std::setw(4) << j << std::endl;
+        o.close();
+    }
+    else {
+        Logger::error("Asset with name " + name + " not found.");
     }
 }
 

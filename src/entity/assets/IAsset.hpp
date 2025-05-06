@@ -7,6 +7,8 @@ struct IData{
     std::string name;
     std::string value;
     std::string value_buffer;
+    std::string value_start;
+    std::string type;
 };
 
 struct Asset{
@@ -21,6 +23,17 @@ struct Asset{
     void start(){
         for(auto& data : this->data){
             data.second.value_buffer = data.second.value;
+            data.second.value_start = data.second.value;
+        }
+    }
+
+    void discard(){
+        if(!is_dirty) return;
+
+        for(auto& data : this->data){
+            data.second.value = data.second.value_start;
+            data.second.value_buffer = data.second.value_start;
+            is_dirty = false;
         }
     }
 

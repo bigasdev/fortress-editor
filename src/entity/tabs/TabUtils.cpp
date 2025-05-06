@@ -33,4 +33,33 @@ void TabUtils::tab(const std::string& name) {
     ImGui::EndChild();
 }
 
+void TabUtils::asset_header(Asset* asset) {
+    ImGui::Text("");
+    ImGui::SameLine();
+    if(asset->is_dirty){
+      ImGui::Text("");
+      ImGui::SameLine();
+    }
+    ImGui::Text(("(" + asset->file_name + ".json)").c_str());
+    ImGui::SameLine();
+    if(ImGui::Button("Save Asset")) {
+        g_asset_manager->save_asset(asset->file_name, asset->file_path);
+        asset->start();
+        asset->is_dirty = false;
+    }
+    ImGui::SameLine();
+    if(ImGui::Button("Delete Asset")) {
+        g_asset_manager->remove_asset(asset->file_name);
+    }
+    ImGui::SameLine();
+    if(ImGui::Button("Open Folder")) {
+        //FUtils::open_folder(asset->file_path);
+    }
+    ImGui::SameLine();
+    if(ImGui::Button("Discard Changes")) {
+        asset->discard();
+        asset->is_dirty = false;
+    }
+}
+
 
