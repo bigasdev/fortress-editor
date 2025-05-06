@@ -37,8 +37,10 @@ void TabUtils::asset_header(Asset* asset) {
     ImGui::Text("");
     ImGui::SameLine();
     if(asset->is_dirty){
+      ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.6, 0.2, 0.9, 1.0));
       ImGui::Text("");
       ImGui::SameLine();
+      ImGui::PopStyleColor();
     }
     ImGui::Text(("(" + asset->file_name + ".json)").c_str());
     ImGui::SameLine();

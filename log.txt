@@ -83,10 +83,7 @@ ui
 ERROR: Asset with name Editor Profile already exists.
 Game initialized
 Engine post init
-115
-115
-115
-115
+101
 TabsWindowEditor disposed
 Prefab Editor disposed
 SDL2 quit
