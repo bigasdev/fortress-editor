@@ -8,16 +8,6 @@
 
 EditorProfileTab::EditorProfileTab(const std::string& _name) {
   name = _name;
-  m_current_path.resize(256);
-  m_folder_path.resize(256);
-  m_current_path_buffer.resize(256);
-  m_folder_path_buffer.resize(256);
-
-  m_folder_path = g_folder_path;
-  m_current_path = g_editor_data_manager->m_current_path;
-  m_folder_path_buffer = m_folder_path;
-  m_current_path_buffer = m_current_path;
-
   m_asset = g_asset_manager->get_asset("Editor Profile");
 }
 
@@ -29,11 +19,8 @@ void EditorProfileTab::show() {
 }
 
 void EditorProfileTab::update() {
-  if (m_folder_path != m_folder_path_buffer) {
-    is_dirty = true;
-  }
-  if (m_current_path != m_current_path_buffer) {
-    is_dirty = true;
+  if(m_asset != nullptr) {
+    is_dirty = m_asset->is_dirty;
   }
 }
 
@@ -61,8 +48,7 @@ void EditorProfileTab::reload() {
 
 void EditorProfileTab::save() {
   is_dirty = false;
-  m_folder_path_buffer = m_folder_path;
-  m_current_path_buffer = m_current_path;
-  g_editor_data_manager->m_current_path = m_current_path_buffer;
-  g_folder_path = m_folder_path_buffer;
+  m_asset->start();
+  //g_editor_data_manager->m_current_path = m_current_path_buffer;
+  //g_folder_path = m_folder_path_buffer;
 }

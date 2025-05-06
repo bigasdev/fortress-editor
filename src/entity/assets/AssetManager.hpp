@@ -9,6 +9,7 @@ class AssetManager
     AssetManager();
     ~AssetManager() = default;
 
+    void update();
     void add_asset(const std::string& name, const Asset& asset);
     void save_asset(const std::string& name, const std::string& file_path);
     void remove_asset(const std::string& name);

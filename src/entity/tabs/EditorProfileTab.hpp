@@ -18,9 +18,5 @@ public:
     void save() override;
 
 private:
-    std::string m_folder_path = "";
-    std::string m_current_path = "";
-    std::string m_folder_path_buffer = "";
-    std::string m_current_path_buffer = "";
     Asset* m_asset = nullptr;
 };

@@ -27,6 +27,16 @@ AssetManager::AssetManager() {
       }
     }
   }
+
+  for (auto& asset : m_assets) {
+    asset.second.start();
+  }
+}
+
+void AssetManager::update() {
+  for (auto& asset : m_assets) {
+    asset.second.update();
+  }
 }
 
 void AssetManager::add_asset(const std::string& name, const Asset& asset) {

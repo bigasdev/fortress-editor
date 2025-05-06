@@ -226,6 +226,7 @@ void Game::update(double dt) {
     ctrl_pressed = false;
   }
 
+  g_asset_manager->update();
   g_editor_manager->update();
 }
 
