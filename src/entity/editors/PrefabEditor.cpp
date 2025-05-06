@@ -18,11 +18,17 @@ PrefabEditor::PrefabEditor() {
   Asset editor_profile_asset;
   editor_profile_asset.file_name = "Editor Profile";
   editor_profile_asset.file_path = g_editor_folder_path + "/res/editor_profile.json";
-  EditorProfileData editor_profile_data;
-  editor_profile_data.m_folder_path = g_editor_folder_path;
-  editor_profile_data.m_current_path = g_editor_folder_path;
-  editor_profile_asset.data = editor_profile_data;
   editor_profile_asset.is_static = true;
+
+  IData folder_path;
+  IData current_path;
+  folder_path.name = "folder_path";
+  folder_path.value = g_editor_folder_path;
+  current_path.name = "current_path";
+  current_path.value = g_editor_folder_path + "/res/editor_profile.json";
+
+  editor_profile_asset.data["folder_path"] = folder_path;
+  editor_profile_asset.data["current_path"] = current_path;
 
   g_asset_manager->add_asset("Editor Profile", editor_profile_asset);
 }

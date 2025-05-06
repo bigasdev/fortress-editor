@@ -42,7 +42,13 @@ void EditorProfileTab::dispose() {
 
 void EditorProfileTab::draw() {
   if(ImGui::Button("Save Asset")) {
+    if(m_asset == nullptr) {
+        m_asset = g_asset_manager->get_asset("Editor Profile");
+    }
+    Logger::log("Saving Editor Profile Asset " + m_asset->file_path);
     save();
+    m_asset->is_dirty = false;
+    g_asset_manager->save_asset("Editor Profile", m_asset->file_path);
   }
   ImGui::SameLine();
   if(ImGui::Button("Open Folder")) {

@@ -1,18 +1,11 @@
 #pragma once 
 
 #include <string>
+#include <unordered_map>
 
 struct IData{
-
-};
-
-//datas
-struct GameProfileData : public IData{
-};
-
-struct EditorProfileData : public IData{
-  std::string m_folder_path = "";
-  std::string m_current_path = "";
+    std::string name;
+    std::string value;
 };
 
 struct Asset{
@@ -22,5 +15,5 @@ struct Asset{
     bool is_favorite = false;
     bool is_dirty = false;
 
-    IData data = IData{};
+    std::unordered_map<std::string, IData> data;
 };
