@@ -1,6 +1,8 @@
 #pragma once 
 
 #include <string>
+#include "TabsCommon.hpp"
+
 class ITab{
 public:
     virtual ~ITab(){}

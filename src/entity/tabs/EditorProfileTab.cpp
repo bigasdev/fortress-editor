@@ -18,6 +18,7 @@ EditorProfileTab::EditorProfileTab(const std::string& _name) {
   m_folder_path_buffer = m_folder_path;
   m_current_path_buffer = m_current_path;
 
+  m_asset = g_asset_manager->get_asset("Editor Profile");
 }
 
 void EditorProfileTab::open() {

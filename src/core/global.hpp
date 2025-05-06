@@ -13,12 +13,14 @@ class InputManager;
 class UndoManager;
 class EntityData;
 class EditorManager;
+class AssetManager;
 class EditorDataManager;
 class Fini;
 class FloatingButtons;
 
 extern Engine* g_engine;
 extern EditorManager* g_editor_manager;
+extern AssetManager* g_asset_manager;
 extern EditorDataManager* g_editor_data_manager;
 extern Res* g_res;
 extern Renderer* g_renderer;
@@ -33,6 +35,7 @@ extern FloatingButtons* g_floating_buttons;
 // variables 
 extern EntityData* g_selected_entity;
 extern std::string g_folder_path;
+extern std::string g_editor_folder_path;
 
 extern bool g_controller_connected;
 extern bool g_enter_pressed;

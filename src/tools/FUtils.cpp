@@ -25,3 +25,7 @@ bool FUtils::is_corrupted(const std::string &path) {
 bool FUtils::is_empty(const std::string &path) {
   return false; 
 }
+
+std::string FUtils::get_current_path() {
+  return std::filesystem::current_path().string();
+}

@@ -5,6 +5,8 @@
 #include "../../entity/editors/EditorManager.hpp"
 #include "../../entity/editors/TabsWindowEditor.hpp"
 #include "../../tools/Logger.hpp"
+#include "../../tools/FUtils.hpp"
+#include "../../entity/assets/AssetManager.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
 #include <iostream>
 
@@ -12,6 +14,17 @@ bool test = false;
 ImVec2 p_mouse_pos = ImVec2(0, 0);
 
 PrefabEditor::PrefabEditor() {
+  //creating the static needed assets
+  Asset editor_profile_asset;
+  editor_profile_asset.file_name = "Editor Profile";
+  editor_profile_asset.file_path = g_editor_folder_path + "/res/editor_profile.json";
+  EditorProfileData editor_profile_data;
+  editor_profile_data.m_folder_path = g_editor_folder_path;
+  editor_profile_data.m_current_path = g_editor_folder_path;
+  editor_profile_asset.data = editor_profile_data;
+  editor_profile_asset.is_static = true;
+
+  g_asset_manager->add_asset("Editor Profile", editor_profile_asset);
 }
 
 void PrefabEditor::open() {

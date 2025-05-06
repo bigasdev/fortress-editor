@@ -2,6 +2,7 @@
 
 Engine* g_engine;
 EditorManager* g_editor_manager;
+AssetManager* g_asset_manager;
 EditorDataManager* g_editor_data_manager;
 Res* g_res;
 Renderer* g_renderer;
@@ -15,6 +16,7 @@ FloatingButtons* g_floating_buttons;
 
 EntityData* g_selected_entity;
 std::string g_folder_path;
+std::string g_editor_folder_path;
 
 bool g_controller_connected;
 bool g_enter_pressed;

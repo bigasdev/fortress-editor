@@ -12,4 +12,5 @@ class FUtils
         static bool folder_exists(const std::string& path);
         static bool is_corrupted(const std::string& path);
         static bool is_empty(const std::string& path);
+        static std::string get_current_path();
 };

@@ -30,6 +30,7 @@
 // Systems
 #include "../core/UndoManager.hpp"
 #include "../entity/editors/EditorManager.hpp"
+#include "../entity/assets/AssetManager.hpp"
 
 // Components
 #include "../entity/visualizers/AssetScreen.hpp"
@@ -39,13 +40,6 @@
 #include "../entity/editors/TabsWindowEditor.hpp"
 #include "../entity/editors/MainMenu.hpp"
 #include "../entity/editors/SideMenu.hpp"
-
-struct Asset {
-  char asset_name[128] = "asset";
-  std::string file_name;
-  Sprite spr;
-  std::vector<Animation> animations;
-};
 
 std::unique_ptr<EditorDataManager> m_editor_data_manager;
 
@@ -71,6 +65,7 @@ bool load_assets = false;
 
 // Systems
 std::unique_ptr<EditorManager> m_editor_manager;
+std::unique_ptr<AssetManager> m_asset_manager;
 SpriteAnimator *m_sprite_animator;
 Fini *fini;
 UndoManager *m_undo_manager;
@@ -96,11 +91,12 @@ void Game::init() {
   m_cooldown = new Cooldown();
   m_undo_manager = new UndoManager();
   m_editor_data_manager = std::make_unique<EditorDataManager>();
+  m_asset_manager = std::make_unique<AssetManager>();
   g_editor_data_manager = m_editor_data_manager.get();
   g_undo_manager = m_undo_manager;
   m_editor_manager = std::make_unique<EditorManager>();
   g_editor_manager = m_editor_manager.get();
-
+  g_asset_manager = m_asset_manager.get();
 
   //
 
@@ -115,6 +111,8 @@ void Game::init() {
   g_fini = fini;
 
   project_folder = fini->get_value<std::string>("last", "folder");
+  //get this runtime path
+  g_editor_folder_path = FUtils::get_current_path();
 
   // this will crash if the saved folder or assets are not found anymore
   // FIX:
@@ -275,7 +273,7 @@ void Game::draw_imgui() {
 }
 
 void Game::save() {
-  nlohmann::json j;
+  /*nlohmann::json j;
   for (auto &asset : m_assets) {
     nlohmann::json asset_j;
     asset_j["asset_name"] = asset->asset_name;
@@ -296,11 +294,11 @@ void Game::save() {
     std::ofstream o(asset_folder);
     o << std::setw(4) << j << std::endl;
     o.close();
-  }
+  }*/
 }
 
 void Game::load(std::string file_path) {
-  std::ifstream i(file_path);
+  /*std::ifstream i(file_path);
   nlohmann::json j;
   i >> j;
   m_selected_asset = nullptr;
@@ -317,7 +315,7 @@ void Game::load(std::string file_path) {
     asset.spr.hei = asset_j["hei"];
 
     m_assets.push_back(std::make_unique<Asset>(asset));
-  }
+  }*/
 }
 
 void Game::clean() {
