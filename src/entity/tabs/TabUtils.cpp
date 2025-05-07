@@ -3,8 +3,10 @@
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../core/global.hpp"
 #include "../editors/TabsWindowEditor.hpp"
+#include "../../imgui/ImGuiUtils.hpp"
 #include "../editors/EditorManager.hpp"
 #include "../../tools/Logger.hpp"
+#include "../../tools/FUtils.hpp"
 
 void TabUtils::tab(const std::string& name) {
     auto tab = g_editor_manager->get_editor<TabsWindowEditor>()->get_tab(name);
@@ -37,7 +39,7 @@ void TabUtils::asset_header(Asset* asset) {
     ImGui::Text("");
     ImGui::SameLine();
     if(asset->is_dirty){
-      ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.6, 0.2, 0.9, 1.0));
+      ImGui::PushStyleColor(ImGuiCol_Text, IMRED);
       ImGui::Text("");
       ImGui::SameLine();
       ImGui::PopStyleColor();
@@ -50,12 +52,14 @@ void TabUtils::asset_header(Asset* asset) {
         asset->is_dirty = false;
     }
     ImGui::SameLine();
-    if(ImGui::Button("Delete Asset")) {
+    if(!asset->is_static){
+      if(ImGui::Button("Delete Asset")) {
         g_asset_manager->remove_asset(asset->file_name);
+      }
+      ImGui::SameLine();
     }
-    ImGui::SameLine();
     if(ImGui::Button("Open Folder")) {
-        //FUtils::open_folder(asset->file_path);
+        FUtils::open_folder(FUtils::remove_filename(asset->file_path));
     }
     ImGui::SameLine();
     if(ImGui::Button("Discard Changes")) {

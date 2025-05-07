@@ -80,10 +80,8 @@ item_atlas
 logo
 rog_editor_ui
 ui
-ERROR: Asset with name Editor Profile already exists.
 Game initialized
 Engine post init
-101
 TabsWindowEditor disposed
 Prefab Editor disposed
 SDL2 quit

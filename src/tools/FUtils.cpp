@@ -19,6 +19,18 @@ bool FUtils::folder_exists(const std::string &path) {
          std::filesystem::is_directory(path);
 }
 
+void FUtils::open_folder(const std::string &path) {
+  //std::string command = "xdg-open \"" + path + "\""; // For Linux
+  std::string command = "explorer \"" + path + "\""; // For Windows
+  std::cout << "Opening folder: " << path << std::endl;
+  // std::string command = "open \"" + path + "\""; // For macOS
+  system(command.c_str());
+}
+
+std::string FUtils::remove_filename(const std::string &path) {
+  return std ::filesystem::path(path).parent_path().string();
+}
+
 bool FUtils::is_corrupted(const std::string &path) {
   return false; 
 }

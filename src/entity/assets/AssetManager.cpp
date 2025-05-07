@@ -17,6 +17,7 @@ AssetManager::AssetManager() {
         asset.file_path = file;
         asset.file_name = j["file_name"].get<std::string>();
         asset.is_favorite = j["is_favorite"].get<bool>();
+        asset.is_static = j["is_static"].get<bool>();
         for (const auto& data : j["data"].items()) {
           IData data_item;
           data_item.name = data.key();
@@ -55,6 +56,7 @@ void AssetManager::save_asset(const std::string& name, const std::string& file_p
         nlohmann::json j;
         j["file_name"] = it->second.file_name;
         j["is_favorite"] = it->second.is_favorite;
+        j["is_static"] = it->second.is_static;
 
         for (const auto& data : it->second.data) {
             j["data"][data.first] = data.second.value;

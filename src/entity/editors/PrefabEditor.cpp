@@ -17,7 +17,7 @@ PrefabEditor::PrefabEditor() {
   //creating the static needed assets
   Asset editor_profile_asset;
   editor_profile_asset.file_name = "Editor Profile";
-  editor_profile_asset.file_path = g_editor_folder_path + "/res/assets/editor_profile.json";
+  editor_profile_asset.file_path = g_editor_folder_path + "\\res\\assets\\editor_profile.json";
   editor_profile_asset.is_static = true;
 
   IData folder_path;

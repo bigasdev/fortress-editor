@@ -71,13 +71,4 @@ No joysticks connected!
 
 Game:1
 1
-ERROR: Project folder not found: C:\Users\gusta\.code\rog
-Game init
-character_atlas
-concept
-fortress_atlas
-item_atlas
-logo
-rog_editor_ui
-ui
-ERROR: Signal: 11
+ERROR: Signal: 22
