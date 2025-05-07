@@ -16,4 +16,7 @@ public:
     void draw() override;
     void reload() override;
     void save() override;
+
+private:
+    Asset* m_asset = nullptr;
 };
