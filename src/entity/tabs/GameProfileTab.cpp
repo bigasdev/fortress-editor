@@ -1,6 +1,6 @@
 #include "GameProfileTab.hpp"
 
-#include "../../imgui/imgui_impl_opengl3.h"
+#include "../../imgui/ImGuiUtils.hpp"
 
 #include "../../tools/Logger.hpp"
 #include "TabUtils.hpp"
@@ -71,6 +71,14 @@ void GameProfileTab::show() {
 void GameProfileTab::update() {
   if (m_asset != nullptr) {
     is_dirty = m_asset->is_dirty;
+
+    m_asset->data["game_width"].value = std::to_string(m_game_width);
+    m_asset->data["game_height"].value = std::to_string(m_game_height);
+    m_asset->data["game_scale"].value = std::to_string(m_game_scale);
+    m_asset->data["game_fullscreen"].value = m_game_fullscreen ? "true" : "false";
+    m_asset->data["game_fps"].value = std::to_string(m_game_fps);
+    m_asset->data["fixed_update_factor"].value = std::to_string(m_fixed_update_factor);
+    m_asset->data["game_debug"].value = m_game_debug ? "true" : "false";
   }
 }
 
@@ -79,6 +87,16 @@ void GameProfileTab::dispose() {
 
 void GameProfileTab::draw() {
   TabUtils::asset_header(m_asset);
+  ImGuiUtils::header_input_text("Assets Resource Path", &m_asset->data["assets_resource_path"].value);
+  ImGuiUtils::header_input_int("Game Width", &m_game_width);
+  ImGuiUtils::header_input_int("Game Height", &m_game_height);
+  ImGuiUtils::header_input_float("Game Scale", &m_game_scale);
+  ImGuiUtils::header_input_bool("Game Fullscreen", &m_game_fullscreen);
+  ImGuiUtils::header_input_int("Game FPS", &m_game_fps);
+  ImGuiUtils::header_input_float("Fixed Update Factor", &m_fixed_update_factor);
+  ImGuiUtils::header_input_text("Game Title", &m_asset->data["game_title"].value);
+  ImGuiUtils::header_input_bool("Game Debug", &m_game_debug);
+  ImGuiUtils::header_input_text("Starting World", &m_asset->data["starting_world"].value);
 }
 
 void GameProfileTab::reload() {

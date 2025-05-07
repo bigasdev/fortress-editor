@@ -15,4 +15,7 @@ class ImGuiUtils
   public:
 
       static void header_input_text(const std::string& header, std::string* text);
+      static void header_input_int(const std::string& header, int* value);
+      static void header_input_float(const std::string& header, float* value);
+      static void header_input_bool(const std::string& header, bool* value);
 };
