@@ -3,7 +3,6 @@
 #include "../../entity/tabs/TabUtils.hpp"
 #include <iostream>
 
-bool test = false;
 ImVec2 p_mouse_pos = ImVec2(0, 0);
 
 PrefabEditor::PrefabEditor() {
@@ -35,14 +34,22 @@ void PrefabEditor::show() {
   ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.05, 0.05, 0.05, 1.0));
   ImGui::Begin(" Assets", nullptr,
                ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove );
+  if(ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsWindowHovered()){
+    m_item_clicked = NONE;
+  }
 
-  if(test){
-    //FIX: thiis will be used for the popup window on the objects, refactor this later
-    ImGui::SetNextWindowPos(p_mouse_pos, ImGuiCond_Always);
-    ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Always);
-    ImGui::Begin("Test", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize);
-    ImGui::Text("Test Window");
-    ImGui::End();
+  switch (m_item_clicked) {
+    case NONE:
+      break;
+    case PREFAB:
+      prefab_popup();
+      break;
+    case DATABASE:
+      database_popup();
+      break;
+    case WORLD:
+      world_popup();
+      break;
   }
 
   ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.1, 0.1, 0.1, 0.0));
@@ -53,7 +60,7 @@ void PrefabEditor::show() {
 
   if(ImGui::CollapsingHeader(" Prefabs")){
     if(ImGui::IsMouseClicked(ImGuiMouseButton_Right) && ImGui::IsItemHovered()){
-      test = !test;
+      m_item_clicked = PREFAB;
       p_mouse_pos = ImGui::GetMousePos();
     }
     ImGui::Indent(10);
@@ -69,7 +76,8 @@ void PrefabEditor::show() {
   ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.25, 0.95, 0.45, 1.0));
   if(ImGui::CollapsingHeader(" Database")){
     if(ImGui::IsMouseClicked(ImGuiMouseButton_Right) && ImGui::IsItemHovered()){
-      Logger::log("Right Clicked Prefab Editor");
+      m_item_clicked = DATABASE;
+      p_mouse_pos = ImGui::GetMousePos();
     }
     ImGui::Text("Prefab Editor");
   }
@@ -83,7 +91,8 @@ void PrefabEditor::show() {
   ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.94, 0.53, 0.26, 1.0));
   if(ImGui::CollapsingHeader(" World")){
     if(ImGui::IsMouseClicked(ImGuiMouseButton_Right) && ImGui::IsItemHovered()){
-      Logger::log("Right Clicked Prefab Editor");
+      m_item_clicked = WORLD;
+      p_mouse_pos = ImGui::GetMousePos();
     }
     ImGui::Text("Prefab Editor");
   }
@@ -132,4 +141,30 @@ void PrefabEditor::draw() {
 
 void PrefabEditor::reload() {
   Logger::log("Reloading Prefab Editor");
+}
+
+//popups 
+void PrefabEditor::prefab_popup() {
+  ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Always);
+  ImGui::Begin("Prefab Popup", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize);
+  ImGui::Text("Prefab Popup");
+  ImGui::End();
+}
+
+void PrefabEditor::database_popup() {
+  ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Always);
+  ImGui::Begin("Database Popup", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize);
+  ImGui::Text("Database Popup");
+  ImGui::End();
+}
+
+void PrefabEditor::world_popup() {
+  ImGui::SetNextWindowPos(ImVec2(p_mouse_pos.x, p_mouse_pos.y), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2(200, 40), ImGuiCond_Always);
+  ImGui::Begin("World Popup", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse);
+  if(ImGui::Button("Create New World")){
+  }
+  ImGui::End();
 }

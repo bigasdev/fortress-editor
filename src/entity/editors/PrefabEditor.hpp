@@ -2,6 +2,13 @@
 
 #include "IEditor.hpp"
 
+enum ItemClicked{
+    NONE,
+    PREFAB,
+    DATABASE,
+    WORLD
+};
+
 class PrefabEditor : public IEditor {
 public:
     PrefabEditor();
@@ -11,5 +18,11 @@ public:
     void dispose() override;
     void draw() override;
     void reload() override;
+
+    //popups
+    void prefab_popup();
+    void database_popup();
+    void world_popup();
 private:
+    ItemClicked m_item_clicked = NONE;
 };

@@ -6,6 +6,7 @@
 #include "../../entity/editors/EditorManager.hpp"
 #include "../../entity/tabs/GameProfileTab.hpp"
 #include "../../entity/tabs/EditorProfileTab.hpp"
+#include "../../entity/tabs/WorldTab.hpp"
 #include "Fini.hpp"
 #include "../../tools/Logger.hpp"
 #include <vector>
@@ -15,8 +16,10 @@ Fini* tabs_fini = nullptr;
 TabsWindowEditor::TabsWindowEditor() {
   auto game_profile_tab = std::make_shared<GameProfileTab>("Game Profile");
   auto editor_profile_tab = std::make_shared<EditorProfileTab>("Editor Profile");
+  auto world_tab = std::make_shared<WorldTab>("World");
   add_tab("Game Profile", game_profile_tab);
   add_tab("Editor Profile", editor_profile_tab);
+  add_tab("World", world_tab);
 
   tabs_fini = new Fini("res/tabs.ini");
   tabs_fini->load();
