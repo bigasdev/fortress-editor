@@ -13,7 +13,7 @@ void WorldTab::open() {
 }
 
 void WorldTab::show() {
-  TabUtils::tab("World");
+  TabUtils::tab(name);
 }
 
 void WorldTab::update() {
@@ -26,7 +26,10 @@ void WorldTab::dispose() {
 }
 
 void WorldTab::draw() {
-  TabUtils::asset_header(m_asset);
+  if (m_asset != nullptr) {
+    TabUtils::asset_header(m_asset);
+    return;
+  }
 }
 
 void WorldTab::reload() {
@@ -35,4 +38,9 @@ void WorldTab::reload() {
 void WorldTab::save() {
   is_dirty = false;
   m_asset->start();
+}
+
+void WorldTab::set_asset(Asset* asset) {
+  Logger::log("Setting asset: " + asset->file_name);
+  m_asset = asset;
 }

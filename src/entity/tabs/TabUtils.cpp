@@ -54,6 +54,9 @@ void TabUtils::asset_header(Asset* asset) {
     }
     ImGui::SameLine();
     if(!asset->is_static){
+      if(ImGui::Button("Rename Asset")) {
+      }
+      ImGui::SameLine();
       if(ImGui::Button("Delete Asset")) {
         g_asset_manager->remove_asset(asset->file_name);
       }

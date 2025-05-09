@@ -1,15 +1,16 @@
 #include "PrefabEditor.hpp"
 
 #include "../../entity/tabs/TabUtils.hpp"
+#include "../../entity/tabs/WorldTab.hpp"
 #include <iostream>
 
-ImVec2 p_mouse_pos = ImVec2(0, 0);
+  ImVec2 p_mouse_pos = ImVec2(0, 0);
 
-PrefabEditor::PrefabEditor() {
-  //creating the static needed assets
-  Asset editor_profile_asset;
-  editor_profile_asset.file_name = "Editor Profile";
-  editor_profile_asset.file_path = g_editor_folder_path + "\\res\\assets\\editor_profile.json";
+  PrefabEditor::PrefabEditor() {
+    //creating the static needed assets
+    Asset editor_profile_asset;
+    editor_profile_asset.file_name = "Editor Profile";
+    editor_profile_asset.file_path = g_editor_folder_path + "\\res\\assets\\editor_profile.json";
   editor_profile_asset.is_static = true;
 
   IData folder_path;
@@ -152,6 +153,18 @@ void PrefabEditor::prefab_popup() {
   ImGui::End();
 }
 
+void PrefabEditor::create_world_tab(const std::string& name) {
+  auto asset = g_asset_manager->get_asset(name);
+  if (asset == nullptr) {
+    Logger::log("Asset not found: " + name);
+    return;
+  }
+  WorldTab world_tab(name);
+  world_tab.set_asset(asset);
+
+  g_editor_manager->get_editor<TabsWindowEditor>()->add_tab(name, std::make_shared<WorldTab>(world_tab));
+}
+
 void PrefabEditor::database_popup() {
   ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Always);
@@ -165,6 +178,20 @@ void PrefabEditor::world_popup() {
   ImGui::SetNextWindowSize(ImVec2(200, 40), ImGuiCond_Always);
   ImGui::Begin("World Popup", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse);
   if(ImGui::Button("Create New World")){
+    Asset* game_profile_asset = g_asset_manager->get_asset("Editor Profile");
+    if(game_profile_asset == nullptr){
+      Logger::log("Game Profile Asset not found");
+      return;
+    }
+
+    Asset world_asset;
+    world_asset.file_name = "New World";
+    world_asset.file_path = game_profile_asset->data["folder_path"].value + "worlds/New World.json";
+
+    g_asset_manager->add_asset("New World", world_asset);
+
+    create_world_tab("New World");
+    g_editor_manager->get_editor<TabsWindowEditor>()->open_tab("New World");
   }
   ImGui::End();
 }

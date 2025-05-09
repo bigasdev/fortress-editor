@@ -19,7 +19,6 @@ TabsWindowEditor::TabsWindowEditor() {
   auto world_tab = std::make_shared<WorldTab>("World");
   add_tab("Game Profile", game_profile_tab);
   add_tab("Editor Profile", editor_profile_tab);
-  add_tab("World", world_tab);
 
   tabs_fini = new Fini("res/tabs.ini");
   tabs_fini->load();

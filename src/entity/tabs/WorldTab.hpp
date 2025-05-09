@@ -17,6 +17,8 @@ public:
     void reload() override;
     void save() override;
 
+    void set_asset(Asset* asset);
+
 private:
     Asset* m_asset = nullptr;
 };

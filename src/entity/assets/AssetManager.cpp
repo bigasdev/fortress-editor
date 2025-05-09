@@ -47,6 +47,7 @@ void AssetManager::add_asset(const std::string& name, const Asset& asset) {
     }
 
     m_assets[name] = asset;
+    save_asset(name, asset.file_path);
 }
 
 void AssetManager::save_asset(const std::string& name, const std::string& file_path) {
@@ -65,6 +66,19 @@ void AssetManager::save_asset(const std::string& name, const std::string& file_p
         std::ofstream o(file_path);
         o << std::setw(4) << j << std::endl;
         o.close();
+    }
+    else {
+        Logger::error("Asset with name " + name + " not found.");
+    }
+}
+
+void AssetManager::rename_asset(const std::string& name, const std::string& new_name) {
+    auto it = m_assets.find(name);
+    if (it != m_assets.end()) {
+        Asset asset = it->second;
+        asset.file_name = new_name;
+        m_assets.erase(it);
+        m_assets[new_name] = asset;
     }
     else {
         Logger::error("Asset with name " + name + " not found.");

@@ -13,6 +13,9 @@ class AssetManager
     void add_asset(const std::string& name, const Asset& asset);
     void save_asset(const std::string& name, const std::string& file_path);
     void remove_asset(const std::string& name);
+
+    //internals
+    void rename_asset(const std::string& name, const std::string& new_name);
     Asset* get_asset(const std::string& name);
 
   private:
