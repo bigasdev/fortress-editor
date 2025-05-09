@@ -59,6 +59,17 @@ GameProfileTab::GameProfileTab(const std::string& _name) {
   g_asset_manager->add_asset("Game Profile", game_profile_asset);
 
   m_asset = g_asset_manager->get_asset("Game Profile");
+
+  m_game_width = std::stoi(m_asset->data["game_width"].value);
+  m_game_height = std::stoi(m_asset->data["game_height"].value);
+  m_game_scale = std::stof(m_asset->data["game_scale"].value);
+  m_game_fullscreen = m_asset->data["game_fullscreen"].value == "true" ? true : false;
+  m_game_fps = std::stoi(m_asset->data["game_fps"].value);
+  m_fixed_update_factor = std::stof(m_asset->data["fixed_update_factor"].value);
+  m_game_debug = m_asset->data["game_debug"].value == "true" ? true : false;
+
+  auto editor_profile = g_asset_manager->get_asset("Editor Profile");
+  m_asset->file_path = editor_profile->data["folder_path"].value + "game_profile.json";
 }
 
 void GameProfileTab::open() {

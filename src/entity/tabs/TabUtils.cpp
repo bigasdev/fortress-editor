@@ -28,6 +28,7 @@ void TabUtils::tab(const std::string& name) {
     ImGui::PushID(name.c_str());
     if (ImGui::Button("")) {
         g_editor_manager->get_editor<TabsWindowEditor>()->unselect_tab(name);
+        g_editor_manager->get_editor<TabsWindowEditor>()->close_tab(name);
         tab->is_open = false;
         Logger::log("Tab " + name + " is now " + (tab->is_open ? "open" : "closed"));
     }

@@ -46,7 +46,7 @@ void TabsWindowEditor::open() {
 
 void TabsWindowEditor::show() {
   ImGui::Begin("Tabs Window Editor", nullptr);
-  ImGui::BeginChild("Tabs", ImVec2(0, 230), true);
+  ImGui::BeginChild("Tabs", ImVec2(0, 530), true);
   //align them to the left 
   for (auto& tab : m_tabs) {
     if(tab.second->is_open){
@@ -106,6 +106,10 @@ void TabsWindowEditor::open_tab(const std::string& name) {
         tab->is_open = !tab->is_open;
     }
     tabs_fini->set_value("tabs", name, tab->is_open);
+}
+
+void TabsWindowEditor::close_tab(const std::string& name) {
+    tabs_fini->set_value("tabs", name, false);
 }
 
 void TabsWindowEditor::select_tab(const std::string& name) {

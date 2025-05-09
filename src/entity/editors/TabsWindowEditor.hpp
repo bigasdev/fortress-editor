@@ -29,6 +29,7 @@ public:
         return m_tabs[name];
     }
     void open_tab(const std::string& name);
+    void close_tab(const std::string& name);
     void select_tab(const std::string& name);
     void unselect_tab(const std::string& name);
 

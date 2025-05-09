@@ -84,10 +84,6 @@ ERROR: Asset with name Game Profile already exists.
 ERROR: Asset with name Editor Profile already exists.
 Game initialized
 Engine post init
-101
-115
-101
-115
 TabsWindowEditor disposed
 Prefab Editor disposed
 SDL2 quit
