@@ -2,6 +2,7 @@
 
 #include "../../entity/tabs/TabUtils.hpp"
 #include "../../entity/tabs/WorldTab.hpp"
+#include "../../entity/tabs/TabsGenerator.hpp"
 #include <iostream>
 
   ImVec2 p_mouse_pos = ImVec2(0, 0);
@@ -153,18 +154,6 @@ void PrefabEditor::prefab_popup() {
   ImGui::End();
 }
 
-void PrefabEditor::create_world_tab(const std::string& name) {
-  auto asset = g_asset_manager->get_asset(name);
-  if (asset == nullptr) {
-    Logger::log("Asset not found: " + name);
-    return;
-  }
-  WorldTab world_tab(name);
-  world_tab.set_asset(asset);
-
-  g_editor_manager->get_editor<TabsWindowEditor>()->add_tab(name, std::make_shared<WorldTab>(world_tab));
-}
-
 void PrefabEditor::database_popup() {
   ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Always);
@@ -190,7 +179,12 @@ void PrefabEditor::world_popup() {
 
     g_asset_manager->add_asset("New World", world_asset);
 
-    create_world_tab("New World");
+    auto world_tab = TabsGenerator::create_asset_tab<WorldTab>("New World");
+    if(!world_tab) {
+      Logger::log("Failed to create World Tab");
+      return;
+    }
+
     g_editor_manager->get_editor<TabsWindowEditor>()->open_tab("New World");
   }
   ImGui::End();

@@ -40,7 +40,7 @@ void WorldTab::save() {
   m_asset->start();
 }
 
-void WorldTab::set_asset(Asset* asset) {
+void WorldTab::add_asset(Asset* asset) {
   Logger::log("Setting asset: " + asset->file_name);
   m_asset = asset;
 }

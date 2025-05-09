@@ -24,7 +24,6 @@ public:
     //popups
     void prefab_popup();
     void database_popup();
-    void create_world_tab(const std::string& name);
     void world_popup();
 private:
     ItemClicked m_item_clicked = NONE;

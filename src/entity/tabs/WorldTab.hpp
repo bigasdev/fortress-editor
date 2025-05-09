@@ -1,9 +1,10 @@
 #pragma once 
 
 #include "ITab.hpp"
+#include "IAssetTab.hpp"
 #include <string>
 
-class WorldTab : public ITab
+class WorldTab : public IAssetTab
 {
 public:
     WorldTab() = default;
@@ -16,8 +17,7 @@ public:
     void draw() override;
     void reload() override;
     void save() override;
-
-    void set_asset(Asset* asset);
+    void add_asset(Asset* asset) override;
 
 private:
     Asset* m_asset = nullptr;
