@@ -1,9 +1,13 @@
 #include "AssetManager.hpp"
 #include "json.hpp"
+#include <algorithm>
 #include <fstream>
+#include <pstl/glue_algorithm_defs.h>
 #include "../../tools/FUtils.hpp"
 #include "../../tools/Logger.hpp"
 #include "../../core/global.hpp"
+#include "../../entity/editors/TabsWindowEditor.hpp"
+#include "../../entity/editors/EditorManager.hpp"
 
 AssetManager::AssetManager() {
   if(FUtils::folder_exists(g_editor_folder_path + "/res/assets")){
@@ -88,6 +92,15 @@ void AssetManager::rename_asset(const std::string& name, const std::string& new_
 }
 
 void AssetManager::remove_asset(const std::string& name) {
+    auto it = m_assets.find(name);
+    if (it == m_assets.end()) {
+        Logger::error("Asset with name " + name + " not found.");
+        return;
+    }else{
+        Logger::log("Removing asset " + name);
+        std::remove(it->second.file_path.c_str());
+        g_editor_manager->get_editor<TabsWindowEditor>()->close_tab(name);
+    }
     m_assets.erase(name);
 }
 

@@ -112,6 +112,14 @@ void TabsWindowEditor::open_tab(const std::string& name) {
 
 void TabsWindowEditor::close_tab(const std::string& name) {
     tabs_fini->set_value("tabs", name, false);
+    auto tab = m_tabs[name];
+    if (tab) {
+        if(m_selected_tab == name) {
+          m_selected_tab = "";
+        }
+        tab->is_open = false;
+        tab->dispose();
+    }
 }
 
 void TabsWindowEditor::select_tab(const std::string& name) {
