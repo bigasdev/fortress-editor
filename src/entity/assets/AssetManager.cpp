@@ -63,6 +63,8 @@ void AssetManager::save_asset(const std::string& name, const std::string& file_p
             j["data"][data.first] = data.second.value;
         }
 
+        Logger::log("Saving asset " + name + " to " + file_path);
+
         std::ofstream o(file_path);
         o << std::setw(4) << j << std::endl;
         o.close();

@@ -1,9 +1,10 @@
 #include "ImGuiUtils.hpp"
+#include "imgui_stdlib.h"
 
 void ImGuiUtils::header_input_text(const std::string& header, std::string* text) {
     ImGui::Text(header.c_str());
     ImGui::SameLine();
-    ImGui::InputText(("##" + header).c_str(), text->data(), 256);
+    ImGui::InputText(("##" + header).c_str(), text);
     ImGui::Separator();
 }
 

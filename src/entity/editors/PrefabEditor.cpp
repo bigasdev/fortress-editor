@@ -175,7 +175,7 @@ void PrefabEditor::world_popup() {
 
     Asset world_asset;
     world_asset.file_name = "New World";
-    world_asset.file_path = game_profile_asset->data["folder_path"].value + "worlds/New World.json";
+    world_asset.file_path = game_profile_asset->data["folder_path"].value + "\\res\\assets\\worlds\\New World.json";
 
     g_asset_manager->add_asset("New World", world_asset);
 

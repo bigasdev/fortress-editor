@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include "../../tools/Logger.hpp"
 
 struct IData{
     std::string name;
@@ -22,6 +23,7 @@ struct Asset{
 
     void start(){
         for(auto& data : this->data){
+            Logger::log("Starting asset: " + data.second.name + " with value: " + data.second.value);
             data.second.value_buffer = data.second.value;
             data.second.value_start = data.second.value;
         }
