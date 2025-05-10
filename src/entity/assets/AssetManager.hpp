@@ -18,6 +18,9 @@ class AssetManager
     void rename_asset(const std::string& name, const std::string& new_name);
     Asset* get_asset(const std::string& name);
 
+    //create based on files existing
+    std::string spawn_asset(Asset& asset);
+
   private:
     std::unordered_map<std::string, Asset> m_assets;
 };

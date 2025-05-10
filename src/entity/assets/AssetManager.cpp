@@ -54,6 +54,22 @@ void AssetManager::add_asset(const std::string& name, const Asset& asset) {
     save_asset(name, asset.file_path);
 }
 
+std::string AssetManager::spawn_asset(Asset& asset) {
+    int i = 0;
+    for (const auto& existing_asset : m_assets) {
+        if (existing_asset.second.type == asset.type) {
+            i++;
+        }
+    }
+    std::string new_name = asset.file_name + "_" + std::to_string(i);
+    asset.file_name = new_name;
+    asset.file_path += new_name + ".json";
+    m_assets[new_name] = asset;
+
+    save_asset(asset.file_name, asset.file_path);
+    return asset.file_name;
+}
+
 void AssetManager::save_asset(const std::string& name, const std::string& file_path) {
     auto it = m_assets.find(name);
     if (it != m_assets.end()) {

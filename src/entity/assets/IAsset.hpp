@@ -14,6 +14,7 @@ struct IData{
 
 struct Asset{
     std::string file_name;
+    std::string type = "asset";
     std::string file_path;
     bool is_static = false;
     bool is_favorite = false;

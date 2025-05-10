@@ -175,17 +175,18 @@ void PrefabEditor::world_popup() {
 
     Asset world_asset;
     world_asset.file_name = "New World";
-    world_asset.file_path = game_profile_asset->data["folder_path"].value + "\\res\\assets\\worlds\\New World.json";
+    world_asset.type = "world";
+    world_asset.file_path = game_profile_asset->data["folder_path"].value + "\\res\\assets\\worlds\\";
 
-    g_asset_manager->add_asset("New World", world_asset);
+    auto name = g_asset_manager->spawn_asset(world_asset);
 
-    auto world_tab = TabsGenerator::create_asset_tab<WorldTab>("New World");
+    auto world_tab = TabsGenerator::create_asset_tab<WorldTab>(name);
     if(!world_tab) {
       Logger::log("Failed to create World Tab");
       return;
     }
 
-    g_editor_manager->get_editor<TabsWindowEditor>()->open_tab("New World");
+    g_editor_manager->get_editor<TabsWindowEditor>()->open_tab(name);
   }
   ImGui::End();
 }
