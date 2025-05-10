@@ -100,6 +100,17 @@ void TabsWindowEditor::reload() {
       tab.second->reload();
     }
   }
+  for(auto& tab : m_tabs) {
+    tabs_fini->initialize_value("tabs", tab.first, false);
+
+    auto is_open = tabs_fini->get_value<bool>("tabs", tab.first);
+    if(is_open) {
+      tab.second->is_open = true;
+      tab.second->open();
+    } else {
+      tab.second->is_open = false;
+    }
+  }
 }
 
 void TabsWindowEditor::open_tab(const std::string& name) {
