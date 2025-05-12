@@ -64,6 +64,12 @@ std::string AssetManager::spawn_asset(Asset& asset) {
         }
     }
     std::string new_name = asset.file_name + "_" + std::to_string(i);
+    
+    while(m_assets.find(new_name) != m_assets.end()) {
+        i++;
+        new_name = asset.file_name + "_" + std::to_string(i);
+    }
+
     asset.file_name = new_name;
     asset.file_path += new_name + ".json";
     m_assets[new_name] = asset;
