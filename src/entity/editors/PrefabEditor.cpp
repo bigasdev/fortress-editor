@@ -49,77 +49,18 @@ void PrefabEditor::show() {
     create_asset_popup(m_item_clicked);
   }
 
-  ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.6, 0.2, 0.9, 1.0));
-
   if(ImGui::CollapsingHeader(" Prefabs")){
-    if(ImGui::IsMouseClicked(ImGuiMouseButton_Right) && ImGui::IsItemHovered()){
-      m_item_clicked = PREFAB;
-      p_mouse_pos = ImGui::GetMousePos();
-    }
-    ImGui::Indent(10);
-    ImGui::Text("Prefab Editor");
-    ImGui::Unindent(10);
+    handle_click_asset(PREFAB, m_prefabs);
   }
-  ImGui::PopStyleColor(5);
 
-  ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.25, 0.95, 0.45, 1.0));
   if(ImGui::CollapsingHeader(" Database")){
-    if(ImGui::IsMouseClicked(ImGuiMouseButton_Right) && ImGui::IsItemHovered()){
-      m_item_clicked = DATABASE;
-      p_mouse_pos = ImGui::GetMousePos();
-    }
-    ImGui::Text("Prefab Editor");
+    handle_click_asset(DATABASE, m_databases);
   }
-  ImGui::PopStyleColor(5);
 
-
-  ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.94, 0.53, 0.26, 1.0));
   if(ImGui::CollapsingHeader(" World")){
-    if(ImGui::IsMouseClicked(ImGuiMouseButton_Right) && ImGui::IsItemHovered()){
-      m_item_clicked = WORLD;
-      p_mouse_pos = ImGui::GetMousePos();
-    }
-
-    for(auto& world : m_worlds) {
-      if(g_editor_manager->get_editor<TabsWindowEditor>()->is_tab_open(world.second.file_name)){
-          ImGui::Indent(10);
-          ImGui::Text((world.second.file_name + " ").c_str());
-          ImGui::GetWindowDrawList()->AddRectFilled(ImGui::GetItemRectMin(), ImGui::GetItemRectMax(), IM_COL32(245, 173, 100, 35), 0.0f);
-          ImGui::Unindent(10);
-      }else{
-          ImGui::Text(world.second.file_name.c_str());
-      }
-
-      if(ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsItemHovered()){
-        auto tab = g_editor_manager->get_editor<TabsWindowEditor>()->get_tab(world.second.file_name);
-        if(tab == nullptr){
-          Logger::log("World Tab not found");
-          return;
-        }
-
-        g_editor_manager->get_editor<TabsWindowEditor>()->open_tab(world.second.file_name);
-        g_editor_manager->get_editor<TabsWindowEditor>()->select_tab(world.second.file_name);
-      }
-    }
+    handle_click_asset(WORLD, m_worlds);
   }
-  ImGui::PopStyleColor(5);
     
-  ImGui::PushStyleColor(ImGuiCol_Button , ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_ButtonHovered , ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_ButtonActive , ImVec4(0.1, 0.1, 0.1, 0.0));
-  ImGui::PushStyleColor(ImGuiCol_Text , ImVec4(0.25, 0.55, 0.94, 1.0));
   if(ImGui::Button(" Editor Profile")){
     auto tab = g_editor_manager->get_editor<TabsWindowEditor>()->get_tab("Editor Profile");
     if(tab == nullptr){
@@ -140,7 +81,6 @@ void PrefabEditor::show() {
     g_editor_manager->get_editor<TabsWindowEditor>()->switch_open_tab("Game Profile");
     g_editor_manager->get_editor<TabsWindowEditor>()->unselect_tab("Game Profile");
   }
-  ImGui::PopStyleColor(4);
 
   ImGui::PopStyleColor();
   ImGui::End();
@@ -200,6 +140,35 @@ void PrefabEditor::reload() {
       }
     }
   }
+}
+
+void PrefabEditor::handle_click_asset(const ItemAssetType type, const std::unordered_map<std::string, Asset>& assets) {
+    if(ImGui::IsMouseClicked(ImGuiMouseButton_Right) && ImGui::IsItemHovered()){
+      m_item_clicked = type;
+      p_mouse_pos = ImGui::GetMousePos();
+    }
+
+    for(auto& asset : assets) {
+      if(g_editor_manager->get_editor<TabsWindowEditor>()->is_tab_open(asset.second.file_name)){
+          ImGui::Indent(10);
+          ImGui::Text((asset.second.file_name + " ").c_str());
+          ImGui::GetWindowDrawList()->AddRectFilled(ImGui::GetItemRectMin(), ImGui::GetItemRectMax(), IM_COL32(245, 173, 100, 35), 0.0f);
+          ImGui::Unindent(10);
+      }else{
+          ImGui::Text(asset.second.file_name.c_str());
+      }
+
+      if(ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsItemHovered()){
+        auto tab = g_editor_manager->get_editor<TabsWindowEditor>()->get_tab(asset.second.file_name);
+        if(tab == nullptr){
+          Logger::log(asset.second.file_name + " Tab not found");
+          return;
+        }
+
+        g_editor_manager->get_editor<TabsWindowEditor>()->open_tab(asset.second.file_name);
+        g_editor_manager->get_editor<TabsWindowEditor>()->select_tab(asset.second.file_name);
+      }
+    }
 }
 
 void PrefabEditor::create_asset_popup(const ItemAssetType type) {
