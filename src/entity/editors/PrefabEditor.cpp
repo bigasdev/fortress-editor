@@ -107,20 +107,22 @@ void PrefabEditor::reload() {
     return;
   }
 
-  //Prefabs
-  //db 
-  //world
-  if(FUtils::folder_exists(game_profile_asset->data["folder_path"].value + "\\res\\assets\\worlds")){
-    std::vector<std::string> worlds;
-    auto query = FUtils::get_all_files_in_folder(game_profile_asset->data["folder_path"].value + "\\res\\assets\\worlds", worlds);
-    for (const auto& world : worlds) {
+  std::string folder = game_profile_asset->data["folder_path"].value;
+  load_assets(folder, "world");
+}
+
+void PrefabEditor::load_assets(const std::string& folder, const std::string& asset_type){
+  if(FUtils::folder_exists(folder + "\\res\\assets\\" + asset_type + "s")){
+    std::vector<std::string> assets;
+    auto query = FUtils::get_all_files_in_folder(folder + "\\res\\assets\\" + asset_type + "s", assets);
+    for (const auto& world : assets) {
       if (FUtils::file_exists(world)) {
         std::ifstream i(world);
         nlohmann::json j;
         i >> j;
         Asset asset;
         asset.file_path = world;
-        asset.type = "world";
+        asset.type = asset_type;
         asset.file_name = j["file_name"].get<std::string>();
         asset.is_favorite = j["is_favorite"].get<bool>();
         asset.is_static = j["is_static"].get<bool>();
