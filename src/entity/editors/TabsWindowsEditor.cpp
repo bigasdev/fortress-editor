@@ -152,3 +152,11 @@ void TabsWindowEditor::unselect_tab(const std::string& name) {
     m_selected_tab = "";
   }
 }
+
+bool TabsWindowEditor::is_tab_open(const std::string& name) {
+  auto tab = m_tabs[name];
+  if (tab) {
+    return tab->is_open;
+  }
+  return false;
+}

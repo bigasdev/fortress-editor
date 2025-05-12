@@ -3,6 +3,7 @@
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../core/global.hpp"
 #include "../editors/TabsWindowEditor.hpp"
+#include "../editors/PrefabEditor.hpp"
 #include "../../imgui/ImGuiUtils.hpp"
 #include "../editors/EditorManager.hpp"
 #include "../../tools/Logger.hpp"
@@ -59,6 +60,7 @@ void TabUtils::asset_header(Asset* asset) {
       ImGui::SameLine();
       if(ImGui::Button("Delete Asset")) {
         g_asset_manager->remove_asset(asset->file_name);
+        g_editor_manager->get_editor<PrefabEditor>()->reload();
       }
       ImGui::SameLine();
     }

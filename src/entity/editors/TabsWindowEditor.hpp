@@ -34,6 +34,9 @@ public:
     void select_tab(const std::string& name);
     void unselect_tab(const std::string& name);
 
+    //getters
+    bool is_tab_open(const std::string& name);
+
 private:
     std::map<std::string, std::shared_ptr<ITab>> m_tabs;
     std::string m_selected_tab = "";

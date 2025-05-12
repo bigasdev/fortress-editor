@@ -57,6 +57,8 @@ void AssetManager::add_asset(const std::string& name, const Asset& asset) {
 std::string AssetManager::spawn_asset(Asset& asset) {
     int i = 0;
     for (const auto& existing_asset : m_assets) {
+        Logger::log("Checking asset " + existing_asset.first + " against " + asset.file_name);
+        Logger::log("Type: " + existing_asset.second.type + " against " + asset.type);
         if (existing_asset.second.type == asset.type) {
             i++;
         }
