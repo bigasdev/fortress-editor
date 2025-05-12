@@ -45,18 +45,8 @@ void PrefabEditor::show() {
     m_item_clicked = NONE;
   }
 
-  switch (m_item_clicked) {
-    case NONE:
-      break;
-    case PREFAB:
-      prefab_popup();
-      break;
-    case DATABASE:
-      database_popup();
-      break;
-    case WORLD:
-      world_popup();
-      break;
+  if(m_item_clicked != NONE){
+    create_asset_popup(m_item_clicked);
   }
 
   ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.1, 0.1, 0.1, 0.0));
@@ -212,49 +202,73 @@ void PrefabEditor::reload() {
   }
 }
 
-//popups 
-void PrefabEditor::prefab_popup() {
-  ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
-  ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Always);
-  ImGui::Begin("Prefab Popup", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize);
-  ImGui::Text("Prefab Popup");
-  ImGui::End();
-}
+void PrefabEditor::create_asset_popup(const ItemAssetType type) {
+  std::string title;
+  std::string button_text;
+  std::string file_name;
+  std::string file_type;
+  std::string folder_name;
 
-void PrefabEditor::database_popup() {
-  ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
-  ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiCond_Always);
-  ImGui::Begin("Database Popup", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize);
-  ImGui::Text("Database Popup");
-  ImGui::End();
-}
+  switch (type) {
+    case PREFAB:
+      title = "Create New Prefab";
+      button_text = "Create New Prefab";
+      file_name = "New Prefab";
+      file_type = "prefab";
+      folder_name = "prefabs";
+      break;
+    case DATABASE:
+      title = "Create New Database";
+      button_text = "Create New Database";
+      file_name = "New Database";
+      file_type = "database";
+      folder_name = "databases";
+      break;
+    case WORLD:
+      title = "Create New World";
+      button_text = "Create New World";
+      file_name = "New World";
+      file_type = "world";
+      folder_name = "worlds";
+      break;
+    default:
+      return;
+  }
 
-void PrefabEditor::world_popup() {
   ImGui::SetNextWindowPos(ImVec2(p_mouse_pos.x, p_mouse_pos.y), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(200, 40), ImGuiCond_Always);
-  ImGui::Begin("World Popup", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse);
-  if(ImGui::Button("Create New World")){
+  ImGui::Begin(title.c_str(), nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse);
+  if(ImGui::Button(button_text.c_str())){
     Asset* game_profile_asset = g_asset_manager->get_asset("Editor Profile");
     if(game_profile_asset == nullptr){
       Logger::log("Game Profile Asset not found");
       return;
     }
 
-    Asset world_asset;
-    world_asset.file_name = "New World";
-    world_asset.type = "world";
-    world_asset.file_path = game_profile_asset->data["folder_path"].value + "\\res\\assets\\worlds\\";
+    Asset asset;
+    asset.file_name = file_name;
+    asset.type = file_type;
+    asset.file_path = game_profile_asset->data["folder_path"].value + "\\res\\assets\\" + folder_name + "\\";
 
-    auto name = g_asset_manager->spawn_asset(world_asset);
+    auto name = g_asset_manager->spawn_asset(asset);
 
-    auto world_tab = TabsGenerator::create_asset_tab<WorldTab>(name);
-    if(!world_tab) {
-      Logger::log("Failed to create World Tab");
-      return;
+    switch (type) {
+      case PREFAB:
+        //
+        break;
+      case DATABASE:
+        //
+        break;
+      case WORLD:
+        TabsGenerator::create_asset_tab<WorldTab>(name);
+        break;
+      default:
+        return;
     }
 
     g_editor_manager->get_editor<TabsWindowEditor>()->open_tab(name);
     g_editor_manager->get_editor<TabsWindowEditor>()->select_tab(name);
+    reload();
   }
   ImGui::End();
 }

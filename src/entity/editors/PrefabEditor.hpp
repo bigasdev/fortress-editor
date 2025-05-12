@@ -5,7 +5,7 @@
 #include <string>
 #include <unordered_map>
 
-enum ItemClicked{
+enum ItemAssetType{
     NONE,
     PREFAB,
     DATABASE,
@@ -25,10 +25,8 @@ public:
     void reload() override;
 
     //popups
-    void prefab_popup();
-    void database_popup();
-    void world_popup();
+    void create_asset_popup(const ItemAssetType type);
 private:
-    ItemClicked m_item_clicked = NONE;
+    ItemAssetType m_item_clicked = NONE;
     std::unordered_map<std::string, Asset> m_worlds;
 };
