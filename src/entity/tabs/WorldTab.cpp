@@ -3,6 +3,8 @@
 #include "../../imgui/ImGuiUtils.hpp"
 
 #include "../../tools/Logger.hpp"
+#include "../../core/global.hpp"
+#include "../../renderer/Renderer.hpp"
 #include "TabUtils.hpp"
 
 WorldTab::WorldTab(const std::string& _name) {
@@ -26,10 +28,19 @@ void WorldTab::dispose() {
 }
 
 void WorldTab::draw() {
+  //renderer + imgui windows
+  ImGui::BeginChild("World Tab", ImVec2(200, 200), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+  auto size = ImGui::GetWindowSize();
+  auto pos = ImGui::GetWindowPos();
+
+  g_renderer->draw_rect({pos.x, pos.y, size.x, size.y}, {255,0,0,150}, true);
+  ImGui::EndChild();
+
   if (m_asset != nullptr) {
     TabUtils::asset_header(m_asset);
     return;
   }
+
 }
 
 void WorldTab::reload() {
