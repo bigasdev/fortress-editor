@@ -113,12 +113,21 @@ void TabsWindowEditor::reload() {
   }
 }
 
-void TabsWindowEditor::open_tab(const std::string& name) {
+void TabsWindowEditor::switch_open_tab(const std::string& name) {
     auto tab = m_tabs[name];
     if (tab) {
         tab->is_open = !tab->is_open;
     }
     tabs_fini->set_value("tabs", name, tab->is_open);
+}
+
+void TabsWindowEditor::open_tab(const std::string& name) {
+    auto tab = m_tabs[name];
+    if (tab) {
+        tab->is_open = true;
+        tab->open();
+    }
+    tabs_fini->set_value("tabs", name, true);
 }
 
 void TabsWindowEditor::close_tab(const std::string& name) {

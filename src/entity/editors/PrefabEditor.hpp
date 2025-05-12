@@ -3,6 +3,7 @@
 #include "IEditor.hpp"
 
 #include <string>
+#include <unordered_map>
 
 enum ItemClicked{
     NONE,
@@ -10,6 +11,8 @@ enum ItemClicked{
     DATABASE,
     WORLD
 };
+
+class Asset;
 
 class PrefabEditor : public IEditor {
 public:
@@ -27,4 +30,5 @@ public:
     void world_popup();
 private:
     ItemClicked m_item_clicked = NONE;
+    std::unordered_map<std::string, Asset> m_worlds;
 };

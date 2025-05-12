@@ -67,6 +67,8 @@ void PrefabEditor::open() {
         g_asset_manager->save_asset(asset.file_name, asset.file_path);
         TabsGenerator::create_asset_tab<WorldTab>(asset.file_name);
         g_editor_manager->get_editor<TabsWindowEditor>()->reload();
+
+        m_worlds[asset.file_name] = asset;
       }
     }
   }
@@ -139,7 +141,20 @@ void PrefabEditor::show() {
       m_item_clicked = WORLD;
       p_mouse_pos = ImGui::GetMousePos();
     }
-    ImGui::Text("Prefab Editor");
+
+    for(auto& world : m_worlds) {
+      ImGui::Text(world.second.file_name.c_str());
+      if(ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsItemHovered()){
+        auto tab = g_editor_manager->get_editor<TabsWindowEditor>()->get_tab(world.second.file_name);
+        if(tab == nullptr){
+          Logger::log("World Tab not found");
+          return;
+        }
+
+        g_editor_manager->get_editor<TabsWindowEditor>()->open_tab(world.second.file_name);
+        g_editor_manager->get_editor<TabsWindowEditor>()->select_tab(world.second.file_name);
+      }
+    }
   }
   ImGui::PopStyleColor(5);
     
@@ -154,7 +169,7 @@ void PrefabEditor::show() {
       return;
     }
 
-    g_editor_manager->get_editor<TabsWindowEditor>()->open_tab("Editor Profile");
+    g_editor_manager->get_editor<TabsWindowEditor>()->switch_open_tab("Editor Profile");
     g_editor_manager->get_editor<TabsWindowEditor>()->unselect_tab("Editor Profile");
   }
   if(ImGui::Button(" Game Profile")){
@@ -164,7 +179,7 @@ void PrefabEditor::show() {
       return;
     }
 
-    g_editor_manager->get_editor<TabsWindowEditor>()->open_tab("Game Profile");
+    g_editor_manager->get_editor<TabsWindowEditor>()->switch_open_tab("Game Profile");
     g_editor_manager->get_editor<TabsWindowEditor>()->unselect_tab("Game Profile");
   }
   ImGui::PopStyleColor(4);
@@ -230,6 +245,7 @@ void PrefabEditor::world_popup() {
     }
 
     g_editor_manager->get_editor<TabsWindowEditor>()->open_tab(name);
+    g_editor_manager->get_editor<TabsWindowEditor>()->select_tab(name);
   }
   ImGui::End();
 }

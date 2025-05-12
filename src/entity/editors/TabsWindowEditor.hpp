@@ -28,6 +28,7 @@ public:
     std::shared_ptr<ITab> get_tab(const std::string& name) {
         return m_tabs[name];
     }
+    void switch_open_tab(const std::string& name);
     void open_tab(const std::string& name);
     void close_tab(const std::string& name);
     void select_tab(const std::string& name);
