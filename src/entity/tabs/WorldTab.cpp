@@ -5,10 +5,13 @@
 #include "../../tools/Logger.hpp"
 #include "../../core/global.hpp"
 #include "../../renderer/Renderer.hpp"
+#include "../editors/RendererViewer.hpp"
 #include "TabUtils.hpp"
 
 WorldTab::WorldTab(const std::string& _name) {
   name = _name;
+
+  m_viewer = new RendererViewer();
 }
 
 void WorldTab::open() {
@@ -25,6 +28,7 @@ void WorldTab::update() {
 }
 
 void WorldTab::dispose() {
+  delete m_viewer;
 }
 
 void WorldTab::draw() {
@@ -33,8 +37,9 @@ void WorldTab::draw() {
   auto size = ImGui::GetWindowSize();
   auto pos = ImGui::GetWindowPos();
 
-  g_renderer->draw_rect({pos.x, pos.y, size.x, size.y}, {255,0,0,150}, true);
+  m_viewer->draw({size.x, size.y}, {pos.x, pos.y});
   ImGui::EndChild();
+
 
   if (m_asset != nullptr) {
     TabUtils::asset_header(m_asset);

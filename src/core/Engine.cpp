@@ -230,10 +230,6 @@ void Engine::draw() {
 
   GPU_Clear(m_gpu);
 
-#if _DEBUG
-  GPU_SetCamera(m_gpu, nullptr);
-  m_profiler->draw();
-#endif
 
   // game draw
   GPU_SetCamera(m_gpu, nullptr);
@@ -247,6 +243,11 @@ void Engine::draw() {
 #if _IMGUI
   GPU_FlushBlitBuffer();
   m_game->draw_imgui();
+#endif
+
+#if _DEBUG
+  GPU_SetCamera(m_gpu, nullptr);
+  m_profiler->draw();
 #endif
 
   GPU_Flip(m_gpu);

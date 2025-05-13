@@ -4,6 +4,8 @@
 #include "IAssetTab.hpp"
 #include <string>
 
+class RendererViewer;
+
 class WorldTab : public IAssetTab
 {
 public:
@@ -21,4 +23,5 @@ public:
 
 private:
     Asset* m_asset = nullptr;
+    RendererViewer* m_viewer = nullptr;
 };
