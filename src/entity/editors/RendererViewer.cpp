@@ -33,6 +33,9 @@ void RendererViewer::draw(const vec2& size, const vec2& pos) {
 
   //grid drawing
   for (auto& cel : m_cels) {
+    if (cel.x > size.x || cel.y > size.y || cel.x < -16 || cel.y < -16) {
+      continue;
+    }
     g_renderer->draw_rect({cel.x + pos.x, cel.y + pos.y, cel.w, cel.h}, cel.color, true);
   }
 }
