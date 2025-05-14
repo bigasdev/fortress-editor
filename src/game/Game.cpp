@@ -148,7 +148,7 @@ void Game::init() {
   // basic camera tracking to make everything in the middle of the screen
   g_camera->track_pos(&pos);
 
-  g_input_manager->bind_mouse(&mouse_clicked, nullptr, &mouse_wheel_clicked);
+  g_input_manager->bind_mouse(&g_left_click, &g_right_click, &g_left_click);
   g_input_manager->bind_keyboard(SDLK_s, &g_s_pressed);
   g_input_manager->bind_keyboard(SDLK_p, &load_assets);
   g_input_manager->bind_keyboard(SDLK_e, &load_project);

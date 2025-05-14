@@ -18,6 +18,9 @@ EntityData* g_selected_entity;
 std::string g_folder_path;
 std::string g_editor_folder_path;
 
+bool g_left_click;
+bool g_right_click;
+bool g_middle_click;
 bool g_controller_connected;
 bool g_enter_pressed;
 bool g_ctrl_pressed;

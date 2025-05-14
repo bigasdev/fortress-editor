@@ -36,11 +36,11 @@ void WorldTab::dispose() {
 
 void WorldTab::draw() {
   //renderer + imgui windows
-  ImGui::BeginChild("World Tab", ImVec2(208, 208), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+  ImGui::BeginChild("World Tab", ImVec2(408, 408), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
   auto size = ImGui::GetWindowSize();
   auto pos = ImGui::GetWindowPos();
 
-  m_viewer->draw({size.x, size.y}, {pos.x, pos.y});
+  m_viewer->draw({size.x - 16, size.y - 16}, {pos.x + 8, pos.y + 8});
   ImGui::EndChild();
 
 

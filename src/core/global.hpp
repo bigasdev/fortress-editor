@@ -37,6 +37,9 @@ extern EntityData* g_selected_entity;
 extern std::string g_folder_path;
 extern std::string g_editor_folder_path;
 
+extern bool g_left_click;
+extern bool g_right_click;
+extern bool g_middle_click;
 extern bool g_controller_connected;
 extern bool g_enter_pressed;
 extern bool g_ctrl_pressed;

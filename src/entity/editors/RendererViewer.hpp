@@ -4,11 +4,10 @@
 #include <vector>
 
 struct Point{
-  int x, y;
+  int x, y, w, h;
 };
 
-struct Cel{
-  int x, y, w, h;
+struct Cel : Point{
   Col color = {0, 0, 0, 255};
 };
 
@@ -30,4 +29,10 @@ class RendererViewer
 
     std::vector<Cel> m_cels;
     std::vector<Point> m_points;
+
+    //interactions 
+    Point* m_grabbed_point = nullptr;
+
+    bool m_mouse_on_area = false;
+    bool m_is_dragging = false;
 };
