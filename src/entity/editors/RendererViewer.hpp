@@ -3,6 +3,10 @@
 #include "../../tools/Common.hpp"
 #include <vector>
 
+struct Point{
+  int x, y;
+};
+
 struct Cel{
   int x, y, w, h;
   Col color = {0, 0, 0, 255};
@@ -14,6 +18,7 @@ class RendererViewer
     RendererViewer();
     ~RendererViewer() = default;
 
+    void update();
     void draw(const vec2& size, const vec2& pos);
   private:
     float m_zoom = 1.0f;
@@ -24,4 +29,5 @@ class RendererViewer
     vec2 local_pos = {0.0f, 0.0f};
 
     std::vector<Cel> m_cels;
+    std::vector<Point> m_points;
 };

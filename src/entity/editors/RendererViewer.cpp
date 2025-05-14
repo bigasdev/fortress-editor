@@ -3,6 +3,7 @@
 #include "../../core/global.hpp"
 #include "../../renderer/Renderer.hpp"
 #include "../../tools/Logger.hpp"
+#include "../../core/Timer.hpp"
 
 RendererViewer::RendererViewer() {
   m_grid = {16.0f, 16.0f};
@@ -22,6 +23,15 @@ RendererViewer::RendererViewer() {
       col++;
     }
   }
+
+  Point test_point = {0, 0};
+  m_points.push_back(test_point);
+}
+
+void RendererViewer::update() {
+  auto dt = Timer::get_dt();
+
+  local_pos.x += 10 * dt;
 }
 
 void RendererViewer::draw(const vec2& size, const vec2& pos) {
@@ -33,9 +43,13 @@ void RendererViewer::draw(const vec2& size, const vec2& pos) {
 
   //grid drawing
   for (auto& cel : m_cels) {
-    if (cel.x > size.x || cel.y > size.y || cel.x < -16 || cel.y < -16) {
+    if ((cel.x - local_pos.x) > size.x || (cel.y - local_pos.y) > size.y || cel.x < 0 || cel.y < 0) {
       continue;
     }
     g_renderer->draw_rect({cel.x + pos.x, cel.y + pos.y, cel.w, cel.h}, cel.color, true);
   }
+
+  //info drawing
+  //entity drawing
+  g_renderer->draw_rect({(m_pos.x - local_pos.x)+m_points[0].x, (m_pos.y - local_pos.y)+m_points[0].y, 16, 16}, {255, 0, 0, 255}, true);
 }

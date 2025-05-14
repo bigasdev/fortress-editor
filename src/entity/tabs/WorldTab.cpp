@@ -3,6 +3,7 @@
 #include "../../imgui/ImGuiUtils.hpp"
 
 #include "../../tools/Logger.hpp"
+#include "../../core/Timer.hpp"
 #include "../../core/global.hpp"
 #include "../../renderer/Renderer.hpp"
 #include "../editors/RendererViewer.hpp"
@@ -25,6 +26,8 @@ void WorldTab::update() {
   if (m_asset != nullptr) {
     is_dirty = m_asset->is_dirty;
   }
+
+  m_viewer->update();
 }
 
 void WorldTab::dispose() {
@@ -33,7 +36,7 @@ void WorldTab::dispose() {
 
 void WorldTab::draw() {
   //renderer + imgui windows
-  ImGui::BeginChild("World Tab", ImVec2(200, 200), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+  ImGui::BeginChild("World Tab", ImVec2(208, 208), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
   auto size = ImGui::GetWindowSize();
   auto pos = ImGui::GetWindowPos();
 
