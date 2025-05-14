@@ -2,6 +2,7 @@
 
 #include "../../core/global.hpp"
 #include "../../renderer/Renderer.hpp"
+#include "../../core/InputManager.hpp"
 #include "../../tools/Logger.hpp"
 #include "../../core/Timer.hpp"
 
@@ -31,7 +32,8 @@ RendererViewer::RendererViewer() {
 void RendererViewer::update() {
   auto dt = Timer::get_dt();
 
-  local_pos.x += 10 * dt;
+  local_pos.x -= g_input_manager->get_raw_axis().x * dt * 100.0f;
+  local_pos.y -= g_input_manager->get_raw_axis().y * dt * 100.0f;
 }
 
 void RendererViewer::draw(const vec2& size, const vec2& pos) {
@@ -43,10 +45,10 @@ void RendererViewer::draw(const vec2& size, const vec2& pos) {
 
   //grid drawing
   for (auto& cel : m_cels) {
-    if ((cel.x - local_pos.x) > size.x || (cel.y - local_pos.y) > size.y || cel.x < 0 || cel.y < 0) {
+    if ((cel.x - local_pos.x) > size.x || (cel.y - local_pos.y) > size.y || (cel.x-local_pos.x) < 0 || (cel.y-local_pos.y) < 0) {
       continue;
     }
-    g_renderer->draw_rect({cel.x + pos.x, cel.y + pos.y, cel.w, cel.h}, cel.color, true);
+    g_renderer->draw_rect({(cel.x-local_pos.x) + pos.x, (cel.y-local_pos.y) + pos.y, cel.w, cel.h}, cel.color, true);
   }
 
   //info drawing
