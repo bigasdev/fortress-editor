@@ -4,6 +4,7 @@
 #include "../../renderer/Renderer.hpp"
 #include "../../core/InputManager.hpp"
 #include "../../tools/Logger.hpp"
+#include "../../res/Res.hpp"
 #include "../../tools/Mouse.hpp"
 #include "../../core/Timer.hpp"
 
@@ -28,6 +29,13 @@ RendererViewer::RendererViewer() {
 
   Point test_point = {0, 0, 16, 16};
   m_points.push_back(test_point);
+}
+
+vec2 RendererViewer::get_coordinate() {
+  vec2 coord = {0.0f, 0.0f};
+  coord.x = (Mouse::get_mouse_pos().x - m_pos.x) + local_pos.x;
+  coord.y = (Mouse::get_mouse_pos().y - m_pos.y) + local_pos.y;
+  return coord;
 }
 
 void RendererViewer::update() {
@@ -62,7 +70,7 @@ void RendererViewer::draw(const vec2& size, const vec2& pos) {
   m_pos = pos;
 
   //bg drawing
-  g_renderer->draw_rect({pos.x, pos.y, size.x, size.y}, {50, 50, m_mouse_on_area ? 85 : 65, 255}, true);
+  g_renderer->draw_rect({static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(size.x), static_cast<int>(size.y)}, {50, 50, m_mouse_on_area ? 85 : 65, 255}, true);
 
   //grid drawing
   for (auto& cel : m_cels) {

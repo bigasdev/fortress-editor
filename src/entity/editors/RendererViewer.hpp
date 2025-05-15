@@ -19,7 +19,11 @@ class RendererViewer
 
     void update();
     void draw(const vec2& size, const vec2& pos);
+    vec2 get_coordinate();
+
+    bool is_mouse_on_area() const { return m_mouse_on_area; }
   private:
+
     float m_zoom = 1.0f;
     vec2 m_grid = {16.0f, 16.0f};
     vec2 invisible_size = {50.0f, 50.0f};
