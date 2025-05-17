@@ -269,8 +269,9 @@ void Game::imgui_map() {
                    ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar |
                    ImGuiWindowFlags_NoMouseInputs |
                    ImGuiWindowFlags_NoScrollbar);
-
+  
   g_editor_manager->show();
+
 
   ImGui::End();
 }

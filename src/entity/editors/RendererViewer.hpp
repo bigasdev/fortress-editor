@@ -1,6 +1,8 @@
 #pragma once 
 
 #include "../../tools/Common.hpp"
+#include "modules/IRendererViewer.hpp"
+#include <memory>
 #include <vector>
 
 struct Point{
@@ -22,6 +24,11 @@ class RendererViewer
     vec2 get_coordinate();
 
     bool is_mouse_on_area() const { return m_mouse_on_area; }
+
+    //modules
+    void add_module(std::shared_ptr<IRendererViewer> module) {
+        m_modules.push_back(module);
+    }
   private:
 
     float m_zoom = 1.0f;
@@ -39,4 +46,6 @@ class RendererViewer
 
     bool m_mouse_on_area = false;
     bool m_is_dragging = false;
+
+    std::vector<std::shared_ptr<IRendererViewer>> m_modules;
 };

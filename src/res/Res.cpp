@@ -98,6 +98,28 @@ void Res::load_sounds() {
   }
 }
 
+GPU_Image* Res::load_aseprite(const std::string& file) {
+  std::string path = file;
+  std::string file_name = path.substr(path.find_last_of("/\\") + 1);
+  file_name = file_name.substr(0, file_name.find_last_of("."));
+  Logger::log("Loading aseprite: " + file_name);
+
+  ase_t *ase = cute_aseprite_load_from_file(file.c_str(), NULL);
+
+  if (ase == nullptr) {
+    Logger::error("Failed to load aseprite: " + file);
+    return nullptr;
+  }
+
+  ase_frame_t *frame = &ase->frames[0];
+  const uint8_t *rgba =
+      reinterpret_cast<const uint8_t *>(frame->ase->frames[0].pixels);
+  GPU_Image *texture =
+      CreateTextureFromRGBA(m_renderer, rgba, frame->ase->w, frame->ase->h);
+
+  return texture;
+}
+
 void Res::load_aseprites(std::string path) {
   auto files = Reader::get_extension_files(path, ".aseprite");
   m_aseprite_files.clear();

@@ -34,6 +34,7 @@ public:
   // loaders
   void load_fonts();
   void load_sounds();
+  GPU_Image* load_aseprite(const std::string& file);
   void load_aseprites(std::string path = "res/");
   void load_pallete();
   void load_prefabs(std::string path);

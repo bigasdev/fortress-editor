@@ -4,9 +4,14 @@
 #include "../../tools/Logger.hpp"
 #include "../../core/Timer.hpp"
 #include "../../core/global.hpp"
+#include "../../res/Res.hpp"
 #include "../../renderer/Renderer.hpp"
 #include "../editors/RendererViewer.hpp"
+#include "../editors/modules/AsepriteViewer.hpp"
 #include "TabUtils.hpp"
+#include <memory>
+#include "SDL_gpu.h"
+#include "SDL.h"
 
 AsepriteTab::AsepriteTab(const std::string& _name) {
   name = _name;
@@ -14,6 +19,7 @@ AsepriteTab::AsepriteTab(const std::string& _name) {
 }
 
 void AsepriteTab::open() {
+  reload();
 }
 
 void AsepriteTab::show() {
@@ -25,27 +31,27 @@ void AsepriteTab::update() {
     is_dirty = m_asset->is_dirty;
   }
 
-  //m_viewer->update();
+  m_viewer->update();
 }
 
 void AsepriteTab::dispose() {
   delete m_viewer;
+  delete m_asset;
+  delete m_ase;
 }
 
 void AsepriteTab::draw() {
   //renderer + imgui windows
-  if(m_viewer->is_mouse_on_area()){
-    auto coord = m_viewer->get_coordinate();
-    ImGui::Text("X: %.2f Y: %.2f", coord.x, coord.y);
-    ImGui::NewLine();
-  }
-
   ImGui::BeginChild("Aseprite Tab", ImVec2(408, 408), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
   auto size = ImGui::GetWindowSize();
   auto pos = ImGui::GetWindowPos();
 
 
-  //m_viewer->draw({size.x - 16, size.y - 16}, {pos.x + 8, pos.y + 8});
+  GPU_SetActiveTarget(g_engine->get_gpu());
+  GPU_SetCamera(g_engine->get_gpu(), nullptr);
+  m_viewer->draw({size.x - 16, size.y - 16}, {pos.x + 8, pos.y + 8});
+  GPU_SetActiveTarget(nullptr);
+  GPU_DeactivateShaderProgram();
   ImGui::EndChild();
 
 
@@ -58,8 +64,17 @@ void AsepriteTab::draw() {
 
 void AsepriteTab::reload() {
   //load the aseprite file
-  if (m_file_path != "") {
+  if (m_asset != nullptr) {
+    m_asset->start();
+    m_file_path = m_asset->data["aseprite_path"].value;
 
+    m_ase = g_res->load_aseprite(m_file_path.c_str());
+    if(m_ase){
+      Logger::log("Loaded aseprite: " + m_file_path);
+    }
+
+    auto aseprite_viewer = std::make_shared<AsepriteViewer>(m_ase);
+    m_viewer->add_module(aseprite_viewer);
   }
 }
 

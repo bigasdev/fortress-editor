@@ -26,9 +26,6 @@ RendererViewer::RendererViewer() {
       col++;
     }
   }
-
-  Point test_point = {0, 0, 16, 16};
-  m_points.push_back(test_point);
 }
 
 vec2 RendererViewer::get_coordinate() {
@@ -51,17 +48,8 @@ void RendererViewer::update() {
     m_grabbed_point->y = Mouse::get_mouse_pos().y - (m_pos.y + local_pos.y);
   }
 
-  if(g_left_click){
-    for(auto& point : m_points) {
-      Logger::log("Point: " + std::to_string(point.x) + " " + std::to_string(point.y) + " " + std::to_string(point.w) + " " + std::to_string(point.h));
-      if(Mouse::is_at_area({point.x, point.y, point.w, point.h}, 16, 16)) {
-        Logger::log("Point grabbed: " + std::to_string(point.x) + " " + std::to_string(point.y) + " " + std::to_string(point.w) + " " + std::to_string(point.h));
-        m_grabbed_point = &point;
-        break;
-      } else {
-        m_grabbed_point = nullptr;
-      }
-    }
+  for(auto& module : m_modules) {
+    module->update();
   }
 }
 
@@ -80,8 +68,13 @@ void RendererViewer::draw(const vec2& size, const vec2& pos) {
     g_renderer->draw_rect({(cel.x-local_pos.x) + pos.x, (cel.y-local_pos.y) + pos.y, cel.w, cel.h}, cel.color, true);
   }
 
-  //entity drawing
-  g_renderer->draw_rect({(m_pos.x - local_pos.x)+m_points[0].x, (m_pos.y - local_pos.y)+m_points[0].y, 16, 16}, {255, 0, 0, 255}, true);
+  for (auto& point : m_points) {
+    g_renderer->draw_rect({(point.x - local_pos.x) + pos.x, (point.y - local_pos.y) + pos.y, 16, 16}, {0, 255, 0, 255}, true);
+  }
+  for (auto& module : m_modules) {
+    module->draw({(local_pos.x) + pos.x, (local_pos.y) + pos.y});
+  }
+
 
   //info drawing
 }

@@ -33,9 +33,11 @@ void AssetEditor::show() {
       if(ImGui::Button(pallete.c_str())){
         auto tab = g_editor_manager->get_editor<TabsWindowEditor>()->get_tab(pallete);
         if(tab == nullptr){
+          Logger::log("Creating new tab for pallete: " + pallete);
           Asset asset;
           asset.file_name = pallete;
           asset.type = "pallete";
+          asset.is_static = true;
           asset.file_path = m_project_folder + "\\res\\assets\\palletes\\" + pallete + ".json";
 
           IData aseprite_path;
@@ -78,7 +80,40 @@ void AssetEditor::reload() {
     }else{
       m_project_folder = profile->data["folder_path"].value;
       auto asset_folder = m_project_folder + "\\res\\";
+      auto palletes_folder = m_project_folder + "\\res\\assets\\palletes\\";
 
+      //loading the palletes data
+      if(FUtils::folder_exists(palletes_folder)){
+        std::vector<std::string> assets;
+        auto query = FUtils::get_all_files_in_folder(palletes_folder, assets);
+        for (const auto& asset : assets) {
+          if (FUtils::file_exists(asset)) {
+            std::ifstream i(asset);
+            nlohmann::json j;
+            i >> j;
+            Asset _asset;
+            _asset.file_path = asset;
+            _asset.type = "pallete";
+            _asset.file_name = j["file_name"].get<std::string>();
+            _asset.is_favorite = j["is_favorite"].get<bool>();
+            _asset.is_static = j["is_static"].get<bool>();
+            for (const auto& data : j["data"].items()) {
+              IData data_item;
+              data_item.name = data.key();
+              data_item.value = data.value().get<std::string>();
+              _asset.data[data_item.name] = data_item;
+            }
+
+            g_asset_manager->add_asset(_asset.file_name, _asset);
+            g_asset_manager->save_asset(_asset.file_name, _asset.file_path);
+            TabsGenerator::create_asset_tab<AsepriteTab>(_asset.file_name);
+            g_editor_manager->get_editor<TabsWindowEditor>()->reload();
+          }
+        }
+        
+      }
+
+      //loading the aseprites
       if(FUtils::folder_exists(asset_folder)){
         std::vector<std::string> files;
         auto query = FUtils::get_all_files_in_folder(asset_folder, files);
