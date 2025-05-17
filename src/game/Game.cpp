@@ -20,6 +20,7 @@
 #include "SDL_gpu.h"
 #include "SDL_keycode.h"
 #include "json.hpp"
+#include <algorithm>
 #include <cmath>
 #include <fstream>
 #include <iomanip>
@@ -37,6 +38,7 @@
 #include "../entity/editors/AssetView.hpp"
 #include "../entity/editors/AnimatorView.hpp"
 #include "../entity/editors/PrefabEditor.hpp"
+#include "../entity/editors/AssetEditor.hpp"
 #include "../entity/editors/TabsWindowEditor.hpp"
 #include "../entity/editors/MainMenu.hpp"
 #include "../entity/editors/SideMenu.hpp"
@@ -77,6 +79,7 @@ std::unique_ptr<MainMenu> main_menu;
 std::unique_ptr<AssetView> asset_view;
 std::unique_ptr<AnimatorView> animator_view;
 std::unique_ptr<AssetScreen> asset_screen;
+std::unique_ptr<AssetEditor> asset_editor;
 std::unique_ptr<PrefabEditor> prefab_editor;
 std::unique_ptr<TabsWindowEditor> tabs_window_editor;
 
@@ -167,6 +170,7 @@ void Game::init() {
   main_menu = std::make_unique<MainMenu>();
   main_menu->block_close = true;
   asset_view = std::make_unique<AssetView>(sprite_map, project_folder);
+  asset_editor = std::make_unique<AssetEditor>();
   animator_view = std::make_unique<AnimatorView>();
   tabs_window_editor = std::make_unique<TabsWindowEditor>();
   tabs_window_editor->block_close = true;
@@ -174,6 +178,7 @@ void Game::init() {
   g_editor_manager->add_editor(std::move(side_menu));
   g_editor_manager->add_editor(std::move(main_menu));
   g_editor_manager->add_editor(std::move(asset_view));
+  g_editor_manager->add_editor(std::move(asset_editor));
   g_editor_manager->add_editor(std::move(animator_view));
   g_editor_manager->add_editor(std::move(tabs_window_editor));
 
@@ -184,7 +189,7 @@ void Game::init() {
   prefab_editor = std::make_unique<PrefabEditor>();
   g_editor_manager->add_editor(std::move(prefab_editor));
 
-  g_editor_manager->open_editor<PrefabEditor>();
+  g_editor_manager->open_editor<AssetEditor>();
 }
 
 void Game::fixed_update(double tmod) {}
@@ -197,7 +202,7 @@ void Game::update(double dt) {
 
   // LOAD PROJECT FOLDER
   if (g_ctrl_pressed and load_project) {
-    project_folder = Data_Loader::load_folder("Select project folder");
+    /*(project_folder = Data_Loader::load_folder("Select project folder");
     if (project_folder == "")
       return;
     fini->set_value("last", "folder", project_folder);
@@ -216,7 +221,7 @@ void Game::update(double dt) {
 
     load_project = false;
     ctrl_pressed = false;
-    asset_view->update_sprite_map(project_folder, sprite_map);
+    asset_view->update_sprite_map(project_folder, sprite_map);*/
   }
 
   // UNDO

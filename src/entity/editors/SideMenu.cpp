@@ -4,6 +4,7 @@
 #include "AssetView.hpp"
 #include "AnimatorView.hpp"
 #include "PrefabEditor.hpp"
+#include "AssetEditor.hpp"
 #include "EditorManager.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../res/Res.hpp"
@@ -62,7 +63,7 @@ void SideMenu::show() {
     g_editor_manager->open_and_close_all<PrefabEditor>();
   }
   if (ImGui::ImageButton("assets", (void *)(intptr_t)t, ImVec2(48, 48))) {
-    g_editor_manager->open_and_close_all<AssetView>();
+    g_editor_manager->open_and_close_all<AssetEditor>();
   }
   if (ImGui::ImageButton("animator", (void *)(intptr_t)t, ImVec2(48, 48))) {
     g_editor_manager->open_and_close_all<AnimatorView>();

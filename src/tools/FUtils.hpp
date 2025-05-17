@@ -16,6 +16,8 @@ class FUtils
         static std::string remove_filename(const std::string& path);
         static bool is_corrupted(const std::string& path);
         static bool is_empty(const std::string& path);
+        static std::string get_file_name(const std::string& path);
+        static bool get_file_extension(const std::string& path, const std::string& extension);
         static std::string get_current_path();
         static std::vector<std::string> get_files_in_folder(const std::string& path);
 };
