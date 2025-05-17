@@ -163,3 +163,7 @@ bool TabsWindowEditor::is_tab_open(const std::string& name) {
   }
   return false;
 }
+
+bool TabsWindowEditor::is_tab_selected(const std::string& name) {
+  return m_selected_tab == name;
+}

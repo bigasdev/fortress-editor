@@ -73,6 +73,7 @@ void Camera::track_pos(vec2 *pos) {
 }
 
 void Camera::set_zoom(float zoom) {
+  m_zoom = zoom;
   m_camera->zoom_x = zoom;
   m_camera->zoom_y = zoom;
 }

@@ -57,6 +57,10 @@ void RendererViewer::draw(const vec2& size, const vec2& pos) {
   m_size = size;
   m_pos = pos;
 
+  for (auto& module : m_modules) {
+    module->set_pos({pos.x - local_pos.x, pos.y - local_pos.y});
+  }
+
   //bg drawing
   g_renderer->draw_rect({static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(size.x), static_cast<int>(size.y)}, {50, 50, m_mouse_on_area ? 85 : 65, 255}, true);
 
@@ -70,9 +74,6 @@ void RendererViewer::draw(const vec2& size, const vec2& pos) {
 
   for (auto& point : m_points) {
     g_renderer->draw_rect({(point.x - local_pos.x) + pos.x, (point.y - local_pos.y) + pos.y, 16, 16}, {0, 255, 0, 255}, true);
-  }
-  for (auto& module : m_modules) {
-    module->draw({(local_pos.x) + pos.x, (local_pos.y) + pos.y});
   }
 
 

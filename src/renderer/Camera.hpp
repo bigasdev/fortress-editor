@@ -16,17 +16,20 @@ public:
 
   GPU_Camera** get_gpu_cam();
   int get_game_scale() { return m_game_scale; }
+  float get_zoom() { return m_zoom; }
   vec2 get_camera_pos();
 
   bool is_on_screen(vec2 pos);
   void track_pos(vec2* pos);
   void set_zoom(float zoom);
+
 private:
   GPU_Camera *m_camera;
   vec2 m_pos;
   vec2 m_ref_pos;
   vec2 *m_size;
   vec2 *m_tracked_pos;
+  float m_zoom = 1.f;
 
   int m_game_scale;
 

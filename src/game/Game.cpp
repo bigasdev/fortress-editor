@@ -31,6 +31,7 @@
 // Systems
 #include "../core/UndoManager.hpp"
 #include "../entity/editors/EditorManager.hpp"
+#include "../entity/editors/modules/IRendererViewer.hpp"
 #include "../entity/assets/AssetManager.hpp"
 
 // Components
@@ -254,6 +255,14 @@ void Game::draw_ent() {
 
 void Game::draw_ui() {
   g_editor_manager->draw();
+}
+
+void Game::draw_viewers() {
+  for (auto &viewer : m_viewers) {
+    if(g_editor_manager->get_editor<TabsWindowEditor>()->is_tab_selected(viewer.first)) {
+      viewer.second->draw();
+    }
+  }
 }
 
 void Game::imgui_assets() {}

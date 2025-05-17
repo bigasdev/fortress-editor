@@ -126,20 +126,9 @@ void Renderer::draw_raw_sheet(GPU_Image *sheet, vec2 pos) {
   GPU_Rect dst;
   dst.x = static_cast<int>(pos.x);
   dst.y = static_cast<int>(pos.y);
-  dst.w = sheet->w * g_camera->get_game_scale();
-  dst.h = sheet->h * g_camera->get_game_scale();
+  dst.w = sheet->w * g_camera->get_game_scale() * g_camera->get_zoom();
+  dst.h = sheet->h * g_camera->get_game_scale() * g_camera->get_zoom();
 
-  Logger::log("Drawing raw sheet: " + std::to_string(dst.w) + " " +
-             std::to_string(dst.h) + " " + std::to_string(dst.x) + " " +
-             std::to_string(dst.y));
-
-  Logger::log("Drawing raw sheet: " + std::to_string(src.w) + " " +
-             std::to_string(src.h) + " " + std::to_string(src.x) + " " +
-             std::to_string(src.y));
-  Logger::log("GPU : " + std::to_string(m_gpu->w) + " " +
-             std::to_string(m_gpu->h));
-  Logger::log("Sheet: " + std::to_string(sheet->w) + " " +
-             std::to_string(sheet->h));
   GPU_BlitRectX(sheet, &src, m_gpu, &dst, 0, 0, 0, GPU_FLIP_NONE);
   m_calls++;
 }

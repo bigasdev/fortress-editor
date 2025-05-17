@@ -36,6 +36,7 @@ public:
 
     //getters
     bool is_tab_open(const std::string& name);
+    bool is_tab_selected(const std::string& name);
 
 private:
     std::map<std::string, std::shared_ptr<ITab>> m_tabs;

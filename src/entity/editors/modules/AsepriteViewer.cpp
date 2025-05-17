@@ -14,6 +14,6 @@ AsepriteViewer::AsepriteViewer(GPU_Image* ase) : m_ase(ase) {
 void AsepriteViewer::update() {
 }
 
-void AsepriteViewer::draw(const vec2& pos) {
-  g_renderer->draw_raw_sheet(m_ase, pos);
+void AsepriteViewer::draw() {
+  g_renderer->draw_raw_sheet(m_ase, m_pos);
 }

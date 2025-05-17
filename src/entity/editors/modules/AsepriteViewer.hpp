@@ -10,7 +10,7 @@ public:
     ~AsepriteViewer() override = default;
 
     void update() override;
-    void draw(const vec2& pos) override;
+    void draw() override;
 
 private:
     GPU_Image* m_ase = nullptr;

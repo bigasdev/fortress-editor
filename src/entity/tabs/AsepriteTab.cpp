@@ -4,7 +4,9 @@
 #include "../../tools/Logger.hpp"
 #include "../../core/Timer.hpp"
 #include "../../core/global.hpp"
+#include "../../game/Game.hpp"
 #include "../../res/Res.hpp"
+#include "../../renderer/Camera.hpp"
 #include "../../renderer/Renderer.hpp"
 #include "../editors/RendererViewer.hpp"
 #include "../editors/modules/AsepriteViewer.hpp"
@@ -32,6 +34,7 @@ void AsepriteTab::update() {
   }
 
   m_viewer->update();
+  g_camera->set_zoom(4);
 }
 
 void AsepriteTab::dispose() {
@@ -74,6 +77,7 @@ void AsepriteTab::reload() {
     }
 
     auto aseprite_viewer = std::make_shared<AsepriteViewer>(m_ase);
+    g_engine->get_game()->m_viewers[name] = aseprite_viewer;
     m_viewer->add_module(aseprite_viewer);
   }
 }
