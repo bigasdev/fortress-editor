@@ -20,4 +20,6 @@ public:
 
 private:
     std::vector<std::string> m_palletes;
+    std::string m_project_folder;
+    std::unordered_map<std::string, Asset> m_assets;
 };
