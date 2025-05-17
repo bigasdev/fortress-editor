@@ -3,6 +3,7 @@
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../entity/tabs/BaseTab.hpp"
 #include "../../core/global.hpp"
+#include "../../core/Engine.hpp"
 #include "../../entity/editors/EditorManager.hpp"
 #include "../../entity/tabs/GameProfileTab.hpp"
 #include "../../entity/tabs/EditorProfileTab.hpp"
@@ -47,7 +48,9 @@ void TabsWindowEditor::open() {
 }
 
 void TabsWindowEditor::show() {
-  ImGui::Begin("Tabs Window Editor", nullptr);
+  ImGui::SetNextWindowPos(ImVec2(396, 20), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2(g_engine->get_window_size()->x - 401, g_engine->get_window_size()->y - 25), ImGuiCond_Always);
+  ImGui::Begin("Tabs Window Editor", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
   ImGui::BeginChild("Tabs", ImVec2(0, 530), true);
   //align them to the left 
   for (auto& tab : m_tabs) {

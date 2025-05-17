@@ -27,7 +27,7 @@ void WorldTab::update() {
     is_dirty = m_asset->is_dirty;
   }
 
-  m_viewer->update();
+  //m_viewer->update();
 }
 
 void WorldTab::dispose() {
@@ -47,7 +47,7 @@ void WorldTab::draw() {
   auto pos = ImGui::GetWindowPos();
 
 
-  m_viewer->draw({size.x - 16, size.y - 16}, {pos.x + 8, pos.y + 8});
+  //m_viewer->draw({size.x - 16, size.y - 16}, {pos.x + 8, pos.y + 8});
   ImGui::EndChild();
 
 
