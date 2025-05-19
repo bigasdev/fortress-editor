@@ -12,8 +12,27 @@ AsepriteViewer::AsepriteViewer(GPU_Image* ase) : m_ase(ase) {
 }
 
 void AsepriteViewer::update() {
+  if(g_left_click && !m_is_dragging){
+    if(m_last_mouse_pos != Mouse::get_mouse_pos()){
+      m_last_mouse_pos = Mouse::get_mouse_pos();
+      m_current_mouse_pos = m_last_mouse_pos;
+      m_is_dragging = true;
+    }
+  }else if(g_left_click && m_is_dragging){
+    m_current_mouse_pos = Mouse::get_mouse_pos();
+  }
+  else if(!g_left_click && m_is_dragging){
+    m_is_dragging = false;
+  }
 }
 
 void AsepriteViewer::draw() {
   g_renderer->draw_raw_sheet(m_ase, m_pos);
+
+  auto rect = Rect{m_last_mouse_pos.x, m_last_mouse_pos.y, m_current_mouse_pos.x - m_last_mouse_pos.x, m_current_mouse_pos.y - m_last_mouse_pos.y};
+  g_renderer->draw_rect(rect, {0, 255, 0, 255}, false);
+
+  g_renderer->draw_rect({m_current_mouse_pos.x, m_current_mouse_pos.y, 100, 30}, {0, 0, 255, 255}, true);
+  auto text = std::to_string(static_cast<int>(rect.w/3)) + ", " + std::to_string(static_cast<int>(rect.h/3));
+  g_renderer->draw_text({m_current_mouse_pos.x, m_current_mouse_pos.y + 15}, text.c_str(), g_res->get_font("arial"), {255, 255, 255, 255}, 1, 100);
 }

@@ -34,18 +34,20 @@ void AsepriteTab::update() {
   }
 
   m_viewer->update();
-  g_camera->set_zoom(4);
+  g_camera->set_zoom(3);
 }
 
 void AsepriteTab::dispose() {
-  delete m_viewer;
-  delete m_asset;
-  delete m_ase;
+  g_engine->get_game()->m_viewers.erase(name);
 }
 
 void AsepriteTab::draw() {
   //renderer + imgui windows
-  ImGui::BeginChild("Aseprite Tab", ImVec2(408, 408), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+  if (m_asset != nullptr) {
+    TabUtils::asset_header(m_asset);
+  }
+  ImGui::SameLine();
+  ImGui::BeginChild("Aseprite Tab", ImVec2(640, 760), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
   auto size = ImGui::GetWindowSize();
   auto pos = ImGui::GetWindowPos();
 
@@ -58,10 +60,6 @@ void AsepriteTab::draw() {
   ImGui::EndChild();
 
 
-  if (m_asset != nullptr) {
-    TabUtils::asset_header(m_asset);
-    return;
-  }
 
 }
 
@@ -76,9 +74,9 @@ void AsepriteTab::reload() {
       Logger::log("Loaded aseprite: " + m_file_path);
     }
 
-    auto aseprite_viewer = std::make_shared<AsepriteViewer>(m_ase);
-    g_engine->get_game()->m_viewers[name] = aseprite_viewer;
-    m_viewer->add_module(aseprite_viewer);
+    m_aseprite_viewer = std::make_shared<AsepriteViewer>(m_ase);
+    g_engine->get_game()->m_viewers[name] = m_aseprite_viewer;
+    m_viewer->add_module(m_aseprite_viewer);
   }
 }
 
