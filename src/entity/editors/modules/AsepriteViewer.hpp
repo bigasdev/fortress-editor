@@ -3,10 +3,11 @@
 #include "IRendererViewer.hpp"
 
 class GPU_Image;
+class Asset;
 
 class AsepriteViewer : public IRendererViewer {
 public:
-    AsepriteViewer(GPU_Image* ase);
+    AsepriteViewer(GPU_Image* ase, Asset* asset);
     ~AsepriteViewer() override = default;
 
     void update() override;
@@ -18,4 +19,7 @@ private:
     vec2 m_current_mouse_pos;
 
     bool m_is_dragging = false;
+
+    //data 
+    Asset* m_asset = nullptr;
 };
