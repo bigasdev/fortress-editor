@@ -56,7 +56,7 @@ void AsepriteTab::draw() {
     ImGuiUtils::header_input_text("H", &m_asset->data["h"].value);
     ImGuiUtils::header_input_text("Name", &m_asset->data["name"].value);
     if(ImGui::Button("Create Asset")){
-        std::string asset = "name: " + m_asset->data["name"].value + " x: " + m_asset->data["x"].value + " y: " + m_asset->data["y"].value + " w: " + m_asset->data["w"].value + "\n" + "h: " + m_asset->data["h"].value;
+        std::string asset = "name: " + m_asset->data["name"].value + ";" + "x: " + m_asset->data["x"].value + ";" + "y: " + m_asset->data["y"].value + ";" + "w: " + m_asset->data["w"].value + ";" + "h: " + m_asset->data["h"].value + ";";
         m_asset->data[m_asset->data["name"].value].value = asset; 
 
         //cleaning the typed data
