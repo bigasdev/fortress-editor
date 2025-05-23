@@ -1,9 +1,19 @@
 #pragma once
 
 #include "IRendererViewer.hpp"
+#include <string>
+#include <unordered_map>
 
 class GPU_Image;
 class Asset;
+
+struct AssetViewerData {
+    std::string name;
+    int x;
+    int y;
+    int w;
+    int h;
+};
 
 class AsepriteViewer : public IRendererViewer {
 public:
@@ -12,6 +22,9 @@ public:
 
     void update() override;
     void draw() override;
+
+    //data 
+    void add_data(const std::string& name, const AssetViewerData& data);
 
 private:
     GPU_Image* m_ase = nullptr;
@@ -22,4 +35,5 @@ private:
 
     //data 
     Asset* m_asset = nullptr;
+    std::unordered_map<std::string, AssetViewerData> m_asset_data;
 };

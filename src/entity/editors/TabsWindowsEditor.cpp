@@ -51,7 +51,7 @@ void TabsWindowEditor::show() {
   ImGui::SetNextWindowPos(ImVec2(396, 20), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(g_engine->get_window_size()->x - 401, g_engine->get_window_size()->y - 25), ImGuiCond_Always);
   auto size = ImGui::GetWindowSize();
-  ImGui::Begin("Tabs Window Editor", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+  ImGui::Begin("Tabs Window Editor", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar);
   ImGui::BeginChild("Tabs", ImVec2(0, size.y - 75), true);
   //align them to the left 
   for (auto& tab : m_tabs) {

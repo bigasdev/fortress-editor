@@ -45,4 +45,16 @@ void AsepriteViewer::draw() {
   //dividing by 3 becuase its the zoom im using rn, later change it to the actual zoom
   auto text = std::to_string(static_cast<int>(rect.w/3)) + ", " + std::to_string(static_cast<int>(rect.h/3));
   g_renderer->draw_text({m_current_mouse_pos.x, m_current_mouse_pos.y + 15}, text.c_str(), g_res->get_font("arial"), {255, 255, 255, 255}, 1, 100);
+
+  //draw the data
+  for(auto& data : m_asset_data){
+    auto asset_data = data.second;
+    auto rect = Rect{asset_data.x + m_pos.x, asset_data.y + m_pos.y, asset_data.w * 3, asset_data.h * 3};
+    g_renderer->draw_rect(rect, {255, 0, 0, 255}, false);
+    g_renderer->draw_text({asset_data.x + 5 + m_pos.x, asset_data.y + 5 + m_pos.y}, asset_data.name.c_str(), g_res->get_font("arial"), {255, 255, 255, 255}, 1, 100);
+  }
+}
+
+void AsepriteViewer::add_data(const std::string& name, const AssetViewerData& data) {
+  m_asset_data[name] = data;
 }

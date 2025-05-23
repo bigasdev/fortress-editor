@@ -11,6 +11,7 @@
 #include "../editors/RendererViewer.hpp"
 #include "../editors/modules/AsepriteViewer.hpp"
 #include "TabUtils.hpp"
+#include <cstddef>
 #include <memory>
 #include "SDL_gpu.h"
 #include "../../imgui/imgui_stdlib.h"
@@ -69,7 +70,7 @@ void AsepriteTab::draw() {
     ImGui::EndChild();
   }
   ImGui::SameLine();
-  ImGui::BeginChild("Aseprite Tab", ImVec2(640, 760), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+  ImGui::BeginChild("Aseprite Tab", ImVec2(640, 660), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
   auto size = ImGui::GetWindowSize();
   auto pos = ImGui::GetWindowPos();
 
@@ -98,6 +99,43 @@ void AsepriteTab::reload() {
     }
 
     m_aseprite_viewer = std::make_shared<AsepriteViewer>(m_ase, m_asset);
+
+    //data loading 
+    //the data looks like this: "Cube": "name: Cube;x: 37;y: 6;w: 8;h: 9;"
+    for(auto const& data : m_asset->data){
+      auto it = data.second.value.find(";");
+      if(it == std::string::npos) continue;
+      std::string name = data.first;
+      std::string value = data.second.value;
+      int x,y,w,h;
+
+      size_t pos = 0;
+      if((pos = value.find("x: ")) != std::string::npos) {
+        value.erase(0, pos + 3);
+        size_t end = value.find(";");
+        x = std::stoi(value.substr(0, end));
+      }
+      if((pos = value.find("y: ")) != std::string::npos) {
+        value.erase(0, pos + 3);
+        size_t end = value.find(";");
+        y = std::stoi(value.substr(0, end));
+      }
+      if((pos = value.find("w: ")) != std::string::npos) {
+        value.erase(0, pos + 3);
+        size_t end = value.find(";");
+        w = std::stoi(value.substr(0, end));
+      }
+      if((pos = value.find("h: ")) != std::string::npos) {
+        value.erase(0, pos + 3);
+        size_t end = value.find(";");
+        h = std::stoi(value.substr(0, end));
+      }
+
+      AssetViewerData asset_data = {name, x, y, w, h};
+
+      m_aseprite_viewer->add_data(name, asset_data);
+    }
+
     g_engine->get_game()->m_viewers[name] = m_aseprite_viewer;
     m_viewer->add_module(m_aseprite_viewer);
   }
