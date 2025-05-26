@@ -7,6 +7,7 @@
 #include "../../../res/Res.hpp"
 #include "../../../tools/Mouse.hpp"
 #include "../../../entity/assets/IAsset.hpp"
+#include "../../../entity/tabs/AsepriteTab.hpp"
 #include "../../../core/Timer.hpp"
 
 AsepriteViewer::AsepriteViewer(GPU_Image* ase, Asset* asset) : m_ase(ase), m_asset(asset) {
@@ -48,13 +49,12 @@ void AsepriteViewer::draw() {
 
   //draw the data
   for(auto& data : m_asset_data){
-    auto asset_data = data.second;
-    auto rect = Rect{asset_data.x + m_pos.x, asset_data.y + m_pos.y, asset_data.w * 3, asset_data.h * 3};
+    auto rect = Rect{data->x + m_pos.x, data->y + m_pos.y, data->w * 3, data->h * 3};
     g_renderer->draw_rect(rect, {255, 0, 0, 255}, false);
-    g_renderer->draw_text({asset_data.x + 5 + m_pos.x, asset_data.y + 5 + m_pos.y}, asset_data.name.c_str(), g_res->get_font("arial"), {255, 255, 255, 255}, 1, 100);
+    g_renderer->draw_text({data->x + 5 + m_pos.x, data->y + 5 + m_pos.y}, data->name.c_str(), g_res->get_font("arial"), {255, 255, 255, 255}, 1, 100);
   }
 }
 
-void AsepriteViewer::add_data(const std::string& name, const AssetViewerData& data) {
-  m_asset_data[name] = data;
+void AsepriteViewer::add_data(const std::string& name, AssetPrefabData* data) {
+  m_asset_data.push_back(data);
 }

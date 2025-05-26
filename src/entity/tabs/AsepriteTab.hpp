@@ -4,10 +4,20 @@
 #include "ITab.hpp"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 class RendererViewer;
 class AsepriteViewer;
 class GPU_Image;
+
+//this is sloppy, i already have this data created in AsepriteViewer, needs to refactor this later
+struct AssetPrefabData {
+    std::string name;
+    int x;
+    int y;
+    int w;
+    int h;
+};
 
 class AsepriteTab : public IAssetTab{
 public:
@@ -30,4 +40,5 @@ private:
     RendererViewer* m_viewer = nullptr;
     
     std::shared_ptr<AsepriteViewer> m_aseprite_viewer = nullptr;
+    std::unordered_map<std::string, AssetPrefabData> m_asset_data;
 };

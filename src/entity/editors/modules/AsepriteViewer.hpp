@@ -3,17 +3,12 @@
 #include "IRendererViewer.hpp"
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 class GPU_Image;
 class Asset;
+class AssetPrefabData;
 
-struct AssetViewerData {
-    std::string name;
-    int x;
-    int y;
-    int w;
-    int h;
-};
 
 class AsepriteViewer : public IRendererViewer {
 public:
@@ -24,7 +19,7 @@ public:
     void draw() override;
 
     //data 
-    void add_data(const std::string& name, const AssetViewerData& data);
+    void add_data(const std::string& name, AssetPrefabData* data);
 
 private:
     GPU_Image* m_ase = nullptr;
@@ -35,5 +30,5 @@ private:
 
     //data 
     Asset* m_asset = nullptr;
-    std::unordered_map<std::string, AssetViewerData> m_asset_data;
+    std::vector<AssetPrefabData*> m_asset_data;
 };

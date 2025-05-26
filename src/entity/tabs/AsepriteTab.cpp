@@ -49,7 +49,7 @@ void AsepriteTab::draw() {
     TabUtils::asset_header(m_asset);
   }
   if(!m_asset->data["x"].value.empty()){
-    ImGui::BeginChild("##Asset info", ImVec2(240, 430), true, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+    ImGui::BeginChild("##Asset info", ImVec2(240, 430), true, ImGuiWindowFlags_NoCollapse);
     ImGui::Text("Current asset : ");
     ImGuiUtils::header_input_text("X", &m_asset->data["x"].value);
     ImGuiUtils::header_input_text("Y", &m_asset->data["y"].value);
@@ -57,7 +57,7 @@ void AsepriteTab::draw() {
     ImGuiUtils::header_input_text("H", &m_asset->data["h"].value);
     ImGuiUtils::header_input_text("Name", &m_asset->data["name"].value);
     if(ImGui::Button("Create Asset")){
-        std::string asset = "name: " + m_asset->data["name"].value + ";" + "x: " + m_asset->data["x"].value + ";" + "y: " + m_asset->data["y"].value + ";" + "w: " + m_asset->data["w"].value + ";" + "h: " + m_asset->data["h"].value + ";";
+        std::string asset = "x: " + m_asset->data["x"].value + ";" + "y: " + m_asset->data["y"].value + ";" + "w: " + m_asset->data["w"].value + ";" + "h: " + m_asset->data["h"].value + ";";
         m_asset->data[m_asset->data["name"].value].value = asset; 
 
         //cleaning the typed data
@@ -66,6 +66,23 @@ void AsepriteTab::draw() {
         m_asset->data["w"].value = "0";
         m_asset->data["h"].value = "0";
         m_asset->data["name"].value = "none";
+    }
+    ImGui::SeparatorText("Assets");
+    for(auto& data : m_asset_data) {
+      if(ImGui::CollapsingHeader(data.first.c_str())) {
+        ImGuiUtils::image(GPU_GetTextureHandle(m_ase), {data.second.x, data.second.y}, {data.second.w, data.second.h}, m_ase->texture_w, {32, 32});
+        ImGuiUtils::header_input_text("Name", &data.second.name);
+        ImGuiUtils::header_input_int("X", &data.second.x);
+        ImGuiUtils::header_input_int("Y", &data.second.y);
+        ImGuiUtils::header_input_int("W", &data.second.w);
+        ImGuiUtils::header_input_int("H", &data.second.h);
+
+        for(auto& asset_data : m_asset->data) {
+          if(asset_data.first == data.second.name) {
+            asset_data.second.value = "x: " + std::to_string(data.second.x) + ";y: " + std::to_string(data.second.y) + ";w: " + std::to_string(data.second.w) + ";h: " + std::to_string(data.second.h) + ";";
+          }
+        }
+      }
     }
     ImGui::EndChild();
   }
@@ -131,9 +148,9 @@ void AsepriteTab::reload() {
         h = std::stoi(value.substr(0, end));
       }
 
-      AssetViewerData asset_data = {name, x, y, w, h};
+      m_asset_data[name] = {name, x, y, w, h};
 
-      m_aseprite_viewer->add_data(name, asset_data);
+      m_aseprite_viewer->add_data(name, &m_asset_data[name]);
     }
 
     g_engine->get_game()->m_viewers[name] = m_aseprite_viewer;
