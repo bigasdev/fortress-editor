@@ -42,14 +42,17 @@ void PrefabTab::draw() {
     TabUtils::asset_header(m_asset);
   }
   
+  ImGui::BeginCombo("##Asset list", m_asset_data.begin()->first.c_str(), ImGuiComboFlags_HeightLarge);
   for(auto& asset : m_asset_data) {
-    Logger::log("Drawing prefab: " + asset.first);
-    ImGui::Text(asset.first.c_str());
-    ImGui::SameLine();
-    if(ImGui::Button("Edit")) {
-      Logger::log("Editing prefab: " + asset.first);
+    if(ImGui::Selectable(asset.first.c_str(), false)) {
+      m_asset->data["name"].value = asset.first;
+      m_asset->data["x"].value = std::to_string(asset.second.x);
+      m_asset->data["y"].value = std::to_string(asset.second.y);
+      m_asset->data["w"].value = std::to_string(asset.second.w);
+      m_asset->data["h"].value = std::to_string(asset.second.h);
     }
   }
+  ImGui::EndCombo();
 }
 
 void PrefabTab::reload() {
@@ -70,7 +73,6 @@ void PrefabTab::reload() {
         prefab_data.name = data.key();
 
         if(prefab_data.x == 9898 && prefab_data.y == 9898 && prefab_data.w == 9898 && prefab_data.h == 9898) {
-          Logger::log("Prefab data is empty, skipping: " + prefab_data.name);
           continue;
         }
 
