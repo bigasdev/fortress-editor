@@ -13,6 +13,7 @@ PrefabTab::PrefabTab(const std::string& _name) {
   name = _name;
 
   //m_viewer = new RendererViewer();
+  reload();
 }
 
 void PrefabTab::open() {
@@ -43,6 +44,15 @@ void PrefabTab::draw() {
 }
 
 void PrefabTab::reload() {
+  //load all the assets from the project 
+  std::vector<std::string> asset_files;
+  auto query = FUtils::get_all_files_in_folder(g_asset_manager->get_asset("Editor Profile")->data["folder_path"].value + "\\res\\assets\\palletes", asset_files);
+  for(auto const& file : asset_files) {
+    if(FUtils::file_exists(file)) {
+      Logger::log("Loading asset files: " + file);
+    }
+  }
+  //load all the components from the project
 }
 
 void PrefabTab::save() {
