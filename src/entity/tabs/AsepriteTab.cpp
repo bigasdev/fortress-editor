@@ -70,7 +70,8 @@ void AsepriteTab::draw() {
     ImGui::SeparatorText("Assets");
     for(auto& data : m_asset_data) {
       if(ImGui::CollapsingHeader(data.first.c_str())) {
-        ImGuiUtils::image(GPU_GetTextureHandle(m_ase), {data.second.x, data.second.y}, {data.second.w, data.second.h}, m_ase->texture_w, {32, 32});
+        ///3 is the game zoom, again this needs to be in a config/global thingy
+        ImGuiUtils::image(GPU_GetTextureHandle(m_ase), {data.second.x/3, data.second.y/3}, {data.second.w, data.second.h}, m_ase->texture_w, {32, 32});
         ImGuiUtils::header_input_text("Name", &data.second.name);
         ImGuiUtils::header_input_int("X", &data.second.x);
         ImGuiUtils::header_input_int("Y", &data.second.y);
