@@ -8,6 +8,8 @@
 #include "../../renderer/Renderer.hpp"
 #include "../editors/RendererViewer.hpp"
 #include "TabUtils.hpp"
+#include <fstream>
+#include "json.hpp"
 
 PrefabTab::PrefabTab(const std::string& _name) {
   name = _name;
@@ -38,9 +40,16 @@ void PrefabTab::dispose() {
 void PrefabTab::draw() {
   if (m_asset != nullptr) {
     TabUtils::asset_header(m_asset);
-    return;
   }
-
+  
+  for(auto& asset : m_asset_data) {
+    Logger::log("Drawing prefab: " + asset.first);
+    ImGui::Text(asset.first.c_str());
+    ImGui::SameLine();
+    if(ImGui::Button("Edit")) {
+      Logger::log("Editing prefab: " + asset.first);
+    }
+  }
 }
 
 void PrefabTab::reload() {
@@ -50,6 +59,23 @@ void PrefabTab::reload() {
   for(auto const& file : asset_files) {
     if(FUtils::file_exists(file)) {
       Logger::log("Loading asset files: " + file);
+
+      std::ifstream i(file);
+      nlohmann::json j;
+      i >> j;
+
+      for(const auto& data : j["data"].items()) {
+        std::string value = data.value().get<std::string>();
+        auto prefab_data = TabUtils::get_asset_data(value);
+        prefab_data.name = data.key();
+
+        if(prefab_data.x == 9898 && prefab_data.y == 9898 && prefab_data.w == 9898 && prefab_data.h == 9898) {
+          Logger::log("Prefab data is empty, skipping: " + prefab_data.name);
+          continue;
+        }
+
+        m_asset_data[prefab_data.name] = prefab_data;
+      }
     }
   }
   //load all the components from the project

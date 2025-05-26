@@ -3,6 +3,14 @@
 #include <string>
 #include "TabsCommon.hpp"
 
+struct AssetPrefabData {
+    std::string name;
+    int x;
+    int y;
+    int w;
+    int h;
+};
+
 class ITab{
 public:
     virtual ~ITab(){}

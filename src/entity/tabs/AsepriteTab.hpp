@@ -10,15 +10,6 @@ class RendererViewer;
 class AsepriteViewer;
 class GPU_Image;
 
-//this is sloppy, i already have this data created in AsepriteViewer, needs to refactor this later
-struct AssetPrefabData {
-    std::string name;
-    int x;
-    int y;
-    int w;
-    int h;
-};
-
 class AsepriteTab : public IAssetTab{
 public:
     AsepriteTab() = default;

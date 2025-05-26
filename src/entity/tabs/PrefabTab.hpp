@@ -3,6 +3,7 @@
 #include "ITab.hpp"
 #include "IAssetTab.hpp"
 #include <string>
+#include <unordered_map>
 
 class RendererViewer;
 
@@ -24,4 +25,6 @@ public:
 private:
     Asset* m_asset = nullptr;
     RendererViewer* m_viewer = nullptr;
+
+    std::unordered_map<std::string, AssetPrefabData> m_asset_data;
 };

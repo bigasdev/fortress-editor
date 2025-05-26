@@ -74,4 +74,36 @@ void TabUtils::asset_header(Asset* asset) {
     }
 }
 
+//data 
+AssetPrefabData TabUtils::get_asset_data(std::string& data) {
+    AssetPrefabData asset_data;
+    asset_data.x = 9898;
+    asset_data.y = 9898;
+    asset_data.w = 9898;
+    asset_data.h = 9898;
+
+    size_t pos = 0;
+    if((pos = data.find("x: ")) != std::string::npos) {
+        data.erase(0, pos + 3);
+        size_t end = data.find(";");
+        asset_data.x = std::stoi(data.substr(0, end));
+    }
+    if((pos = data.find("y: ")) != std::string::npos) {
+        data.erase(0, pos + 3);
+        size_t end = data.find(";");
+        asset_data.y = std::stoi(data.substr(0, end));
+    }
+    if((pos = data.find("w: ")) != std::string::npos) {
+        data.erase(0, pos + 3);
+        size_t end = data.find(";");
+        asset_data.w = std::stoi(data.substr(0, end));
+    }
+    if((pos = data.find("h: ")) != std::string::npos) {
+        data.erase(0, pos + 3);
+        size_t end = data.find(";");
+        asset_data.h = std::stoi(data.substr(0, end));
+    }
+    return asset_data;
+}
+
 
