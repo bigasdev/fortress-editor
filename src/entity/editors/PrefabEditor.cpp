@@ -2,6 +2,7 @@
 
 #include "../../entity/tabs/TabUtils.hpp"
 #include "../../entity/tabs/WorldTab.hpp"
+#include "../../entity/tabs/PrefabTab.hpp"
 #include "../../entity/tabs/TabsGenerator.hpp"
 #include "../../tools/FUtils.hpp"
 #include <iostream>
@@ -225,7 +226,7 @@ void PrefabEditor::create_asset_popup(const ItemAssetType type) {
 
     switch (type) {
       case PREFAB:
-        //
+        TabsGenerator::create_asset_tab<PrefabTab>(name);
         break;
       case DATABASE:
         //
