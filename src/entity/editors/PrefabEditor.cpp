@@ -138,6 +138,7 @@ void PrefabEditor::load_assets(const std::string& folder, const std::string& ass
         for (const auto& child : j["children"].items()) {
           Asset child_asset;
           child_asset.file_name = child.key();
+          child_asset.type = child.value()["type"].get<std::string>();
           for (const auto& child_data : child.value().items()) {
             IData child_data_item;
             child_data_item.name = child_data.key();

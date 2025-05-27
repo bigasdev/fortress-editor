@@ -92,6 +92,7 @@ void AssetManager::save_asset(const std::string& name, const std::string& file_p
         }
 
         for (const auto& child : it->second.children) {
+            j["children"][child.first]["type"] = child.second.type;
             for (const auto& child_data : child.second.data) {
                j["children"][child.first][child_data.first] = child_data.second.value;
             }

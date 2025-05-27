@@ -41,13 +41,16 @@ void PrefabTab::draw() {
   if (m_asset != nullptr) {
     TabUtils::asset_header(m_asset);
 
-    for(auto const& component : m_components_list) {
+    for(auto& component : m_asset->children) {
+      if(!component.second.is_type("component")) continue;
+
       if(ImGui::Button("")){
         //FIX: 
-        //
+        m_asset->children.erase(component.first);
+        break;
       }
       ImGui::SameLine();
-      if(ImGui::CollapsingHeader(component.c_str())) {
+      if(ImGui::CollapsingHeader(component.second.data["name"].value.c_str())) {
       }
     }
 
@@ -60,8 +63,8 @@ void PrefabTab::draw() {
         if(ImGui::Selectable(component.second.c_str())){
           //check if the component exists before adding it 
           //FIX:
-          m_components_list.push_back(component.second);
           Asset component_asset;
+          component_asset.type = "component";
           component_asset.data["name"].value = component.second;
 
           m_asset->children[component.second] = component_asset;
@@ -123,10 +126,6 @@ void PrefabTab::reload() {
 
   if(m_asset != nullptr) {
     //components data 
-    m_components_list.clear();
-    for(auto& component : m_asset->children) {
-      m_components_list.push_back(component.second.data["name"].value);
-    }
   }
 }
 

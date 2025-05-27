@@ -29,5 +29,4 @@ private:
     std::unordered_map<std::string, AssetPrefabData> m_asset_data;
     //components
     std::unordered_map<std::string, std::string> m_avaliable_components;
-    std::vector<std::string> m_components_list;
 };

@@ -35,6 +35,13 @@ struct Asset{
         }
     }
 
+    bool has_data(const std::string& name) const {
+        return data.find(name) != data.end();
+    }
+    bool is_type(const std::string& type) const {
+      return this->type == type;
+    }
+
     void discard(){
         if(!is_dirty) return;
 
@@ -64,6 +71,8 @@ struct Asset{
             if(child.second.is_dirty){
                 is_dirty = true;
                 break;
+            }else{
+                is_dirty = false;
             }
         }
     }
