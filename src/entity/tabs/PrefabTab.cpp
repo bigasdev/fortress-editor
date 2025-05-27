@@ -61,12 +61,11 @@ void PrefabTab::draw() {
           //check if the component exists before adding it 
           //FIX:
           m_components_list.push_back(component.second);
-          auto components_value = m_components_list[0];
-          for(size_t i = 1; i < m_components_list.size(); i++) {
-            components_value += "," + m_components_list[i];
-          }
+          Asset component_asset;
+          component_asset.data["name"].value = component.second;
 
-          m_asset->data["components"].value = components_value;
+          m_asset->children[component.second] = component_asset;
+
           is_dirty = true;
         }
       }
@@ -78,6 +77,7 @@ void PrefabTab::draw() {
 
 void PrefabTab::reload() {
   //load all the assets from the project 
+  Logger::log("Reloading Prefab Tab");
   std::vector<std::string> asset_files;
   auto query = FUtils::get_all_files_in_folder(g_asset_manager->get_asset("Editor Profile")->data["folder_path"].value + "\\res\\assets\\palletes", asset_files);
   for(auto const& file : asset_files) {
@@ -118,6 +118,14 @@ void PrefabTab::reload() {
         m_avaliable_components[file_name_without_ext] = file_name_without_ext;
       }
 
+    }
+  }
+
+  if(m_asset != nullptr) {
+    //components data 
+    m_components_list.clear();
+    for(auto& component : m_asset->children) {
+      m_components_list.push_back(component.second.data["name"].value);
     }
   }
 }

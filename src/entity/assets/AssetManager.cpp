@@ -91,6 +91,12 @@ void AssetManager::save_asset(const std::string& name, const std::string& file_p
             j["data"][data.first] = data.second.value;
         }
 
+        for (const auto& child : it->second.children) {
+            for (const auto& child_data : child.second.data) {
+               j["children"][child.first][child_data.first] = child_data.second.value;
+            }
+        }
+
         Logger::log("Saving asset " + name + " to " + file_path);
 
         std::ofstream o(file_path);

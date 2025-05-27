@@ -133,6 +133,18 @@ void PrefabEditor::load_assets(const std::string& folder, const std::string& ass
           data_item.name = data.key();
           data_item.value = data.value().get<std::string>();
           asset.data[data_item.name] = data_item;
+
+        }
+        for (const auto& child : j["children"].items()) {
+          Asset child_asset;
+          child_asset.file_name = child.key();
+          for (const auto& child_data : child.value().items()) {
+            IData child_data_item;
+            child_data_item.name = child_data.key();
+            child_data_item.value = child_data.value().get<std::string>();
+            child_asset.data[child_data_item.name] = child_data_item;
+          }
+          asset.children[child_asset.file_name] = child_asset;
         }
 
         g_asset_manager->add_asset(asset.file_name, asset);
