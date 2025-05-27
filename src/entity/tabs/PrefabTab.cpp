@@ -40,19 +40,40 @@ void PrefabTab::dispose() {
 void PrefabTab::draw() {
   if (m_asset != nullptr) {
     TabUtils::asset_header(m_asset);
-  }
-  
-  ImGui::BeginCombo("##Asset list", m_asset_data.begin()->first.c_str(), ImGuiComboFlags_HeightLarge);
-  for(auto& asset : m_asset_data) {
-    if(ImGui::Selectable(asset.first.c_str(), false)) {
-      m_asset->data["name"].value = asset.first;
-      m_asset->data["x"].value = std::to_string(asset.second.x);
-      m_asset->data["y"].value = std::to_string(asset.second.y);
-      m_asset->data["w"].value = std::to_string(asset.second.w);
-      m_asset->data["h"].value = std::to_string(asset.second.h);
+
+    for(auto const& component : m_components_list) {
+      if(ImGui::Button("")){
+        //FIX: 
+        //
+      }
+      ImGui::SameLine();
+      if(ImGui::CollapsingHeader(component.c_str())) {
+      }
+    }
+
+    if(ImGui::Button("Select component")){
+      ImGui::OpenPopup("Select Component");
+    }
+
+    if(ImGui::BeginPopup("Select Component")){
+      for(auto const& component : m_avaliable_components) {
+        if(ImGui::Selectable(component.second.c_str())){
+          //check if the component exists before adding it 
+          //FIX:
+          m_components_list.push_back(component.second);
+          auto components_value = m_components_list[0];
+          for(size_t i = 1; i < m_components_list.size(); i++) {
+            components_value += "," + m_components_list[i];
+          }
+
+          m_asset->data["components"].value = components_value;
+          is_dirty = true;
+        }
+      }
+      ImGui::EndPopup();
     }
   }
-  ImGui::EndCombo();
+  
 }
 
 void PrefabTab::reload() {
@@ -81,10 +102,30 @@ void PrefabTab::reload() {
     }
   }
   //load all the components from the project
+  std::vector<std::string> component_files;
+  query = FUtils::get_all_files_in_folder(g_asset_manager->get_asset("Editor Profile")->data["folder_path"].value + "\\src\\components", component_files);
+  for(auto const& file : component_files) {
+    if(FUtils::file_exists(file)) {
+      auto file_name = FUtils::get_file_name(file);
+      auto file_name_without_ext = file_name.substr(0, file_name.find_last_of('.'));
+      //later we will read the component to get the data type
+
+      //sloppy but will do for now 
+      //FIX: make a better way to check if its a component or just a cpp file
+      if(file_name_without_ext != "IComponent" && file_name_without_ext != "ComponentStore"){
+        Logger::log("Loading component files: " + file_name);
+        
+        m_avaliable_components[file_name_without_ext] = file_name_without_ext;
+      }
+
+    }
+  }
 }
 
 void PrefabTab::save() {
   is_dirty = false;
+  
+
   m_asset->start();
 }
 

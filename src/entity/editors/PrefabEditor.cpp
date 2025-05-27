@@ -109,10 +109,11 @@ void PrefabEditor::reload() {
   }
 
   std::string folder = game_profile_asset->data["folder_path"].value;
-  load_assets(folder, "world");
+  load_assets(folder, "world", WORLD);
+  load_assets(folder, "prefab", PREFAB);
 }
 
-void PrefabEditor::load_assets(const std::string& folder, const std::string& asset_type){
+void PrefabEditor::load_assets(const std::string& folder, const std::string& asset_type, const ItemAssetType item_type) {
   if(FUtils::folder_exists(folder + "\\res\\assets\\" + asset_type + "s")){
     std::vector<std::string> assets;
     auto query = FUtils::get_all_files_in_folder(folder + "\\res\\assets\\" + asset_type + "s", assets);
@@ -136,10 +137,24 @@ void PrefabEditor::load_assets(const std::string& folder, const std::string& ass
 
         g_asset_manager->add_asset(asset.file_name, asset);
         g_asset_manager->save_asset(asset.file_name, asset.file_path);
-        TabsGenerator::create_asset_tab<WorldTab>(asset.file_name);
-        g_editor_manager->get_editor<TabsWindowEditor>()->reload();
 
-        m_worlds[asset.file_name] = asset;
+        switch (item_type) {
+          case PREFAB:
+            m_prefabs[asset.file_name] = asset;
+            TabsGenerator::create_asset_tab<PrefabTab>(asset.file_name);
+            break;
+          case DATABASE:
+            m_databases[asset.file_name] = asset;
+            break;
+          case WORLD:
+            m_worlds[asset.file_name] = asset;
+            TabsGenerator::create_asset_tab<WorldTab>(asset.file_name);
+            break;
+          default:
+            return;
+        }
+        
+        g_editor_manager->get_editor<TabsWindowEditor>()->reload();
       }
     }
   }

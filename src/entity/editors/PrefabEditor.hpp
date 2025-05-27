@@ -25,7 +25,7 @@ public:
     void reload() override;
 
     //loaders
-    void load_assets(const std::string& folder, const std::string& asset_type);
+    void load_assets(const std::string& folder, const std::string& asset_type, const ItemAssetType item_type);
 
     //clickables
     void handle_click_asset(const ItemAssetType type, const std::unordered_map<std::string, Asset>& assets);

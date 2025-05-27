@@ -21,12 +21,17 @@ struct Asset{
     bool is_dirty = false;
 
     std::unordered_map<std::string, IData> data;
+    std::unordered_map<std::string, Asset> children;
 
     void start(){
         for(auto& data : this->data){
             Logger::log("Starting asset: " + data.second.name + " with value: " + data.second.value);
             data.second.value_buffer = data.second.value;
             data.second.value_start = data.second.value;
+        }
+
+        for(auto& child : this->children){
+            child.second.start();
         }
     }
 
@@ -38,6 +43,10 @@ struct Asset{
             data.second.value_buffer = data.second.value_start;
             is_dirty = false;
         }
+
+        for(auto& child : this->children){
+            child.second.discard();
+        }
     }
 
     void update(){
@@ -47,6 +56,14 @@ struct Asset{
                 break;
             }else{
                 is_dirty = false;
+            }
+        }
+
+        for(auto& child : this->children){
+            child.second.update();
+            if(child.second.is_dirty){
+                is_dirty = true;
+                break;
             }
         }
     }
