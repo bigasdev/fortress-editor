@@ -1,13 +1,13 @@
 #include "SideMenu.hpp"
 #include "../../core/Engine.hpp"
 #include "../../core/global.hpp"
-#include "AssetView.hpp"
-#include "AnimatorView.hpp"
-#include "PrefabEditor.hpp"
-#include "AssetEditor.hpp"
-#include "EditorManager.hpp"
 #include "../../imgui/imgui_impl_opengl3.h"
 #include "../../res/Res.hpp"
+#include "AnimatorView.hpp"
+#include "AssetEditor.hpp"
+#include "AssetView.hpp"
+#include "EditorManager.hpp"
+#include "PrefabEditor.hpp"
 #include "SDL.h"
 #include "SDL_gpu.h"
 #include <cstdint>
@@ -29,9 +29,7 @@ SideMenu::SideMenu() {
   }
 }
 
-void SideMenu::open(){
-
-}
+void SideMenu::open() {}
 
 void SideMenu::show() {
   ImGui::SetNextWindowPos(ImVec2(0, 18.5f));
@@ -41,23 +39,20 @@ void SideMenu::show() {
   ImGui::BeginChild("SideMenu", ImVec2(69, g_engine->get_window_size()->y),
                     true);
 
-  //NOTE: DONT REMOVE THIS 
-  // ILL USE THIS LATER TO CREATE THE SPRITE ATLAS
-  int sprite_x = 0; // X position of the sprite in the atlas
+  // NOTE: DONT REMOVE THIS
+  //  ILL USE THIS LATER TO CREATE THE SPRITE ATLAS
+  int sprite_x = 0;  // X position of the sprite in the atlas
   int sprite_y = 16; // Y position of the sprite in the atlas
   int sprite_width = 16;
   int sprite_height = 16;
   int atlas_size = 500;
 
-
   // Top-left texture coordinates
-  ImVec2 uv0 =
-      ImVec2((float)sprite_x / 400, (float)sprite_y / 250);
+  ImVec2 uv0 = ImVec2((float)sprite_x / 400, (float)sprite_y / 250);
 
   // Bottom-right texture coordinates
   ImVec2 uv1 = ImVec2((float)(sprite_x + sprite_width) / 400,
                       (float)(sprite_y + sprite_height) / 250);
-
 
   if (ImGui::ImageButton("##prefabs", (void *)(intptr_t)t, ImVec2(48, 48))) {
     g_editor_manager->open_and_close_all<PrefabEditor>();
@@ -77,7 +72,7 @@ void SideMenu::show() {
 void SideMenu::update() {}
 
 void SideMenu::dispose() {
-  //GPU_FreeImage(sdl_img);
+  // GPU_FreeImage(sdl_img);
 }
 
 void SideMenu::draw() {}

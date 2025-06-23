@@ -1,7 +1,7 @@
 #include "Game.hpp"
+#include "../core/EditorDataManager.hpp"
 #include "../core/Engine.hpp"
 #include "../core/InputManager.hpp"
-#include "../core/EditorDataManager.hpp"
 #include "../core/Timer.hpp"
 #include "../core/global.hpp"
 #include "../imgui/imgui.h"
@@ -11,6 +11,7 @@
 #include "../renderer/Sprite.hpp"
 #include "../res/Res.hpp"
 #include "../tools/Cooldown.hpp"
+#include "../tools/FUtils.hpp"
 #include "../tools/Logger.hpp"
 #include "../tools/Math.hpp"
 #include "../tools/Mouse.hpp"
@@ -26,23 +27,22 @@
 #include <iomanip>
 #include <memory>
 #include <string>
-#include "../tools/FUtils.hpp"
 
 // Systems
 #include "../core/UndoManager.hpp"
+#include "../entity/assets/AssetManager.hpp"
 #include "../entity/editors/EditorManager.hpp"
 #include "../entity/editors/modules/IRendererViewer.hpp"
-#include "../entity/assets/AssetManager.hpp"
 
 // Components
-#include "../entity/visualizers/AssetScreen.hpp"
-#include "../entity/editors/AssetView.hpp"
 #include "../entity/editors/AnimatorView.hpp"
-#include "../entity/editors/PrefabEditor.hpp"
 #include "../entity/editors/AssetEditor.hpp"
-#include "../entity/editors/TabsWindowEditor.hpp"
+#include "../entity/editors/AssetView.hpp"
 #include "../entity/editors/MainMenu.hpp"
+#include "../entity/editors/PrefabEditor.hpp"
 #include "../entity/editors/SideMenu.hpp"
+#include "../entity/editors/TabsWindowEditor.hpp"
+#include "../entity/visualizers/AssetScreen.hpp"
 
 std::unique_ptr<EditorDataManager> m_editor_data_manager;
 
@@ -86,9 +86,7 @@ std::unique_ptr<TabsWindowEditor> tabs_window_editor;
 
 Game::Game() {}
 
-Game::~Game() {
-  fini->save();
-}
+Game::~Game() { fini->save(); }
 
 void Game::init() {
   g_editor_folder_path = FUtils::get_current_path();
@@ -117,14 +115,14 @@ void Game::init() {
   g_fini = fini;
 
   project_folder = fini->get_value<std::string>("last", "folder");
-  //get this runtime path
+  // get this runtime path
 
   // this will crash if the saved folder or assets are not found anymore
   // FIX:
   if (project_folder != "") {
-    if(!FUtils::folder_exists(project_folder)){
+    if (!FUtils::folder_exists(project_folder)) {
       Logger::error("Project folder not found: " + project_folder);
-    }else{
+    } else {
       g_res->reset_aseprites();
       g_res->load_aseprites(project_folder + "/res/");
       g_res->load_prefabs(project_folder + "/res/prefabs/");
@@ -164,8 +162,7 @@ void Game::init() {
   g_input_manager->bind_keyboard(SDLK_EQUALS, &g_plus_pressed);
   g_input_manager->bind_keyboard(SDLK_MINUS, &g_minus_pressed);
 
-
-  //editors
+  // editors
   side_menu = std::make_unique<SideMenu>();
   side_menu->block_close = true;
   main_menu = std::make_unique<MainMenu>();
@@ -199,7 +196,6 @@ void Game::update(double dt) {
   m_cooldown->update(dt);
 
   mouse_not_clicked = !mouse_clicked;
-
 
   // LOAD PROJECT FOLDER
   if (g_ctrl_pressed and load_project) {
@@ -253,13 +249,12 @@ void Game::draw_ent() {
   }*/
 }
 
-void Game::draw_ui() {
-  g_editor_manager->draw();
-}
+void Game::draw_ui() { g_editor_manager->draw(); }
 
 void Game::draw_viewers() {
   for (auto &viewer : m_viewers) {
-    if(g_editor_manager->get_editor<TabsWindowEditor>()->is_tab_selected(viewer.first)) {
+    if (g_editor_manager->get_editor<TabsWindowEditor>()->is_tab_selected(
+            viewer.first)) {
       viewer.second->draw();
     }
   }
@@ -278,9 +273,8 @@ void Game::imgui_map() {
                    ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar |
                    ImGuiWindowFlags_NoMouseInputs |
                    ImGuiWindowFlags_NoScrollbar);
-  
-  g_editor_manager->show();
 
+  g_editor_manager->show();
 
   ImGui::End();
 }
@@ -335,6 +329,4 @@ void Game::load(std::string file_path) {
   }*/
 }
 
-void Game::clean() {
-  g_editor_manager->dispose();
-}
+void Game::clean() { g_editor_manager->dispose(); }
