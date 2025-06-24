@@ -142,8 +142,8 @@ void Engine::post_init() {
   m_fini = new Fini("res/engine.ini");
   m_fini->initialize_value("window", "pos_x", "");
   m_fini->initialize_value("window", "pos_y", "");
-  m_fini->initialize_value("window", "width", std::to_string(WIN_WIDTH));
-  m_fini->initialize_value("window", "height", std::to_string(WIN_HEIGHT));
+  m_fini->initialize_value("window", "width", "");
+  m_fini->initialize_value("window", "height", "");
 
   // starting game
   m_game = new Game();
@@ -225,7 +225,6 @@ void Engine::update() {
     return;
   }
 
-  m_fini->update();
   m_game->update(Timer::get_dt());
 }
 
