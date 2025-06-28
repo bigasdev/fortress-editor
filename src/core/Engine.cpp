@@ -225,6 +225,7 @@ void Engine::update() {
     return;
   }
 
+  g_input_manager->tick_update();
   m_game->update(Timer::get_dt());
 }
 

@@ -1,5 +1,4 @@
 #include "Game.hpp"
-#include "../core/EditorDataManager.hpp"
 #include "../core/Engine.hpp"
 #include "../core/InputManager.hpp"
 #include "../core/Timer.hpp"
@@ -29,111 +28,29 @@
 #include <string>
 
 // Systems
-#include "../core/UndoManager.hpp"
-#include "../entity/assets/AssetManager.hpp"
-#include "../entity/editors/EditorManager.hpp"
-#include "../entity/editors/modules/IRendererViewer.hpp"
-
-// Components
-#include "../entity/editors/AnimatorView.hpp"
-#include "../entity/editors/AssetEditor.hpp"
-#include "../entity/editors/AssetView.hpp"
-#include "../entity/editors/MainMenu.hpp"
-#include "../entity/editors/PrefabEditor.hpp"
-#include "../entity/editors/SideMenu.hpp"
-#include "../entity/editors/TabsWindowEditor.hpp"
-#include "../entity/visualizers/AssetScreen.hpp"
-
-std::unique_ptr<EditorDataManager> m_editor_data_manager;
-
-std::string project_folder;
-std::string asset_folder;
-vec2 pos = {0, 0};
-std::map<std::string, Sprite> sprite_map;
-std::vector<std::unique_ptr<Asset>> m_assets;
-std::unique_ptr<Asset> *m_selected_asset;
-std::string selected_asset;
-std::string current_asset = "asset";
-
-vec2 mouse_pos;
-bool mouse_clicked;
-bool mouse_wheel_clicked;
-bool mouse_not_clicked;
-
-bool ctrl_pressed = false;
-bool load_project = false;
-bool save_pressed = false;
-bool z_pressed = false;
-bool load_assets = false;
-
-// Systems
-std::unique_ptr<EditorManager> m_editor_manager;
-std::unique_ptr<AssetManager> m_asset_manager;
-SpriteAnimator *m_sprite_animator;
 Fini *fini;
-UndoManager *m_undo_manager;
-
-// Components
-std::unique_ptr<SideMenu> side_menu;
-std::unique_ptr<MainMenu> main_menu;
-// Editors
-std::unique_ptr<AssetView> asset_view;
-std::unique_ptr<AnimatorView> animator_view;
-std::unique_ptr<AssetScreen> asset_screen;
-std::unique_ptr<AssetEditor> asset_editor;
-std::unique_ptr<PrefabEditor> prefab_editor;
-std::unique_ptr<TabsWindowEditor> tabs_window_editor;
 
 Game::Game() {}
 
 Game::~Game() { fini->save(); }
 
 void Game::init() {
-  g_editor_folder_path = FUtils::get_current_path();
+  // g_editor_folder_path = FUtils::get_current_path();
 
   m_camera = new Camera(g_engine->get_window_size());
   m_cooldown = new Cooldown();
-  m_undo_manager = new UndoManager();
-  m_editor_data_manager = std::make_unique<EditorDataManager>();
-  m_asset_manager = std::make_unique<AssetManager>();
-  g_editor_data_manager = m_editor_data_manager.get();
-  g_undo_manager = m_undo_manager;
-  m_editor_manager = std::make_unique<EditorManager>();
-  g_editor_manager = m_editor_manager.get();
-  g_asset_manager = m_asset_manager.get();
-
-  //
 
   // initial settings to get last folder and asset
-  fini = new Fini("res/config.ini");
+  /*fini = new Fini("res/config.ini");
   fini->initialize_value("last", "folder", "");
   g_folder_path = fini->get_value<std::string>("last", "folder");
   fini->initialize_value("last", "asset", "");
   fini->initialize_value("settings", "grid_size", 16);
   fini->initialize_value("settings", "zoom", 1.0f);
   fini->initialize_value("settings", "zoom", 1.0f);
-  g_fini = fini;
+  g_fini = fini;*/
 
-  project_folder = fini->get_value<std::string>("last", "folder");
-  // get this runtime path
-
-  // this will crash if the saved folder or assets are not found anymore
-  // FIX:
-  if (project_folder != "") {
-    if (!FUtils::folder_exists(project_folder)) {
-      Logger::error("Project folder not found: " + project_folder);
-    } else {
-      g_res->reset_aseprites();
-      g_res->load_aseprites(project_folder + "/res/");
-      g_res->load_prefabs(project_folder + "/res/prefabs/");
-      sprite_map.clear();
-    }
-  }
   Logger::log("Game init");
-
-  asset_folder = fini->get_value<std::string>("last", "asset");
-  if (asset_folder != "") {
-  }
 
   g_cooldown = m_cooldown;
   g_camera = m_camera;
@@ -143,93 +60,27 @@ void Game::init() {
     Logger::log(file);
 
     auto spr = Sprite();
-
-    sprite_map[file] = spr;
   }
 
-  // basic camera tracking to make everything in the middle of the screen
-  g_camera->track_pos(&pos);
-
+  // FIX: rework the input manager
   g_input_manager->bind_mouse(&g_left_click, &g_right_click, &g_left_click);
   g_input_manager->bind_keyboard(SDLK_s, &g_s_pressed);
-  g_input_manager->bind_keyboard(SDLK_p, &load_assets);
-  g_input_manager->bind_keyboard(SDLK_e, &load_project);
-  g_input_manager->bind_keyboard(SDLK_z, &z_pressed);
   g_input_manager->bind_keyboard(SDLK_o, &g_o_pressed);
   g_input_manager->bind_keyboard(SDLK_LCTRL, &g_ctrl_pressed);
   g_input_manager->bind_keyboard(SDLK_RETURN, &g_enter_pressed);
   g_input_manager->bind_keyboard(SDLK_DELETE, &g_del_pressed);
   g_input_manager->bind_keyboard(SDLK_EQUALS, &g_plus_pressed);
   g_input_manager->bind_keyboard(SDLK_MINUS, &g_minus_pressed);
-
-  // editors
-  side_menu = std::make_unique<SideMenu>();
-  side_menu->block_close = true;
-  main_menu = std::make_unique<MainMenu>();
-  main_menu->block_close = true;
-  asset_view = std::make_unique<AssetView>(sprite_map, project_folder);
-  asset_editor = std::make_unique<AssetEditor>();
-  animator_view = std::make_unique<AnimatorView>();
-  tabs_window_editor = std::make_unique<TabsWindowEditor>();
-  tabs_window_editor->block_close = true;
-
-  g_editor_manager->add_editor(std::move(side_menu));
-  g_editor_manager->add_editor(std::move(main_menu));
-  g_editor_manager->add_editor(std::move(asset_view));
-  g_editor_manager->add_editor(std::move(asset_editor));
-  g_editor_manager->add_editor(std::move(animator_view));
-  g_editor_manager->add_editor(std::move(tabs_window_editor));
-
-  g_editor_manager->open_editor<SideMenu>();
-  g_editor_manager->open_editor<MainMenu>();
-  g_editor_manager->open_editor<TabsWindowEditor>();
-
-  prefab_editor = std::make_unique<PrefabEditor>();
-  g_editor_manager->add_editor(std::move(prefab_editor));
-
-  g_editor_manager->open_editor<PrefabEditor>();
 }
 
 void Game::fixed_update(double tmod) {}
 
 void Game::update(double dt) {
+  if (g_input_manager->get_key_press(SDLK_e)) {
+    std::cout << "E key pressed" << std::endl;
+  }
+
   m_cooldown->update(dt);
-
-  mouse_not_clicked = !mouse_clicked;
-
-  // LOAD PROJECT FOLDER
-  if (g_ctrl_pressed and load_project) {
-    /*(project_folder = Data_Loader::load_folder("Select project folder");
-    if (project_folder == "")
-      return;
-    fini->set_value("last", "folder", project_folder);
-    g_res->reset_aseprites();
-    g_res->load_aseprites(project_folder + "/res/");
-    sprite_map.clear();
-
-    auto files = g_res->get_aseprite_names();
-    for (auto file : files) {
-      Logger::log(file);
-
-      auto spr = Sprite();
-
-      sprite_map[file] = spr;
-    }
-
-    load_project = false;
-    ctrl_pressed = false;
-    asset_view->update_sprite_map(project_folder, sprite_map);*/
-  }
-
-  // UNDO
-  if (g_ctrl_pressed and z_pressed) {
-    m_undo_manager->undo();
-    z_pressed = false;
-    ctrl_pressed = false;
-  }
-
-  g_asset_manager->update();
-  g_editor_manager->update();
 }
 
 void Game::post_update(double dt) {
@@ -249,16 +100,9 @@ void Game::draw_ent() {
   }*/
 }
 
-void Game::draw_ui() { g_editor_manager->draw(); }
+void Game::draw_ui() {}
 
-void Game::draw_viewers() {
-  for (auto &viewer : m_viewers) {
-    if (g_editor_manager->get_editor<TabsWindowEditor>()->is_tab_selected(
-            viewer.first)) {
-      viewer.second->draw();
-    }
-  }
-}
+void Game::draw_viewers() {}
 
 void Game::imgui_assets() {}
 
@@ -274,7 +118,7 @@ void Game::imgui_map() {
                    ImGuiWindowFlags_NoMouseInputs |
                    ImGuiWindowFlags_NoScrollbar);
 
-  g_editor_manager->show();
+  ImGui::Text("Hello World!");
 
   ImGui::End();
 }
@@ -329,4 +173,4 @@ void Game::load(std::string file_path) {
   }*/
 }
 
-void Game::clean() { g_editor_manager->dispose(); }
+void Game::clean() {}
