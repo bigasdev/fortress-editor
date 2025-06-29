@@ -7,6 +7,7 @@ public:
 
   void init();
   void update();
+  void side_draw();
   void draw();
   void clean();
 

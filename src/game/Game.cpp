@@ -146,9 +146,24 @@ void Game::imgui_map() {
   }
   ImGui::EndChild();
   ImGui::SameLine();
-  ImGui::BeginChild("SideMenu", ImVec2(150, 0), true,
-                    ImGuiWindowFlags_AlwaysUseWindowPadding);
-  ImGui::EndChild();
+  if (m_current_tab != Tab::EDITOR) {
+    ImGui::BeginChild("SideMenu", ImVec2(150, 0), true,
+                      ImGuiWindowFlags_AlwaysUseWindowPadding);
+
+    switch (m_current_tab) {
+    case Tab::PALLETES:
+      m_pallete->side_draw();
+      break;
+    case Tab::PREFABS:
+      m_prefab->side_draw();
+      break;
+    default:
+      ImGui::Text("Unknown tab selected");
+      break;
+    }
+
+    ImGui::EndChild();
+  }
   ImGui::SameLine();
   ImGui::BeginChild("MainContent", ImVec2(0, 0), true,
                     ImGuiWindowFlags_AlwaysUseWindowPadding);

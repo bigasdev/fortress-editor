@@ -11,6 +11,10 @@ void Prefab::update() {
   // Update logic for tabs can be added here
 }
 
+void Prefab::side_draw() {
+  ImGui::Text("This is the side panel for the prefab.");
+}
+
 void Prefab::draw() { ImGui::Text("Hello Prefab!"); }
 
 void Prefab::clean() { Logger::log("Tabs cleaned"); }
