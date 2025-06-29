@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+#include <vector>
 class Pallete {
 public:
   Pallete() = default;
@@ -12,4 +14,5 @@ public:
   void clean();
 
 private:
+  std::vector<std::string> m_palettes;
 };

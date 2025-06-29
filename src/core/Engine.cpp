@@ -90,6 +90,11 @@ void Engine::init() {
 
   GPU_SetWindowResolution(m_window_size.x, m_window_size.y);
 
+#if _IMGUI
+  SDL_GLContext &gl_context = m_gpu->context->context;
+  GUI::setup(m_sdl_window, gl_context);
+#endif
+
   Logger::log("Loading 50%...");
 
   if (m_renderer != nullptr && m_gpu != nullptr) {
@@ -153,11 +158,6 @@ void Engine::post_init() {
   m_game->init();
 
   Logger::log("Game initialized");
-
-#if _IMGUI
-  SDL_GLContext &gl_context = m_gpu->context->context;
-  GUI::setup(m_sdl_window, gl_context);
-#endif
 
   Logger::log("Engine post init");
   m_loaded = true;

@@ -58,6 +58,9 @@ void Game::init() {
   fini->initialize_value("settings", "zoom", 1.0f);
   g_fini = fini;*/
 
+  fini = new Fini("res/editor.ini");
+  g_fini = fini;
+
   Logger::log("Game init");
 
   g_cooldown = m_cooldown;
@@ -137,12 +140,15 @@ void Game::imgui_map() {
                     ImGuiWindowFlags_AlwaysUseWindowPadding);
   if (ImGui::Button(" Editor")) {
     m_current_tab = Tab::EDITOR;
+    m_editor->init();
   }
   if (ImGui::Button(" Palettes")) {
     m_current_tab = Tab::PALLETES;
+    m_pallete->init();
   }
   if (ImGui::Button(" Prefabs")) {
     m_current_tab = Tab::PREFABS;
+    m_prefab->init();
   }
   ImGui::EndChild();
   ImGui::SameLine();
@@ -236,4 +242,4 @@ void Game::load(std::string file_path) {
   }*/
 }
 
-void Game::clean() {}
+void Game::clean() { g_fini->save(); }
