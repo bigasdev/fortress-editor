@@ -35,7 +35,7 @@ public:
   void tick_update();
   void update(SDL_Event event);
 
-  bool get_key_press(SDL_Keycode key);
+  bool get_key_press(SDL_Keycode key, SDL_Keycode mod = SDLK_UNKNOWN);
 
 private:
   std::map<SDL_Keycode, bool *> m_key_map;

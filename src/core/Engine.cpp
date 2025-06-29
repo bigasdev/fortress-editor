@@ -61,11 +61,21 @@ void Engine::init() {
   SDL_WindowFlags window_flags =
       (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI |
                         SDL_WINDOW_RESIZABLE);
-  m_sdl_window = SDL_CreateWindow("rog_editor", SDL_WINDOWPOS_CENTERED,
-                                  SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT,
-                                  window_flags);
-  SDL_SetWindowMinimumSize(m_sdl_window, 1024, 576);
-  m_window_size = {WIN_WIDTH, WIN_HEIGHT};
+
+  // starting fini
+  m_fini = new Fini("res/engine.ini");
+  m_fini->initialize_value("window", "pos_x", SDL_WINDOWPOS_CENTERED);
+  m_fini->initialize_value("window", "pos_y", SDL_WINDOWPOS_CENTERED);
+  m_fini->initialize_value("window", "width", WIN_WIDTH);
+  m_fini->initialize_value("window", "height", WIN_HEIGHT);
+
+  m_window_size = {m_fini->get_value<int>("window", "width"),
+                   m_fini->get_value<int>("window", "height")};
+
+  m_sdl_window =
+      SDL_CreateWindow("rog_editor", m_fini->get_value<int>("window", "pos_x"),
+                       m_fini->get_value<int>("window", "pos_y"),
+                       m_window_size.x, m_window_size.y, window_flags);
 
   GPU_SetInitWindow(SDL_GetWindowID(m_sdl_window));
 
@@ -137,13 +147,6 @@ void Engine::post_init() {
   g_engine = this;
   g_res = m_res;
   g_renderer = m_renderer;
-
-  // starting fini
-  m_fini = new Fini("res/engine.ini");
-  m_fini->initialize_value("window", "pos_x", "");
-  m_fini->initialize_value("window", "pos_y", "");
-  m_fini->initialize_value("window", "width", "");
-  m_fini->initialize_value("window", "height", "");
 
   // starting game
   m_game = new Game();

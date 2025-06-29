@@ -175,7 +175,6 @@ void InputManager::update(SDL_Event event) {
     break;
   case SDL_KEYDOWN:
     if (m_key_map.find(event.key.keysym.sym) != m_key_map.end()) {
-      Logger::log(std::to_string(event.key.keysym.sym));
       *m_key_map[event.key.keysym.sym] = true;
     }
     if (event.key.keysym.sym == SDLK_d || event.key.keysym.sym == SDLK_RIGHT) {
@@ -217,12 +216,18 @@ void InputManager::update(SDL_Event event) {
   }
 }
 
-bool InputManager::get_key_press(SDL_Keycode key) {
+bool InputManager::get_key_press(SDL_Keycode key, SDL_Keycode mod) {
   if (!has_tick) {
     return false;
   }
 
   const Uint8 *state = SDL_GetKeyboardState(NULL);
+  if (mod != SDLK_UNKNOWN) {
+    if (!state[SDL_GetScancodeFromKey(mod)]) {
+      return false;
+    }
+  }
+
   if (state[SDL_GetScancodeFromKey(key)]) {
     has_tick = false;
     return true;

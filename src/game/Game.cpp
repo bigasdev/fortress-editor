@@ -76,7 +76,7 @@ void Game::init() {
 void Game::fixed_update(double tmod) {}
 
 void Game::update(double dt) {
-  if (g_input_manager->get_key_press(SDLK_e)) {
+  if (g_input_manager->get_key_press(SDLK_e, SDLK_LCTRL)) {
     std::cout << "E key pressed" << std::endl;
   }
 
