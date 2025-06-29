@@ -253,6 +253,11 @@ void Engine::draw() {
 
   GPU_Clear(m_gpu);
 
+#if _IMGUI
+  GPU_FlushBlitBuffer();
+  m_game->draw_imgui();
+#endif
+
   // game draw
   GPU_SetCamera(m_gpu, nullptr);
   m_game->draw_root();
@@ -261,10 +266,6 @@ void Engine::draw() {
   GPU_SetCamera(m_gpu, nullptr);
   m_game->draw_ui();
 
-#if _IMGUI
-  GPU_FlushBlitBuffer();
-  m_game->draw_imgui();
-#endif
   GPU_SetCamera(m_gpu, nullptr);
   m_game->draw_viewers();
   GPU_DeactivateShaderProgram();

@@ -15,4 +15,5 @@ public:
 
 private:
   std::vector<std::string> m_palettes;
+  std::string m_current_palette = "";
 };

@@ -97,6 +97,21 @@ void Game::update(double dt) {
     m_current_tab = Tab::PREFABS;
   }
 
+  switch (m_current_tab) {
+  case Tab::EDITOR:
+    m_editor->update();
+    break;
+  case Tab::PALLETES:
+    m_pallete->update();
+    break;
+  case Tab::PREFABS:
+    m_prefab->update();
+    break;
+  default:
+    Logger::log("Unknown tab selected");
+    break;
+  }
+
   m_cooldown->update(dt);
 }
 
@@ -115,6 +130,11 @@ void Game::draw_ent() {
   /*if (side_menu->get_state() == State::ASSET) {
     asset_screen->ent();
   }*/
+  if (m_current_tab == Tab::PALLETES) {
+    m_pallete->draw();
+  } else if (m_current_tab == Tab::PREFABS) {
+    m_prefab->draw();
+  }
 }
 
 void Game::draw_ui() {}
@@ -178,10 +198,8 @@ void Game::imgui_map() {
     m_editor->draw();
     break;
   case Tab::PALLETES:
-    m_pallete->draw();
     break;
   case Tab::PREFABS:
-    m_prefab->draw();
     break;
   default:
     ImGui::Text("Unknown tab selected");
