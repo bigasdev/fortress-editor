@@ -15,7 +15,10 @@
 #include "../tools/Math.hpp"
 #include "../tools/Mouse.hpp"
 #include "DataLoader.hpp"
+#include "Editor.hpp"
 #include "Fini.hpp"
+#include "Pallete.hpp"
+#include "Prefab.hpp"
 #include "SDL.h"
 #include "SDL_gpu.h"
 #include "SDL_keycode.h"
@@ -29,6 +32,11 @@
 
 // Systems
 Fini *fini;
+
+// Views
+std::unique_ptr<Editor> m_editor;
+std::unique_ptr<Pallete> m_pallete;
+std::unique_ptr<Prefab> m_prefab;
 
 Game::Game() {}
 
@@ -64,20 +72,26 @@ void Game::init() {
 
   // FIX: rework the input manager
   g_input_manager->bind_mouse(&g_left_click, &g_right_click, &g_left_click);
-  g_input_manager->bind_keyboard(SDLK_s, &g_s_pressed);
-  g_input_manager->bind_keyboard(SDLK_o, &g_o_pressed);
-  g_input_manager->bind_keyboard(SDLK_LCTRL, &g_ctrl_pressed);
-  g_input_manager->bind_keyboard(SDLK_RETURN, &g_enter_pressed);
-  g_input_manager->bind_keyboard(SDLK_DELETE, &g_del_pressed);
-  g_input_manager->bind_keyboard(SDLK_EQUALS, &g_plus_pressed);
-  g_input_manager->bind_keyboard(SDLK_MINUS, &g_minus_pressed);
+
+  m_editor = std::make_unique<Editor>();
+  m_editor->init();
+  m_pallete = std::make_unique<Pallete>();
+  m_pallete->init();
+  m_prefab = std::make_unique<Prefab>();
+  m_prefab->init();
 }
 
 void Game::fixed_update(double tmod) {}
 
 void Game::update(double dt) {
   if (g_input_manager->get_key_press(SDLK_e, SDLK_LCTRL)) {
-    std::cout << "E key pressed" << std::endl;
+    m_current_tab = Tab::EDITOR;
+  }
+  if (g_input_manager->get_key_press(SDLK_p, SDLK_LCTRL)) {
+    m_current_tab = Tab::PALLETES;
+  }
+  if (g_input_manager->get_key_press(SDLK_f, SDLK_LCTRL)) {
+    m_current_tab = Tab::PREFABS;
   }
 
   m_cooldown->update(dt);
@@ -118,7 +132,41 @@ void Game::imgui_map() {
                    ImGuiWindowFlags_NoMouseInputs |
                    ImGuiWindowFlags_NoScrollbar);
 
-  ImGui::Text("Hello World!");
+  // tab selection, i.e the main screen at the editor
+  ImGui::BeginChild("Tabs", ImVec2(150, 0), true,
+                    ImGuiWindowFlags_AlwaysUseWindowPadding);
+  if (ImGui::Button(" Editor")) {
+    m_current_tab = Tab::EDITOR;
+  }
+  if (ImGui::Button(" Palettes")) {
+    m_current_tab = Tab::PALLETES;
+  }
+  if (ImGui::Button(" Prefabs")) {
+    m_current_tab = Tab::PREFABS;
+  }
+  ImGui::EndChild();
+  ImGui::SameLine();
+  ImGui::BeginChild("SideMenu", ImVec2(150, 0), true,
+                    ImGuiWindowFlags_AlwaysUseWindowPadding);
+  ImGui::EndChild();
+  ImGui::SameLine();
+  ImGui::BeginChild("MainContent", ImVec2(0, 0), true,
+                    ImGuiWindowFlags_AlwaysUseWindowPadding);
+  switch (m_current_tab) {
+  case Tab::EDITOR:
+    m_editor->draw();
+    break;
+  case Tab::PALLETES:
+    m_pallete->draw();
+    break;
+  case Tab::PREFABS:
+    m_prefab->draw();
+    break;
+  default:
+    ImGui::Text("Unknown tab selected");
+    break;
+  }
+  ImGui::EndChild();
 
   ImGui::End();
 }

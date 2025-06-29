@@ -1,7 +1,8 @@
-#pragma once 
+#pragma once
 
 /*
-   Here is where all the game logic will be, the goal is to never touch the Engine code, just use this one to manage the game.
+   Here is where all the game logic will be, the goal is to never touch the
+   Engine code, just use this one to manage the game.
  */
 
 #include <memory>
@@ -16,7 +17,9 @@ class Camera;
 class Cooldown;
 class IRendererViewer;
 
-class Game{
+enum class Tab { EDITOR, PALLETES, PREFABS };
+
+class Game {
 public:
   Game();
   ~Game();
@@ -38,10 +41,12 @@ public:
   void load(std::string file_path);
 
   std::unordered_map<std::string, std::shared_ptr<IRendererViewer>> m_viewers;
-private:
 
+private:
   Camera *m_camera;
   Cooldown *m_cooldown;
+
+  Tab m_current_tab = Tab::EDITOR;
 };
 
 #endif

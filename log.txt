@@ -81,6 +81,9 @@ item_atlas
 logo
 rog_editor_ui
 ui
+Tabs initialized
+Tabs initialized
+Tabs initialized
 Game initialized
 Engine post init
 SDL2 quit

@@ -31,12 +31,5 @@ extern bool g_left_click;
 extern bool g_right_click;
 extern bool g_middle_click;
 extern bool g_controller_connected;
-extern bool g_enter_pressed;
-extern bool g_ctrl_pressed;
-extern bool g_s_pressed;
-extern bool g_o_pressed;
-extern bool g_del_pressed;
-extern bool g_plus_pressed;
-extern bool g_minus_pressed;
 
 #endif
