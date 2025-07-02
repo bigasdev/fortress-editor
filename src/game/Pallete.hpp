@@ -2,9 +2,16 @@
 
 #include "../tools/Common.hpp"
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 class GPU_Image;
+
+struct GridCell {
+  Rect grid;
+  Col color;
+  Col m_selected_color;
+};
 
 class Pallete {
 public:
@@ -21,8 +28,7 @@ private:
   std::vector<std::string> m_palettes;
   std::string m_current_palette = "";
 
-  GPU_Image *m_current_image = nullptr;
+  std::unordered_map<int, GridCell> m_cells = {};
 
-  vec2 mouse_pos = {0, 0};
-  vec2 mouse_end_pos = {0, 0};
+  GPU_Image *m_current_image = nullptr;
 };

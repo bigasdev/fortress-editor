@@ -175,7 +175,7 @@ void Profiler::draw() {
       {0, 255, 0, 255});
 
   g_engine->get_renderer()->draw_text(
-      {get_pos_x(80), 2},
+      {get_pos_x(70), 1},
       ("_DEBUG " + std::to_string(static_cast<int>(Timer::get_fps())) + " fps")
           .c_str(),
       g_res->get_font("fusion10"), {0, 255, 0, 255});

@@ -19,8 +19,8 @@ Loading font: blueterm
 Loaded font: res/font\blueterm.ttf
 Loading font: code8
 Loaded font: res/font\code8.ttf
-Loading font: fusion10px
-Loaded font: res/font\fusion10px.ttf
+Loading font: fusion10
+Loaded font: res/font\fusion10.ttf
 Loading font: fusion8px
 Loaded font: res/font\fusion8px.ttf
 Loading font: gohu11
@@ -85,7 +85,4 @@ item_atlas
 logo
 rog_editor_ui
 ui
-Tabs initialized
-Game initialized
-Engine post init
-ERROR: Signal: 11
+ERROR: Signal: 8

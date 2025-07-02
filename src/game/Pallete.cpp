@@ -10,6 +10,7 @@
 #include "../tools/Math.hpp"
 #include "../tools/Mouse.hpp"
 #include "Fini.hpp"
+#include "SDL_keycode.h"
 
 vec2 start_pos = {350, 30};
 
@@ -25,21 +26,34 @@ void Pallete::init() {
 
   } else {
   }
+
+  if (m_cells.empty()) {
+    for (int i = 0; i < 16; ++i) {
+      GridCell cell;
+      cell.grid = {start_pos.x + (i * 32), start_pos.y, 32, 32};
+      cell.color = {255, 255, 255, 15};             // default color
+      cell.m_selected_color = {255, 255, 255, 125}; // selected color
+      m_cells[i] = cell;
+    }
+  }
 }
 
 void Pallete::update() {
-  if (Mouse::get_mouse_pos().x > start_pos.x) {
-    if (g_left_click && mouse_pos == vec2{0, 0}) {
-      mouse_pos = Mouse::get_mouse_pos();
+  Logger::log("Pallete update");
+  // changing cells sizes by 8
+  if (g_input_manager->get_key_press(SDLK_q)) {
+    for (auto &cell : m_cells) {
+      cell.second.grid.w -= 16;
+      cell.second.grid.h -= 16;
     }
+  }
 
-    if (g_left_click) {
-      mouse_end_pos = Mouse::get_mouse_pos();
-    }
-
-    if (g_right_click) {
-      mouse_pos = vec2{0, 0};
-      mouse_end_pos = vec2{0, 0};
+  if (g_input_manager->get_key_press(SDLK_e)) {
+    for (auto &cell : m_cells) {
+      cell.second.grid.x += 16;
+      cell.second.grid.y += 16;
+      cell.second.grid.w += 16;
+      cell.second.grid.h += 16;
     }
   }
 }
@@ -59,18 +73,19 @@ void Pallete::draw() {
   if (m_current_palette != "") {
 
     if (m_current_image != nullptr) {
-      g_renderer->draw_raw_sheet(m_current_image, start_pos);
-    } else {
-    }
 
-    // drawing the rectangle for the mouse selection
-    if (mouse_pos != vec2{0, 0} && mouse_end_pos != vec2{0, 0}) {
-      auto rect =
-          Rect{static_cast<int>(std::min(mouse_pos.x, mouse_end_pos.x)),
-               static_cast<int>(std::min(mouse_pos.y, mouse_end_pos.y)),
-               static_cast<int>(std::abs(mouse_end_pos.x - mouse_pos.x)),
-               static_cast<int>(std::abs(mouse_end_pos.y - mouse_pos.y))};
-      g_renderer->draw_rect(rect, {255, 0, 0, 128}, false);
+      g_renderer->draw_raw_sheet(m_current_image, start_pos);
+
+      for (const auto &cell : m_cells) {
+        if (Mouse::is_at_area(cell.second.grid, 16, 16)) {
+          g_renderer->draw_rect(cell.second.grid, cell.second.m_selected_color,
+                                true);
+        } else {
+          g_renderer->draw_rect(cell.second.grid, cell.second.color, true);
+        }
+      }
+
+    } else {
     }
   }
 }
