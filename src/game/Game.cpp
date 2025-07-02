@@ -46,6 +46,7 @@ void Game::init() {
   // g_editor_folder_path = FUtils::get_current_path();
 
   m_camera = new Camera(g_engine->get_window_size());
+  m_camera->set_game_scale(2);
   m_cooldown = new Cooldown();
 
   // initial settings to get last folder and asset
