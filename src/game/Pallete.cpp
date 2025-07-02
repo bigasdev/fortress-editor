@@ -3,6 +3,7 @@
 #include "../core/global.hpp"
 #include "../imgui/imgui.h"
 #include "../renderer/AppGui.hpp"
+#include "../renderer/Camera.hpp"
 #include "../renderer/Renderer.hpp"
 #include "../res/Res.hpp"
 #include "../tools/FUtils.hpp"
@@ -28,12 +29,19 @@ void Pallete::init() {
   }
 
   if (m_cells.empty()) {
-    for (int i = 0; i < 16; ++i) {
-      GridCell cell;
-      cell.grid = {start_pos.x + (i * 32), start_pos.y, 32, 32};
-      cell.color = {255, 255, 255, 15};             // default color
-      cell.m_selected_color = {255, 255, 255, 125}; // selected color
-      m_cells[i] = cell;
+    for (int i = 0; i < 48; ++i) {
+      for (int j = 0; j < 48; ++j) {
+        GridCell cell;
+        cell.grid.x =
+            start_pos.x + i * base_px_w * zoom * g_camera->get_game_scale();
+        cell.grid.y =
+            start_pos.y + j * base_px_w * zoom * g_camera->get_game_scale();
+        cell.grid.w = base_px_w * zoom * g_camera->get_game_scale();
+        cell.grid.h = base_px_w * zoom * g_camera->get_game_scale();
+        cell.color = Col(255, 255, 255, 25);
+        cell.m_selected_color = Col(255, 255, 255, 125);
+        m_cells[{i, j}] = cell;
+      }
     }
   }
 }
@@ -42,18 +50,30 @@ void Pallete::update() {
   Logger::log("Pallete update");
   // changing cells sizes by 8
   if (g_input_manager->get_key_press(SDLK_q)) {
-    for (auto &cell : m_cells) {
-      cell.second.grid.w -= 16;
-      cell.second.grid.h -= 16;
+    if (zoom > 1) {
+      zoom--;
+      for (auto &cell : m_cells) {
+        cell.second.grid.x = start_pos.x + cell.first.x * base_px_w * zoom *
+                                               g_camera->get_game_scale();
+        cell.second.grid.y = start_pos.y + cell.first.y * base_px_w * zoom *
+                                               g_camera->get_game_scale();
+        cell.second.grid.w = base_px_w * zoom * g_camera->get_game_scale();
+        cell.second.grid.h = base_px_w * zoom * g_camera->get_game_scale();
+      }
     }
   }
 
   if (g_input_manager->get_key_press(SDLK_e)) {
-    for (auto &cell : m_cells) {
-      cell.second.grid.x += 16;
-      cell.second.grid.y += 16;
-      cell.second.grid.w += 16;
-      cell.second.grid.h += 16;
+    if (zoom < 8) {
+      zoom++;
+      for (auto &cell : m_cells) {
+        cell.second.grid.x = start_pos.x + cell.first.x * base_px_w * zoom *
+                                               g_camera->get_game_scale();
+        cell.second.grid.y = start_pos.y + cell.first.y * base_px_w * zoom *
+                                               g_camera->get_game_scale();
+        cell.second.grid.w = base_px_w * zoom * g_camera->get_game_scale();
+        cell.second.grid.h = base_px_w * zoom * g_camera->get_game_scale();
+      }
     }
   }
 }
@@ -77,7 +97,11 @@ void Pallete::draw() {
       g_renderer->draw_raw_sheet(m_current_image, start_pos);
 
       for (const auto &cell : m_cells) {
-        if (Mouse::is_at_area(cell.second.grid, 16, 16)) {
+        if (Mouse::is_at_area(cell.second.grid,
+                              base_px_w - 2 * zoom * g_camera->get_game_scale(),
+                              base_px_w -
+                                  2 * zoom * g_camera->get_game_scale())) {
+          Rect cell_rect = cell.second.grid;
           g_renderer->draw_rect(cell.second.grid, cell.second.m_selected_color,
                                 true);
         } else {

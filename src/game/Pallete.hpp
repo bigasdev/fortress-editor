@@ -2,7 +2,6 @@
 
 #include "../tools/Common.hpp"
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 class GPU_Image;
@@ -28,7 +27,9 @@ private:
   std::vector<std::string> m_palettes;
   std::string m_current_palette = "";
 
-  std::unordered_map<int, GridCell> m_cells = {};
+  std::unordered_map<vec2, GridCell> m_cells;
+  int base_px_w = 8;
+  int zoom = 2;
 
   GPU_Image *m_current_image = nullptr;
 };
