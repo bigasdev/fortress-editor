@@ -98,9 +98,8 @@ void Pallete::draw() {
 
       for (const auto &cell : m_cells) {
         if (Mouse::is_at_area(cell.second.grid,
-                              base_px_w - 2 * zoom * g_camera->get_game_scale(),
-                              base_px_w -
-                                  2 * zoom * g_camera->get_game_scale())) {
+                              base_px_w * zoom * g_camera->get_game_scale(),
+                              base_px_w * zoom * g_camera->get_game_scale())) {
           Rect cell_rect = cell.second.grid;
           g_renderer->draw_rect(cell.second.grid, cell.second.m_selected_color,
                                 true);
