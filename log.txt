@@ -19,6 +19,10 @@ Loading font: blueterm
 Loaded font: res/font\blueterm.ttf
 Loading font: code8
 Loaded font: res/font\code8.ttf
+Loading font: fusion10
+Loaded font: res/font\fusion10.ttf
+Loading font: fusion8px
+Loaded font: res/font\fusion8px.ttf
 Loading font: gohu11
 Loaded font: res/font\gohu11.ttf
 Loading font: gohufont-11
@@ -84,22 +88,4 @@ ui
 Tabs initialized
 Game initialized
 Engine post init
-Loading aseprite: concept_map
-Tabs initialized
-Loading aseprite: ui
-Loading aseprite: weapons
-Loading aseprite: concept_sketches
-Loading aseprite: concept_ui
-Loading aseprite: concept_1x1
-Loading aseprite: concept_sketches
-Loading aseprite: concept_map
-Loading aseprite: concept_sketches
-Loading aseprite: concept_ui
-Loading aseprite: concept_sketches
-Loading aseprite: concept_map
-Loading aseprite: concept_1x1
-Loading aseprite: concept
-Loading aseprite: concept_1x1
-Loading aseprite: concept_map
-Loading aseprite: concept_sketches
 SDL2 quit

@@ -5,11 +5,11 @@
 #include "../core/Engine.hpp"
 #include "../core/SoundManager.hpp"
 #include "../core/global.hpp"
+#include "../renderer/Sprite.hpp"
 #include "../tools/Reader.hpp"
 #include "Res.hpp"
 #include "SDL_render.h"
 #include "cute_aseprite.h"
-#include "../renderer/Sprite.hpp"
 #include "json.hpp"
 
 #include "../tools/Logger.hpp"
@@ -64,7 +64,7 @@ void Res::init() {
   load_fonts();
   load_sounds();
   load_aseprites();
-  //load_pallete();
+  // load_pallete();
   load_shaders();
 }
 
@@ -76,7 +76,7 @@ void Res::load_fonts() {
     std::string file_name = path.substr(path.find_last_of("/\\") + 1);
     file_name = file_name.substr(0, file_name.find_last_of("."));
     Logger::log("Loading font: " + file_name);
-    TTF_Font *font = TTF_OpenFont(path.c_str(), 8);
+    TTF_Font *font = TTF_OpenFont(path.c_str(), 10);
     if (font == nullptr) {
       Logger::error("Failed to load font: " + path);
     } else {
@@ -98,7 +98,7 @@ void Res::load_sounds() {
   }
 }
 
-GPU_Image* Res::load_aseprite(const std::string& file) {
+GPU_Image *Res::load_aseprite(const std::string &file) {
   std::string path = file;
   std::string file_name = path.substr(path.find_last_of("/\\") + 1);
   file_name = file_name.substr(0, file_name.find_last_of("."));
@@ -223,9 +223,9 @@ void Res::load_pallete() {
       Logger::log("Loading pixel: " + std::to_string(pixels[pixel]));
       Uint8 r, g, b, a;
 
-      r = pixels[pixel+0];
-      g = pixels[pixel+1];
-      b = pixels[pixel+2];
+      r = pixels[pixel + 0];
+      g = pixels[pixel + 1];
+      b = pixels[pixel + 2];
       a = 255;
 
       Logger::log("Loading color : " + std::to_string(r) + " " +
@@ -287,7 +287,6 @@ void Res::load_prefabs(std::string path) {
         spr.spr_y = offset_y;
 
         m_sprites.insert(std::make_pair(name, spr));
-
 
         Logger::log("Prefab loaded: " + name);
       } catch (nlohmann::json::exception &e) {
@@ -432,4 +431,3 @@ void Res::update() {
   }
 #endif
 }
-
