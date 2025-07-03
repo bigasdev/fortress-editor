@@ -50,8 +50,31 @@ void Pallete::init() {
 }
 
 void Pallete::update() {
+  // loading all the data for the start + after each asset creation
+  if (m_is_dirty) {
+    std::string json_file_path =
+        g_fini->get_value<std::string>("editor", "project_folder") +
+        "\\res\\sprites\\sprites.json";
+    if (FUtils::file_exists(json_file_path)) {
+      std::ifstream file(json_file_path);
+      nlohmann::json existing_json;
+      file >> existing_json;
+      file.close();
+
+      m_grid_data.clear();
+      for (const auto &item : existing_json) {
+        GridData data;
+        data.name = item["name"];
+        data.pallete = item["palette"];
+        m_grid_data.push_back(data);
+      }
+    }
+
+    m_is_dirty = false;
+  }
+
   // changing cells sizes by 8
-  if (g_input_manager->get_key_press(SDLK_q)) {
+  if (g_input_manager->get_key_press(SDLK_q, SDLK_LSHIFT)) {
     if (zoom > 1) {
       zoom--;
       for (auto &cell : m_cells) {
@@ -65,7 +88,7 @@ void Pallete::update() {
     }
   }
 
-  if (g_input_manager->get_key_press(SDLK_e)) {
+  if (g_input_manager->get_key_press(SDLK_e, SDLK_LSHIFT)) {
     if (zoom < 8) {
       zoom++;
       for (auto &cell : m_cells) {
@@ -127,8 +150,20 @@ void Pallete::side_draw() {
           out_file << new_json.dump(4);
           out_file.close();
         }
+
+        m_is_dirty = true;
       } else {
         Logger::log("Please enter a name for the cell.");
+      }
+    }
+  } else {
+  }
+  // sprite collection of the current pallete
+  ImGui::Separator();
+  if (m_current_palette != "") {
+    for (const auto &data : m_grid_data) {
+      if (data.pallete == m_current_palette) {
+        ImGui::Text("Name: %s", data.name.c_str());
       }
     }
   } else {

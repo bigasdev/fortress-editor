@@ -17,6 +17,11 @@ struct GridCell {
   int get_y(int pos) const { return (grid.y - pos) / grid.h; }
 };
 
+struct GridData {
+  std::string name;
+  std::string pallete;
+};
+
 class Pallete {
 public:
   Pallete() = default;
@@ -33,9 +38,12 @@ private:
   std::string m_current_palette = "";
 
   std::unordered_map<vec2, GridCell> m_cells;
+  std::vector<GridData> m_grid_data;
   GridCell *m_selected_cell = nullptr;
   int base_px_w = 8;
   int zoom = 2;
+
+  bool m_is_dirty = true;
 
   GPU_Image *m_current_image = nullptr;
 };
