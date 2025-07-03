@@ -1,6 +1,7 @@
 #include "Pallete.hpp"
 #include "../core/InputManager.hpp"
 #include "../core/global.hpp"
+#include "../imgui/ImGuiUtils.hpp"
 #include "../imgui/imgui.h"
 #include "../renderer/AppGui.hpp"
 #include "../renderer/Camera.hpp"
@@ -12,6 +13,7 @@
 #include "../tools/Mouse.hpp"
 #include "Fini.hpp"
 #include "SDL_keycode.h"
+#include "json.hpp"
 
 vec2 start_pos = {350, 30};
 
@@ -32,6 +34,7 @@ void Pallete::init() {
     for (int i = 0; i < 48; ++i) {
       for (int j = 0; j < 48; ++j) {
         GridCell cell;
+        cell.name = "";
         cell.grid.x =
             start_pos.x + i * base_px_w * zoom * g_camera->get_game_scale();
         cell.grid.y =
@@ -47,7 +50,6 @@ void Pallete::init() {
 }
 
 void Pallete::update() {
-  Logger::log("Pallete update");
   // changing cells sizes by 8
   if (g_input_manager->get_key_press(SDLK_q)) {
     if (zoom > 1) {
@@ -87,6 +89,50 @@ void Pallete::side_draw() {
       }
     }
   }
+  // the asset creator, just add a name check the position and hit the Export!
+  ImGui::Separator();
+  if (m_selected_cell != nullptr) {
+    ImGui::Text("Selected Cell");
+    ImGuiUtils::header_input_text("Name", &m_selected_cell->name);
+    ImGui::Text("X (%d)", m_selected_cell->get_x(start_pos.x));
+    ImGui::Text("Y (%d)", m_selected_cell->get_y(start_pos.y));
+
+    // create or add it to the .json of the assets
+    if (ImGui::Button("Export")) {
+      if (m_selected_cell->name != "") {
+        nlohmann::json asset_json;
+        asset_json["name"] = m_selected_cell->name;
+        asset_json["palette"] = m_current_palette;
+        asset_json["x"] = m_selected_cell->get_x(start_pos.x);
+        asset_json["y"] = m_selected_cell->get_y(start_pos.y);
+        asset_json["width"] = m_selected_cell->grid.w / 2;
+        asset_json["height"] = m_selected_cell->grid.h / 2;
+
+        std::string json_file_path =
+            g_fini->get_value<std::string>("editor", "project_folder") +
+            "\\res\\sprites\\sprites.json";
+
+        if (FUtils::file_exists(json_file_path)) {
+          std::ifstream file(json_file_path);
+          nlohmann::json existing_json;
+          file >> existing_json;
+          file.close();
+          existing_json.push_back(asset_json);
+          std::ofstream out_file(json_file_path);
+          out_file << existing_json.dump(4);
+          out_file.close();
+        } else {
+          std::ofstream out_file(json_file_path);
+          nlohmann::json new_json = {asset_json};
+          out_file << new_json.dump(4);
+          out_file.close();
+        }
+      } else {
+        Logger::log("Please enter a name for the cell.");
+      }
+    }
+  } else {
+  }
 }
 
 void Pallete::draw() {
@@ -96,13 +142,18 @@ void Pallete::draw() {
 
       g_renderer->draw_raw_sheet(m_current_image, start_pos);
 
-      for (const auto &cell : m_cells) {
+      for (auto &cell : m_cells) {
         if (Mouse::is_at_area(cell.second.grid,
                               base_px_w * zoom * g_camera->get_game_scale(),
                               base_px_w * zoom * g_camera->get_game_scale())) {
           Rect cell_rect = cell.second.grid;
           g_renderer->draw_rect(cell.second.grid, cell.second.m_selected_color,
                                 true);
+
+          // click detection, open a popup or just at the side
+          if (g_left_click) {
+            m_selected_cell = &cell.second;
+          }
         } else {
           g_renderer->draw_rect(cell.second.grid, cell.second.color, true);
         }

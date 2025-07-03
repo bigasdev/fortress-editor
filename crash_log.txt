@@ -85,4 +85,7 @@ item_atlas
 logo
 rog_editor_ui
 ui
-ERROR: Signal: 8
+Tabs initialized
+Game initialized
+Engine post init
+ERROR: Signal: 11

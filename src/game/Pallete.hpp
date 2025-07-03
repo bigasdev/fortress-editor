@@ -7,9 +7,14 @@
 class GPU_Image;
 
 struct GridCell {
+  std::string name;
   Rect grid;
   Col color;
   Col m_selected_color;
+
+  int get_x(int pos) const { return (grid.x - pos) / grid.w; }
+
+  int get_y(int pos) const { return (grid.y - pos) / grid.h; }
 };
 
 class Pallete {
@@ -28,6 +33,7 @@ private:
   std::string m_current_palette = "";
 
   std::unordered_map<vec2, GridCell> m_cells;
+  GridCell *m_selected_cell = nullptr;
   int base_px_w = 8;
   int zoom = 2;
 
