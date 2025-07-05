@@ -190,13 +190,13 @@ void Pallete::convert_to_grid() {
         grid_cell.name = cell.name;
         grid_cell.pallete = cell.pallete;
         grid_cell.grid.x =
-            start_pos.x + cell.x * base_px_w * g_camera->get_game_scale();
+            start_pos.x + cell.x * cell.w * g_camera->get_game_scale();
         grid_cell.grid.y =
-            start_pos.y + cell.y * base_px_w * g_camera->get_game_scale();
+            start_pos.y + cell.y * cell.h * g_camera->get_game_scale();
         grid_cell.grid.w = cell.w * g_camera->get_game_scale();
         grid_cell.grid.h = cell.h * g_camera->get_game_scale();
-        grid_cell.color = Col(255, 0, 0, 50);
-        grid_cell.m_selected_color = Col(255, 0, 0, 150);
+        grid_cell.color = Col(0, 255, 0, 25);
+        grid_cell.m_selected_color = Col(255, 0, 0, 100);
 
         m_cells_saved[{cell.x, cell.y}] = grid_cell;
       }
