@@ -85,6 +85,34 @@ item_atlas
 logo
 rog_editor_ui
 ui
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
 Game initialized
 Engine post init
-ERROR: Signal: 11
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
+ERROR: Signal: 22

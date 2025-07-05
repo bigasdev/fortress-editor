@@ -8,9 +8,9 @@ class GridData;
 
 struct Component {
   std::string type;
-  char val[128] = "";
-  char val_1[128] = "";
-  char val_2[128] = "";
+  std::string value;
+  std::string val_1;
+  std::string val_2;
 };
 
 struct ComponentData {
@@ -30,6 +30,7 @@ public:
 
   void init();
   void update();
+  void save();
   void side_draw();
   void draw();
   void clean();
@@ -37,7 +38,7 @@ public:
 private:
   std::vector<GridData> m_grid_data;
 
-  std::unordered_map<std::string, PrefabData> m_prefabs;
+  std::vector<PrefabData> m_prefabs;
   std::unordered_map<std::string, ComponentData> m_components;
 
   PrefabData *m_current_prefab;

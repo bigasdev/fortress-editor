@@ -171,7 +171,9 @@ void Pallete::side_draw() {
   if (m_current_palette != "") {
     for (const auto &data : m_grid_data) {
       if (data.pallete == m_current_palette) {
+        ImGui::PushStyleColor(ImGuiCol_Text, IMGREEN);
         ImGui::Text("Name: %s", data.name.c_str());
+        ImGui::PopStyleColor();
       }
     }
   } else {
@@ -195,7 +197,7 @@ void Pallete::convert_to_grid() {
             start_pos.y + cell.y * cell.h * g_camera->get_game_scale();
         grid_cell.grid.w = cell.w * g_camera->get_game_scale();
         grid_cell.grid.h = cell.h * g_camera->get_game_scale();
-        grid_cell.color = Col(0, 255, 0, 25);
+        grid_cell.color = Col(0, 255, 0, 50);
         grid_cell.m_selected_color = Col(255, 0, 0, 100);
 
         m_cells_saved[{cell.x, cell.y}] = grid_cell;

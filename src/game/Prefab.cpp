@@ -81,14 +81,22 @@ void Prefab::init() {
             Logger::log(var_type);
             std::string var_name =
                 line.substr(type_end + 1, line.find('=') - (type_end + 1) - 1);
-            Logger::log(var_name);
             var_name = std::regex_replace(var_name, std::regex(";"),
                                           ""); // Trim trailing spaces
+            Logger::log(var_name);
+
+            auto default_value = line.substr(
+                var_start, line.find(';') - var_start); // Get the default value
             Component var;
-            var.type = var_name;
-            var.val[0] = '\0';
-            var.val_1[0] = '\0';
-            var.val_2[0] = '\0';
+            var.type = var_type;
+            var.value = var_name;
+            if (var_type == "vec2") {
+              var.val_1 = "0";
+              var.val_2 = "0";
+            } else {
+              var.val_1 = default_value;
+              var.val_2 = "";
+            }
 
             data.variables.push_back({var_type, var});
           }
@@ -108,35 +116,93 @@ void Prefab::side_draw() {
   if (ImGui::Button("Add New")) {
     PrefabData newPrefab;
     newPrefab.name = "New Prefab";
-    m_prefabs[newPrefab.name] = newPrefab;
+    m_prefabs.push_back(newPrefab);
   }
 
   ImGui::Separator();
 
-  for (auto &pair : m_prefabs) {
-    auto &data = pair.second;
+  for (auto &data : m_prefabs) {
+    ImGui::PushStyleColor(ImGuiCol_Text, IMGREEN);
     if (ImGui::Button(data.name.c_str())) {
 
       m_current_prefab = &data;
     }
-
-    ImGui::SameLine();
-    if (ImGui::Button("Delete")) {
-      m_current_prefab = nullptr;
-      m_prefabs.erase(data.name);
-    }
+    ImGui::PopStyleColor();
   }
+}
+
+void Prefab::save() {
+  std::string json_file_path =
+      g_fini->get_value<std::string>("editor", "project_folder") +
+      "\\res\\prefabs\\" + "prefabs.json";
+
+  if (json_file_path.empty()) {
+    Logger::log("Prefab JSON file path is empty.");
+    return;
+  }
+
+  nlohmann::json prefab_json;
+  for (const auto &prefab : m_prefabs) {
+    nlohmann::json prefab_data;
+    prefab_data["name"] = prefab.name;
+
+    for (const auto &component : prefab.components) {
+      nlohmann::json component_data;
+      component_data["name"] = component.name;
+
+      for (const auto &var : component.variables) {
+        nlohmann::json variable_data;
+        if (var.second.type == "vec2") {
+          variable_data["value"] =
+              "{" + var.second.val_1 + ", " + var.second.val_2 + "}";
+        } else {
+          variable_data["value"] = var.second.val_1;
+        }
+
+        component_data["variables"].push_back(variable_data);
+      }
+
+      prefab_data["components"].push_back(component_data);
+    }
+
+    prefab_json.push_back(prefab_data);
+  }
+
+  std::ofstream file(json_file_path);
+  file << prefab_json.dump(4);
+  file.close();
 }
 
 void Prefab::draw() {
   if (m_current_prefab != nullptr) {
     ImGuiUtils::header_input_text("Prefab Name", &m_current_prefab->name);
+    ImGui::SameLine();
+    ImGui::PushStyleColor(ImGuiCol_Text, IMYELLOW);
+    if (ImGui::Button("Save Prefab")) {
+      save();
+    }
+    ImGui::PopStyleColor();
 
     for (auto &component : m_current_prefab->components) {
       ImGui::Text("Component: %s", component.name.c_str());
-      for (const auto &var : component.variables) {
-        ImGui::Text("Type: %s, Name: %s", var.first.c_str(),
-                    var.second.type.c_str());
+      for (auto &var : component.variables) {
+        ImGui::Text("Type: %s", var.first.c_str());
+        ImGui::SameLine();
+        ImGui::PushStyleColor(ImGuiCol_Text, IMGREEN);
+
+        if (var.second.type == "vec2") {
+          ImGuiUtils::header_input_text(var.second.value + " X",
+                                        &var.second.val_1);
+          ImGuiUtils::header_input_text(var.second.value + " Y",
+                                        &var.second.val_2);
+
+          ImGui::PopStyleColor();
+          continue;
+        }
+
+        ImGuiUtils::header_input_text((var.second.value).c_str(),
+                                      &var.second.val_1);
+        ImGui::PopStyleColor();
       }
       if (ImGui::Button(("Remove Component##" + component.name).c_str())) {
       }
