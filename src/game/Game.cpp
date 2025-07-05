@@ -133,8 +133,6 @@ void Game::draw_ent() {
   }*/
   if (m_current_tab == Tab::PALLETES) {
     m_pallete->draw();
-  } else if (m_current_tab == Tab::PREFABS) {
-    m_prefab->draw();
   }
 }
 
@@ -201,6 +199,7 @@ void Game::imgui_map() {
   case Tab::PALLETES:
     break;
   case Tab::PREFABS:
+    m_prefab->draw();
     break;
   default:
     ImGui::Text("Unknown tab selected");

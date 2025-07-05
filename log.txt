@@ -85,15 +85,34 @@ item_atlas
 logo
 rog_editor_ui
 ui
-Tabs initialized
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
 Game initialized
 Engine post init
-Loading aseprite: char
-Loading aseprite: main
-Loading aseprite: knightsheet
-Loading aseprite: mini-ui
-Loading aseprite: knightsheet
-Loading aseprite: main
-Loading aseprite: game_scene
-Loading aseprite: char
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
 SDL2 quit
