@@ -35,6 +35,7 @@ void Pallete::init() {
       for (int j = 0; j < 48; ++j) {
         GridCell cell;
         cell.name = "";
+        cell.pallete = "";
         cell.grid.x =
             start_pos.x + i * base_px_w * zoom * g_camera->get_game_scale();
         cell.grid.y =
@@ -66,9 +67,15 @@ void Pallete::update() {
         GridData data;
         data.name = item["name"];
         data.pallete = item["palette"];
+        data.x = item["x"];
+        data.y = item["y"];
+        data.w = item["width"];
+        data.h = item["height"];
         m_grid_data.push_back(data);
       }
     }
+
+    convert_to_grid();
 
     m_is_dirty = false;
   }
@@ -109,6 +116,7 @@ void Pallete::side_draw() {
       if (ImGui::Button((FUtils::get_file_name(pallete)).c_str())) {
         m_current_palette = pallete;
         m_current_image = g_res->load_aseprite(m_current_palette);
+        convert_to_grid();
       }
     }
   }
@@ -170,6 +178,32 @@ void Pallete::side_draw() {
   }
 }
 
+// FIX: this will be later converted to a res function to load the sprites from
+// the data at least the idea
+void Pallete::convert_to_grid() {
+  m_cells_saved.clear();
+  // convert the current image to a grid
+  if (m_current_palette != "") {
+    for (auto &cell : m_grid_data) {
+      if (cell.pallete == m_current_palette) {
+        GridCell grid_cell;
+        grid_cell.name = cell.name;
+        grid_cell.pallete = cell.pallete;
+        grid_cell.grid.x =
+            start_pos.x + cell.x * base_px_w * g_camera->get_game_scale();
+        grid_cell.grid.y =
+            start_pos.y + cell.y * base_px_w * g_camera->get_game_scale();
+        grid_cell.grid.w = cell.w * g_camera->get_game_scale();
+        grid_cell.grid.h = cell.h * g_camera->get_game_scale();
+        grid_cell.color = Col(255, 0, 0, 50);
+        grid_cell.m_selected_color = Col(255, 0, 0, 150);
+
+        m_cells_saved[{cell.x, cell.y}] = grid_cell;
+      }
+    }
+  }
+}
+
 void Pallete::draw() {
   if (m_current_palette != "") {
 
@@ -188,6 +222,27 @@ void Pallete::draw() {
           // click detection, open a popup or just at the side
           if (g_left_click) {
             m_selected_cell = &cell.second;
+          }
+        } else {
+          g_renderer->draw_rect(cell.second.grid, cell.second.color, true);
+        }
+      }
+
+      // drawing the saved cells to give a feedback
+      for (const auto &cell : m_cells_saved) {
+        if (m_current_palette != cell.second.pallete) {
+          continue;
+        }
+
+        if (Mouse::is_at_area(cell.second.grid,
+                              base_px_w * zoom * g_camera->get_game_scale(),
+                              base_px_w * zoom * g_camera->get_game_scale())) {
+          Rect cell_rect = cell.second.grid;
+          g_renderer->draw_rect(cell.second.grid, cell.second.m_selected_color,
+                                true);
+
+          // click detection, but in this case it will trigger a warning??
+          if (g_left_click) {
           }
         } else {
           g_renderer->draw_rect(cell.second.grid, cell.second.color, true);

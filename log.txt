@@ -89,18 +89,16 @@ Tabs initialized
 Game initialized
 Engine post init
 Loading aseprite: char
-Loading aseprite: mini-ui
-Loading aseprite: knightsheet
-Loading aseprite: mini-ui
-Loading aseprite: char
 Loading aseprite: game_scene
 Loading aseprite: main
 Loading aseprite: knightsheet
 Loading aseprite: mini-ui
 Loading aseprite: knightsheet
+Loading aseprite: main
+Loading aseprite: main
+Loading aseprite: main
+Loading aseprite: game_scene
 Loading aseprite: char
 Loading aseprite: mini-ui
 Loading aseprite: knightsheet
-Tabs initialized
-Tabs initialized
 SDL2 quit

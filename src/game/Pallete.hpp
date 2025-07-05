@@ -8,6 +8,7 @@ class GPU_Image;
 
 struct GridCell {
   std::string name;
+  std::string pallete;
   Rect grid;
   Col color;
   Col m_selected_color;
@@ -20,6 +21,11 @@ struct GridCell {
 struct GridData {
   std::string name;
   std::string pallete;
+
+  int w = 0;
+  int h = 0;
+  int x = 0;
+  int y = 0;
 };
 
 class Pallete {
@@ -30,6 +36,7 @@ public:
   void init();
   void update();
   void side_draw();
+  void convert_to_grid();
   void draw();
   void clean();
 
@@ -38,6 +45,7 @@ private:
   std::string m_current_palette = "";
 
   std::unordered_map<vec2, GridCell> m_cells;
+  std::unordered_map<vec2, GridCell> m_cells_saved;
   std::vector<GridData> m_grid_data;
   GridCell *m_selected_cell = nullptr;
   int base_px_w = 8;
