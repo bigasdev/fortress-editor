@@ -120,6 +120,20 @@ void Pallete::side_draw() {
       }
     }
   }
+  if (ImGui::IsMouseReleased(ImGuiMouseButton_Right)) {
+    ImGui::OpenPopup("PalleteOptions");
+  }
+
+  if (ImGui::BeginPopup("PalleteOptions")) {
+    if (ImGui::MenuItem("Open Folder")) {
+      std::string folder_path =
+          g_fini->get_value<std::string>("editor", "project_folder") + "\\res";
+      if (FUtils::folder_exists(folder_path)) {
+        FUtils::open_folder(folder_path);
+      }
+    }
+    ImGui::EndPopup();
+  }
   // the asset creator, just add a name check the position and hit the Export!
   ImGui::Separator();
   if (m_selected_cell != nullptr) {
@@ -133,7 +147,8 @@ void Pallete::side_draw() {
       if (m_selected_cell->name != "") {
         nlohmann::json asset_json;
         asset_json["name"] = m_selected_cell->name;
-        asset_json["palette"] = m_current_palette;
+        asset_json["palette"] =
+            FUtils::get_filename_without_extension(m_current_palette);
         asset_json["x"] = m_selected_cell->get_x(start_pos.x);
         asset_json["y"] = m_selected_cell->get_y(start_pos.y);
         asset_json["width"] = m_selected_cell->grid.w / 2;
@@ -170,7 +185,8 @@ void Pallete::side_draw() {
   ImGui::Separator();
   if (m_current_palette != "") {
     for (const auto &data : m_grid_data) {
-      if (data.pallete == m_current_palette) {
+      if (data.pallete ==
+          FUtils::get_filename_without_extension(m_current_palette)) {
         ImGui::PushStyleColor(ImGuiCol_Text, IMGREEN);
         ImGui::Text("Name: %s", data.name.c_str());
         ImGui::PopStyleColor();
@@ -187,7 +203,8 @@ void Pallete::convert_to_grid() {
   // convert the current image to a grid
   if (m_current_palette != "") {
     for (auto &cell : m_grid_data) {
-      if (cell.pallete == m_current_palette) {
+      if (cell.pallete ==
+          FUtils::get_filename_without_extension(m_current_palette)) {
         GridCell grid_cell;
         grid_cell.name = cell.name;
         grid_cell.pallete = cell.pallete;
@@ -232,7 +249,8 @@ void Pallete::draw() {
 
       // drawing the saved cells to give a feedback
       for (const auto &cell : m_cells_saved) {
-        if (m_current_palette != cell.second.pallete) {
+        if (FUtils::get_filename_without_extension(m_current_palette) !=
+            cell.second.pallete) {
           continue;
         }
 
