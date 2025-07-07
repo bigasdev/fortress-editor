@@ -1,0 +1,31 @@
+#include "{{CLASS_NAME}}.hpp"
+
+#include "../core/global.hpp"
+#include "../components/IComponent.hpp"
+#include "../entity/GameAsset.hpp"
+#include "../tools/Logger.hpp"
+#include "../core/GameManager.hpp"
+
+void {{CLASS_NAME}}::awake() {
+
+}
+
+void {{CLASS_NAME}}::start() {
+
+}
+
+void {{CLASS_NAME}}::update(double dt) {
+
+}
+
+void {{CLASS_NAME}}::fixed_update(double tmod) {
+
+}
+
+void {{CLASS_NAME}}::render() {
+
+}
+
+void {{CLASS_NAME}}::dispose() {
+
+}

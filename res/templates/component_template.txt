@@ -1,0 +1,14 @@
+#pragma once
+#include "IComponent.hpp"
+#include "../tools/Common.hpp"
+#include "../core/GameManager.hpp"
+
+class {{CLASS_NAME}} : public IComponent
+{
+  public:
+    ~{{CLASS_NAME}}() override = default;
+
+    void register_component(GameManager* game_manager, EntityID entity_id) override {
+        game_manager->add_component<{{CLASS_NAME}}>(entity_id, *this);
+    }
+};
