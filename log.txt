@@ -87,4 +87,11 @@ rog_editor_ui
 ui
 Game initialized
 Engine post init
+System created: TestManagerSystem
+Loading aseprite: character_atlas
+Loading aseprite: items_atlas
+Loading aseprite: character_atlas
+Loading aseprite: items_atlas
+Loading aseprite: character_atlas
+Loading aseprite: items_atlas
 SDL2 quit
