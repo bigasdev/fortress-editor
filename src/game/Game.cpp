@@ -157,18 +157,44 @@ void Game::imgui_map() {
   // tab selection, i.e the main screen at the editor
   ImGui::BeginChild("Tabs", ImVec2(150, 0), true,
                     ImGuiWindowFlags_AlwaysUseWindowPadding);
-  if (ImGui::Button(" Editor")) {
-    m_current_tab = Tab::EDITOR;
-    m_editor->init();
-  }
-  if (ImGui::Button(" Palettes")) {
-    m_current_tab = Tab::PALLETES;
-    m_pallete->init();
-  }
-  if (ImGui::Button(" Prefabs")) {
-    m_current_tab = Tab::PREFABS;
-    m_prefab->init();
-  }
+
+  ImDrawList *draw_list = ImGui::GetWindowDrawList();
+  ImVec2 start_pos = ImGui::GetCursorScreenPos();
+
+  float button_width = 120.0f;
+  float button_height = 30.0f;
+  float spacing = 10.0f;
+
+  auto tab_button = [&](const char *label, Tab tab, ImU32 color) {
+    ImVec2 p = ImGui::GetCursorScreenPos();
+
+    draw_list->AddRectFilled(p, ImVec2(p.x + button_width, p.y + button_height),
+                             color);
+
+    ImGui::SetCursorScreenPos(ImVec2(p.x + spacing, p.y));
+    if (ImGui::Button(label, ImVec2(button_width, button_height))) {
+      m_current_tab = tab;
+      switch (tab) {
+      case Tab::EDITOR:
+        m_editor->init();
+        break;
+      case Tab::PALLETES:
+        m_pallete->init();
+        break;
+      case Tab::PREFABS:
+        m_prefab->init();
+        break;
+      default:
+        Logger::log("Unknown tab selected");
+        break;
+      }
+    }
+  };
+
+  tab_button("  Editor", Tab::EDITOR, IM_COL32(63, 113, 166, 255));
+  tab_button(" Palettes", Tab::PALLETES, IM_COL32(210, 88, 38, 255));
+  tab_button(" Prefabs", Tab::PREFABS, IM_COL32(90, 139, 90, 255));
+
   ImGui::EndChild();
   ImGui::SameLine();
   if (m_current_tab != Tab::EDITOR) {
