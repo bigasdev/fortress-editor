@@ -41,14 +41,16 @@ void Editor::init() {
 void Editor::update() {}
 
 void Editor::draw() {
-  ImGuiUtils::header_input_text("Project Folder", &buffer_project_folder);
-  if (buffer_project_folder != project_folder) {
-    g_fini->set_value("editor", "project_folder", buffer_project_folder);
-    project_folder = buffer_project_folder;
+  if (ImGui::CollapsingHeader(" Editor")) {
+    ImGuiUtils::header_input_text(" Project Folder", &buffer_project_folder);
+    if (buffer_project_folder != project_folder) {
+      g_fini->set_value("editor", "project_folder", buffer_project_folder);
+      project_folder = buffer_project_folder;
+    }
   }
 
-  if (ImGui::CollapsingHeader("Component")) {
-    ImGuiUtils::header_input_text("Components Folder",
+  if (ImGui::CollapsingHeader(" Component")) {
+    ImGuiUtils::header_input_text(" Components Folder",
                                   &buffer_components_folder);
     if (buffer_components_folder != components_folder) {
       g_fini->set_value("editor", "components_folder",
@@ -87,8 +89,8 @@ void Editor::draw() {
     }
   }
 
-  if (ImGui::CollapsingHeader("System")) {
-    ImGuiUtils::header_input_text("Systems Folder", &buffer_systems_folder);
+  if (ImGui::CollapsingHeader(" System")) {
+    ImGuiUtils::header_input_text(" Systems Folder", &buffer_systems_folder);
     if (buffer_systems_folder != systems_folder) {
       g_fini->set_value("editor", "systems_folder", buffer_systems_folder);
       systems_folder = buffer_systems_folder;

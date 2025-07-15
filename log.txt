@@ -101,18 +101,7 @@ bool
 flip_y
 Game initialized
 Engine post init
-float
-speed
-std::string
-name
-vec2
-pos
-vec2
-scale
-float
-rotation
-bool
-flip_x
-bool
-flip_y
+Loading aseprite: character_atlas
+Loading aseprite: items_atlas
+Loading aseprite: character_atlas
 SDL2 quit
