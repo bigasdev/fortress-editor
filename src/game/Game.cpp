@@ -106,7 +106,7 @@ void Game::update(double dt) {
     m_pallete->update();
     break;
   case Tab::PREFABS:
-    // m_prefab->update();
+    m_prefab->update();
     break;
   default:
     Logger::log("Unknown tab selected");
@@ -165,10 +165,10 @@ void Game::imgui_map() {
     m_current_tab = Tab::PALLETES;
     m_pallete->init();
   }
-  /*if (ImGui::Button(" Prefabs")) {
+  if (ImGui::Button(" Prefabs")) {
     m_current_tab = Tab::PREFABS;
     m_prefab->init();
-  }*/
+  }
   ImGui::EndChild();
   ImGui::SameLine();
   if (m_current_tab != Tab::EDITOR) {
@@ -180,7 +180,7 @@ void Game::imgui_map() {
       m_pallete->side_draw();
       break;
     case Tab::PREFABS:
-      // m_prefab->side_draw();
+      m_prefab->side_draw();
       break;
     default:
       ImGui::Text("Unknown tab selected");
@@ -199,7 +199,7 @@ void Game::imgui_map() {
   case Tab::PALLETES:
     break;
   case Tab::PREFABS:
-    // m_prefab->draw();
+    m_prefab->draw();
     break;
   default:
     ImGui::Text("Unknown tab selected");

@@ -85,13 +85,49 @@ item_atlas
 logo
 rog_editor_ui
 ui
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
 Game initialized
 Engine post init
-System created: TestManagerSystem
-Loading aseprite: character_atlas
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
 Loading aseprite: items_atlas
-Loading aseprite: character_atlas
-Loading aseprite: items_atlas
-Loading aseprite: character_atlas
-Loading aseprite: items_atlas
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
 SDL2 quit
