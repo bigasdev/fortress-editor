@@ -21,8 +21,8 @@ void GUI::setup(SDL_Window *window, SDL_GLContext &renderer) {
   // styling
 
   ImGuiStyle &style = ImGui::GetStyle();
-  style.WindowRounding = 5.3f;
-  style.FrameRounding = 2.3f;
+  style.WindowRounding = 0;
+  style.FrameRounding = 0;
   style.ScrollbarRounding = 0;
 
   style.Colors[ImGuiCol_Text] = ImVec4(0.90f, 0.90f, 0.90f, 0.90f);

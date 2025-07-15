@@ -161,7 +161,7 @@ void Game::imgui_map() {
   ImDrawList *draw_list = ImGui::GetWindowDrawList();
   ImVec2 start_pos = ImGui::GetCursorScreenPos();
 
-  float button_width = 120.0f;
+  float button_width = 122.0f;
   float button_height = 30.0f;
   float spacing = 10.0f;
 
