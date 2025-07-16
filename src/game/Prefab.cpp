@@ -116,17 +116,19 @@ void Prefab::side_draw() {
   if (ImGui::Button(" Add New", ImVec2(132, 30))) {
     PrefabData newPrefab;
     newPrefab.name = "New Prefab";
+    newPrefab.components.clear();
     m_prefabs.push_back(newPrefab);
   }
 
   ImGui::Separator();
 
   for (auto &data : m_prefabs) {
-    if (ImGui::Button((" " + data.name).c_str(), ImVec2(132, 30))) {
+    std::string button_label = "  " + data.name;
+    if (ImGui::Button(button_label.c_str(), ImVec2(132, 30))) {
 
+      m_current_prefab = nullptr;
       m_current_prefab = &data;
     }
-    ImGui::PopStyleColor();
   }
 }
 
@@ -176,11 +178,9 @@ void Prefab::draw() {
   if (m_current_prefab != nullptr) {
     ImGuiUtils::header_input_text("Prefab Name", &m_current_prefab->name);
     ImGui::SameLine();
-    ImGui::PushStyleColor(ImGuiCol_Text, IMYELLOW);
     if (ImGui::Button("Save Prefab")) {
       save();
     }
-    ImGui::PopStyleColor();
 
     for (auto &component : m_current_prefab->components) {
       ImGui::Text("Component: %s", component.name.c_str());

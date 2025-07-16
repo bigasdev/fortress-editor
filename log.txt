@@ -101,4 +101,18 @@ bool
 flip_y
 Game initialized
 Engine post init
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
 SDL2 quit
