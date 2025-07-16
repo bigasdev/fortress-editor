@@ -60,6 +60,18 @@ void Game::init() {
   g_fini = fini;*/
 
   fini = new Fini("res/editor.ini");
+  fini->initialize_value("memory", "tab", "editor");
+  auto tab = fini->get_value<std::string>("memory", "tab");
+  if (tab == "editor") {
+    m_current_tab = Tab::EDITOR;
+  } else if (tab == "pallete") {
+    m_current_tab = Tab::PALLETES;
+  } else if (tab == "prefab") {
+    m_current_tab = Tab::PREFABS;
+  } else {
+    Logger::log("Unknown tab in memory, defaulting to editor");
+    m_current_tab = Tab::EDITOR;
+  }
   g_fini = fini;
 
   Logger::log("Game init");
@@ -176,12 +188,15 @@ void Game::imgui_map() {
       m_current_tab = tab;
       switch (tab) {
       case Tab::EDITOR:
+        g_fini->set_value("memory", "tab", "editor");
         m_editor->init();
         break;
       case Tab::PALLETES:
+        g_fini->set_value("memory", "tab", "pallete");
         m_pallete->init();
         break;
       case Tab::PREFABS:
+        g_fini->set_value("memory", "tab", "prefab");
         m_prefab->init();
         break;
       default:

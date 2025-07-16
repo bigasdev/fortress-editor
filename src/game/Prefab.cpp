@@ -113,7 +113,7 @@ void Prefab::update() {
 }
 
 void Prefab::side_draw() {
-  if (ImGui::Button("Add New")) {
+  if (ImGui::Button(" Add New", ImVec2(132, 30))) {
     PrefabData newPrefab;
     newPrefab.name = "New Prefab";
     m_prefabs.push_back(newPrefab);
@@ -122,8 +122,7 @@ void Prefab::side_draw() {
   ImGui::Separator();
 
   for (auto &data : m_prefabs) {
-    ImGui::PushStyleColor(ImGuiCol_Text, IMGREEN);
-    if (ImGui::Button(data.name.c_str())) {
+    if (ImGui::Button((" " + data.name).c_str(), ImVec2(132, 30))) {
 
       m_current_prefab = &data;
     }

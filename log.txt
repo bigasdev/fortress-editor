@@ -101,7 +101,4 @@ bool
 flip_y
 Game initialized
 Engine post init
-Loading aseprite: character_atlas
-Loading aseprite: items_atlas
-Loading aseprite: character_atlas
 SDL2 quit
