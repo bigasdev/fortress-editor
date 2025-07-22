@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../tools/Common.hpp"
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -23,6 +24,13 @@ struct PrefabData {
   std::vector<ComponentData> components;
 };
 
+// new system!!! sdl gpu map
+struct OptionMenu {
+  std::vector<std::string> options;
+  vec2 pos;
+  bool is_open = false;
+}
+
 class Prefab {
 public:
   Prefab() = default;
@@ -42,4 +50,8 @@ private:
   std::unordered_map<std::string, ComponentData> m_components;
 
   PrefabData *m_current_prefab;
+
+  // new system!!! sdl gpu map
+  OptionMenu m_option_menu;
+  bool m_is_on_grid = false;
 };

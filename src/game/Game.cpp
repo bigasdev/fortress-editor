@@ -146,6 +146,10 @@ void Game::draw_ent() {
   if (m_current_tab == Tab::PALLETES) {
     m_pallete->draw();
   }
+
+  if (m_current_tab == Tab::PREFABS) {
+    m_prefab->draw();
+  }
 }
 
 void Game::draw_ui() {}
@@ -212,7 +216,7 @@ void Game::imgui_map() {
 
   ImGui::EndChild();
   ImGui::SameLine();
-  if (m_current_tab != Tab::EDITOR) {
+  if (m_current_tab != Tab::EDITOR && m_current_tab != Tab::PREFABS) {
     ImGui::BeginChild("SideMenu", ImVec2(150, 0), true,
                       ImGuiWindowFlags_AlwaysUseWindowPadding);
 
@@ -221,7 +225,7 @@ void Game::imgui_map() {
       m_pallete->side_draw();
       break;
     case Tab::PREFABS:
-      m_prefab->side_draw();
+      // m_prefab->side_draw();
       break;
     default:
       ImGui::Text("Unknown tab selected");
@@ -240,7 +244,7 @@ void Game::imgui_map() {
   case Tab::PALLETES:
     break;
   case Tab::PREFABS:
-    m_prefab->draw();
+    // m_prefab->draw();
     break;
   default:
     ImGui::Text("Unknown tab selected");

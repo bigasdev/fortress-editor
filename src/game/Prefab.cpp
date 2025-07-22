@@ -3,9 +3,12 @@
 #include "../imgui/ImGuiUtils.hpp"
 #include "../imgui/imgui.h"
 #include "../renderer/AppGui.hpp"
+#include "../renderer/Renderer.hpp"
+#include "../res/Res.hpp"
 #include "../tools/FUtils.hpp"
 #include "../tools/Logger.hpp"
 #include "../tools/Math.hpp"
+#include "../tools/Mouse.hpp"
 #include "DataLoader.hpp"
 #include "Fini.hpp"
 #include "Pallete.hpp"
@@ -109,28 +112,25 @@ void Prefab::init() {
 }
 
 void Prefab::update() {
-  // Update logic for tabs can be added here
-}
-
-void Prefab::side_draw() {
-  if (ImGui::Button(" Add New", ImVec2(132, 30))) {
-    PrefabData newPrefab;
-    newPrefab.name = "New Prefab";
-    newPrefab.components.clear();
-    m_prefabs.push_back(newPrefab);
+  auto mouse_pos = Mouse::get_mouse_pos();
+  if (mouse_pos.x > 167) {
+    m_is_on_grid = true;
+    return;
+  } else {
+    m_is_on_grid = false;
   }
 
-  ImGui::Separator();
+  if (!m_is_on_grid) {
+    return;
+  }
 
-  for (auto &data : m_prefabs) {
-    std::string button_label = "  " + data.name;
-    if (ImGui::Button(button_label.c_str(), ImVec2(132, 30))) {
-
-      m_current_prefab = nullptr;
-      m_current_prefab = &data;
-    }
+  if (g_left_click) {
+    m_option_menu.is_open = !m_option_menu.is_open;
+    m_option_menu.pos = mouse_pos;
   }
 }
+
+void Prefab::side_draw() {}
 
 void Prefab::save() {
   std::string json_file_path =
@@ -175,72 +175,8 @@ void Prefab::save() {
 }
 
 void Prefab::draw() {
-  if (m_current_prefab != nullptr) {
-    ImGuiUtils::header_input_text("Prefab Name", &m_current_prefab->name);
-    ImGui::SameLine();
-    if (ImGui::Button("Save Prefab")) {
-      save();
-    }
-
-    for (auto &component : m_current_prefab->components) {
-      ImGui::Text("Component: %s", component.name.c_str());
-      for (auto &var : component.variables) {
-        ImGui::Text("Type: %s", var.first.c_str());
-        ImGui::SameLine();
-        ImGui::PushStyleColor(ImGuiCol_Text, IMGREEN);
-
-        if (var.second.type == "vec2") {
-          ImGuiUtils::header_input_text(var.second.value + " X",
-                                        &var.second.val_1);
-          ImGuiUtils::header_input_text(var.second.value + " Y",
-                                        &var.second.val_2);
-
-          ImGui::PopStyleColor();
-          continue;
-        }
-
-        ImGuiUtils::header_input_text((var.second.value).c_str(),
-                                      &var.second.val_1);
-        ImGui::PopStyleColor();
-      }
-      if (ImGui::Button(("Remove Component##" + component.name).c_str())) {
-      }
-    }
-
-    ImGui::Separator();
-
-    // dropdown list with all the components
-    static int selected_component = -1;
-    std::vector<std::string> component_names;
-    for (const auto &pair : m_components) {
-      component_names.push_back(pair.first);
-    }
-    if (ImGui::BeginCombo("Components",
-                          selected_component == -1
-                              ? "Select Component"
-                              : component_names[selected_component].c_str())) {
-      for (int i = 0; i < component_names.size(); ++i) {
-        bool is_selected = (selected_component == i);
-        if (ImGui::Selectable(component_names[i].c_str(), is_selected)) {
-          selected_component = i;
-        }
-        if (is_selected) {
-          ImGui::SetItemDefaultFocus();
-        }
-      }
-      ImGui::EndCombo();
-    }
-
-    if (ImGui::Button("Add Component") && selected_component != -1) {
-      std::string component_name = component_names[selected_component];
-      if (m_components.find(component_name) != m_components.end()) {
-        ComponentData &comp_data = m_components[component_name];
-        m_current_prefab->components.push_back(comp_data);
-      }
-    }
-  } else {
-    ImGui::Text("No prefab selected.");
-  }
+  // g_renderer->draw_text({170, 300}, mouse_pos_text.c_str(),
+  // g_res->get_font("fusion10"), {255, 255, 255, 255}, 1);
 }
 
 void Prefab::clean() { Logger::log("Tabs cleaned"); }
