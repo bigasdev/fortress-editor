@@ -29,7 +29,7 @@ struct OptionMenu {
   std::vector<std::string> options;
   vec2 pos;
   bool is_open = false;
-}
+};
 
 class Prefab {
 public:

@@ -99,6 +99,4 @@ bool
 flip_x
 bool
 flip_y
-Game initialized
-Engine post init
 ERROR: Signal: 11

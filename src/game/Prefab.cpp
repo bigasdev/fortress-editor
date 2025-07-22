@@ -109,13 +109,15 @@ void Prefab::init() {
       m_components[data.name] = data;
     }
   }
+
+  m_option_menu.options.clear();
+  m_option_menu.options.push_back("Create Prefab");
 }
 
 void Prefab::update() {
   auto mouse_pos = Mouse::get_mouse_pos();
   if (mouse_pos.x > 167) {
     m_is_on_grid = true;
-    return;
   } else {
     m_is_on_grid = false;
   }
@@ -124,9 +126,11 @@ void Prefab::update() {
     return;
   }
 
-  if (g_left_click) {
+  if (g_right_click) {
+    Logger::log("Right click on prefab tab");
     m_option_menu.is_open = !m_option_menu.is_open;
     m_option_menu.pos = mouse_pos;
+    g_right_click = false;
   }
 }
 
@@ -177,6 +181,14 @@ void Prefab::save() {
 void Prefab::draw() {
   // g_renderer->draw_text({170, 300}, mouse_pos_text.c_str(),
   // g_res->get_font("fusion10"), {255, 255, 255, 255}, 1);
+  if (m_option_menu.is_open) {
+    g_renderer->draw_rect({m_option_menu.pos.x, m_option_menu.pos.y, 96, 24},
+                          {125, 125, 125, 120}, false);
+
+    g_renderer->draw_text({m_option_menu.pos.x + 3, m_option_menu.pos.y + 3},
+                          "Create Prefab", g_res->get_font("fusion10"),
+                          {255, 255, 255, 255}, 1);
+  }
 }
 
 void Prefab::clean() { Logger::log("Tabs cleaned"); }

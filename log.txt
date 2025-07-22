@@ -101,4 +101,112 @@ bool
 flip_y
 Game initialized
 Engine post init
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Loading aseprite: items_atlas
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
+Right click on prefab tab
 SDL2 quit
