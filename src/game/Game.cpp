@@ -225,7 +225,7 @@ void Game::imgui_map() {
       m_pallete->side_draw();
       break;
     case Tab::PREFABS:
-      // m_prefab->side_draw();
+      m_prefab->side_draw();
       break;
     default:
       ImGui::Text("Unknown tab selected");
@@ -244,7 +244,7 @@ void Game::imgui_map() {
   case Tab::PALLETES:
     break;
   case Tab::PREFABS:
-    // m_prefab->draw();
+    m_prefab->side_draw();
     break;
   default:
     ImGui::Text("Unknown tab selected");

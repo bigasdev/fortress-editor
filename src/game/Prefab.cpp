@@ -132,12 +132,27 @@ void Prefab::update() {
     m_option_menu.pos = mouse_pos;
     g_right_click = false;
   }
+
+  if (g_left_click) {
+    if (m_option_menu.is_open) {
+      if (Mouse::is_at_area({m_option_menu.pos.x, m_option_menu.pos.y, 96, 24},
+                            16, 16)) {
+
+        m_option_menu.is_open = false;
+      }
+    }
+  }
 }
 
-void Prefab::side_draw() {}
+void Prefab::side_draw() {
+  Logger::log("Prefab side draw");
+  ImGui::Begin("Hello World!");
+  ImGui::Text("Hello World!");
+  ImGui::End();
+}
 
 void Prefab::save() {
-  std::string json_file_path =
+  /*std::string json_file_path =
       g_fini->get_value<std::string>("editor", "project_folder") +
       "\\res\\prefabs\\" + "prefabs.json";
 
@@ -175,7 +190,7 @@ void Prefab::save() {
 
   std::ofstream file(json_file_path);
   file << prefab_json.dump(4);
-  file.close();
+  file.close();*/
 }
 
 void Prefab::draw() {
