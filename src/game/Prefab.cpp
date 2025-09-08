@@ -201,7 +201,7 @@ void Prefab::draw() {
                           {125, 125, 125, 120}, false);
 
     g_renderer->draw_text({m_option_menu.pos.x + 3, m_option_menu.pos.y + 3},
-                          "Create Prefab", g_res->get_font("fusion10"),
+                          "Create Prefab", g_res->get_font("GalmuriMono9"),
                           {255, 255, 255, 255}, 1);
   }
 }
