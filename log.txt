@@ -117,6 +117,128 @@ bool
 flip_y
 Game initialized
 Engine post init
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
 float
 speed
 std::string
@@ -169,6 +291,63 @@ Prefab side draw
 Prefab side draw
 Prefab side draw
 Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
 Right click on prefab tab
 Prefab side draw
 Prefab side draw
@@ -218,7 +397,6 @@ Prefab side draw
 Prefab side draw
 Prefab side draw
 Prefab side draw
-Right click on prefab tab
 Prefab side draw
 Prefab side draw
 Prefab side draw
@@ -243,7 +421,50 @@ Prefab side draw
 Prefab side draw
 Prefab side draw
 Prefab side draw
-Right click on prefab tab
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
 Prefab side draw
 Prefab side draw
 Prefab side draw
