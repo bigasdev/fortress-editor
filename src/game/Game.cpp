@@ -212,7 +212,7 @@ void Game::imgui_map() {
 
   tab_button("  Editor", Tab::EDITOR, IM_COL32(63, 113, 166, 255));
   tab_button(" Palettes", Tab::PALLETES, IM_COL32(210, 88, 38, 255));
-  tab_button(" Prefabs", Tab::PREFABS, IM_COL32(90, 139, 90, 255));
+  tab_button(" Data", Tab::PREFABS, IM_COL32(90, 139, 90, 255));
 
   ImGui::EndChild();
   ImGui::SameLine();

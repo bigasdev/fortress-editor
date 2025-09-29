@@ -1,16 +1,9 @@
 #pragma once
-#include "ISystem.hpp"
+#include "tools/Common.hpp"
 
-class {{CLASS_NAME}} : public ISystem
+class {{CLASS_NAME}} : public
 {
   public:
     {{CLASS_NAME}}() = default;
     ~{{CLASS_NAME}}() = default;
-
-    void awake() override;
-    void start() override;
-    void update(double dt) override;
-    void fixed_update(double tmod) override;
-    void render() override;
-    void dispose() override;
 };

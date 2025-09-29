@@ -23,6 +23,22 @@ Loading font: fusion10
 Loaded font: res/font\fusion10.ttf
 Loading font: fusion8px
 Loaded font: res/font\fusion8px.ttf
+Loading font: Galmuri11-Bold
+Loaded font: res/font\Galmuri11-Bold.ttf
+Loading font: Galmuri11
+Loaded font: res/font\Galmuri11.ttf
+Loading font: Galmuri14
+Loaded font: res/font\Galmuri14.ttf
+Loading font: Galmuri7
+Loaded font: res/font\Galmuri7.ttf
+Loading font: Galmuri9
+Loaded font: res/font\Galmuri9.ttf
+Loading font: GalmuriMono11
+Loaded font: res/font\GalmuriMono11.ttf
+Loading font: GalmuriMono7
+Loaded font: res/font\GalmuriMono7.ttf
+Loading font: GalmuriMono9
+Loaded font: res/font\GalmuriMono9.ttf
 Loading font: gohu11
 Loaded font: res/font\gohu11.ttf
 Loading font: gohufont-11
@@ -99,4 +115,365 @@ bool
 flip_x
 bool
 flip_y
-ERROR: Signal: 11
+Game initialized
+Engine post init
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+float
+speed
+std::string
+name
+vec2
+pos
+vec2
+scale
+float
+rotation
+bool
+flip_x
+bool
+flip_y
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Right click on prefab tab
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Prefab side draw
+Loading aseprite: items_atlas
+Loading aseprite: character_atlas
+Loading aseprite: mockup
+Loading aseprite: items_atlas
+Loading aseprite: farming
+Loading aseprite: farming
+Loading aseprite: character_atlas
+Loading aseprite: char_readonly
+Loading aseprite: farming
+Loading aseprite: items_atlas
+Loading aseprite: mockup
+Loading aseprite: farming
+ERROR: Signal: 22
