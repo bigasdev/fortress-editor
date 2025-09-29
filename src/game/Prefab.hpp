@@ -20,5 +20,11 @@ public:
   void clean();
 
 private:
+  struct Item {
+    std::string name;
+    // the name of the sprite, but this can be null
+    std::string pallete;
+  };
+
   std::vector<GridData> m_grid_data;
 };
