@@ -216,7 +216,7 @@ void Game::imgui_map() {
 
   ImGui::EndChild();
   ImGui::SameLine();
-  if (m_current_tab != Tab::EDITOR && m_current_tab != Tab::PREFABS) {
+  if (m_current_tab != Tab::EDITOR) {
     ImGui::BeginChild("SideMenu", ImVec2(150, 0), true,
                       ImGuiWindowFlags_AlwaysUseWindowPadding);
 
@@ -244,7 +244,7 @@ void Game::imgui_map() {
   case Tab::PALLETES:
     break;
   case Tab::PREFABS:
-    m_prefab->side_draw();
+    m_prefab->draw();
     break;
   default:
     ImGui::Text("Unknown tab selected");
