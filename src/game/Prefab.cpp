@@ -46,6 +46,56 @@ void Prefab::init() {
       m_grid_data.push_back(data);
     }
   }
+
+  std::string data_json_file_path =
+      g_fini->get_value<std::string>("editor", "project_folder") +
+      "\\res\\data\\" + "data.json";
+  if (data_json_file_path.empty()) {
+    Logger::log("Data JSON file path is empty.");
+    return;
+  }
+
+  if (FUtils::file_exists(data_json_file_path)) {
+    std::ifstream file(data_json_file_path);
+    nlohmann::json existing_json;
+    file >> existing_json;
+    file.close();
+
+    if (existing_json.contains("folders")) {
+      for (const auto &folder : existing_json["folders"]) {
+        m_folders.push_back(folder);
+      }
+    }
+
+    if (existing_json.contains("data")) {
+      for (const auto &item : existing_json["data"]) {
+        Item new_item;
+        new_item.name = item["name"];
+        new_item.folder = item["folder"];
+        new_item.sprite.name = item["sprite"]["name"];
+        new_item.sprite.pallete = item["sprite"]["pallete"];
+
+        if (item.contains("params")) {
+          for (const auto &param : item["params"]) {
+            // new_item.params.push_back(param);
+          }
+        }
+
+        // TODO: REFACTOR THE FOLDERS AND OPENED ITEMS TO BE ENGINE-SIDE
+        // OR AT LEAST CHECK IF THIS IS REALLY NEEDED
+
+        m_items[new_item.name] = new_item;
+        if (existing_json.contains("open_items") &&
+            std::find(existing_json["open_items"].begin(),
+                      existing_json["open_items"].end(),
+                      new_item.name) != existing_json["open_items"].end()) {
+          m_items_open[new_item.name] = true;
+        } else {
+          m_items_open[new_item.name] = false;
+        }
+      }
+    }
+  }
 }
 
 void Prefab::update() {
@@ -151,6 +201,7 @@ void Prefab::side_draw() {
           m_folders.end()) {
         m_folders.push_back(m_folder_name_cache);
         m_folder_name_cache.clear();
+        save();
       } else {
         Logger::log("Folder already exists");
       }
@@ -175,45 +226,64 @@ void Prefab::side_draw() {
 }
 
 void Prefab::save() {
-  /*std::string json_file_path =
+  std::string json_file_path =
       g_fini->get_value<std::string>("editor", "project_folder") +
-      "\\res\\prefabs\\" + "prefabs.json";
+      "\\res\\data\\" + "data.json";
 
   if (json_file_path.empty()) {
-    Logger::log("Prefab JSON file path is empty.");
+    Logger::log("Data JSON file path is empty.");
     return;
   }
 
-  nlohmann::json prefab_json;
-  for (const auto &prefab : m_prefabs) {
-    nlohmann::json prefab_data;
-    prefab_data["name"] = prefab.name;
-
-    for (const auto &component : prefab.components) {
-      nlohmann::json component_data;
-      component_data["name"] = component.name;
-
-      for (const auto &var : component.variables) {
-        nlohmann::json variable_data;
-        if (var.second.type == "vec2") {
-          variable_data["value"] =
-              "{" + var.second.val_1 + ", " + var.second.val_2 + "}";
-        } else {
-          variable_data["value"] = var.second.val_1;
-        }
-
-        component_data["variables"].push_back(variable_data);
-      }
-
-      prefab_data["components"].push_back(component_data);
-    }
-
-    prefab_json.push_back(prefab_data);
+  nlohmann::json folders_json;
+  for (auto folder : m_folders) {
+    folders_json["folders"].push_back(folder);
   }
 
-  std::ofstream file(json_file_path);
-  file << prefab_json.dump(4);
-  file.close();*/
+  nlohmann::json cache_json;
+  for (auto open : m_items_open) {
+    if (open.second) {
+      cache_json["open_items"].push_back(open.first);
+    }
+  }
+
+  nlohmann::json data_json;
+  for (const auto &item : m_items) {
+    nlohmann::json item_json;
+    item_json["name"] = item.second.name;
+    item_json["folder"] = item.second.folder;
+    item_json["sprite"]["name"] = item.second.sprite.name;
+    item_json["sprite"]["pallete"] = item.second.sprite.pallete;
+
+    for (const auto &param : item.second.params) {
+      item_json["params"].push_back(param.first);
+    }
+
+    data_json.push_back(item_json);
+  }
+
+  if (FUtils::file_exists(json_file_path)) {
+    std::ifstream file(json_file_path);
+    nlohmann::json existing_json;
+    file >> existing_json;
+    file.close();
+
+    existing_json["folders"] = folders_json["folders"];
+    existing_json["data"] = data_json;
+    existing_json["open_items"] = cache_json["open_items"];
+
+    std::ofstream out_file(json_file_path);
+    out_file << existing_json.dump(4);
+    out_file.close();
+  } else {
+    std::ofstream out_file(json_file_path);
+    nlohmann::json new_json;
+    new_json["folders"] = folders_json["folders"];
+    new_json["data"] = data_json;
+    new_json["open_items"] = cache_json["open_items"];
+    out_file << new_json.dump(4);
+    out_file.close();
+  }
 }
 
 void Prefab::draw() {
