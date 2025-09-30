@@ -146,10 +146,6 @@ void Game::draw_ent() {
   if (m_current_tab == Tab::PALLETES) {
     m_pallete->draw();
   }
-
-  if (m_current_tab == Tab::PREFABS) {
-    m_prefab->draw();
-  }
 }
 
 void Game::draw_ui() {}
