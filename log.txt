@@ -104,4 +104,10 @@ ui
 Item: entity loaded with 1 params
 Game initialized
 Engine post init
+Item: entity loaded with 1 params
+Item: entity loaded with 1 params
+Item: entity loaded with 1 params
+Item: entity loaded with 1 params
+Item: entity loaded with 1 params
+Item: entity loaded with 1 params
 SDL2 quit

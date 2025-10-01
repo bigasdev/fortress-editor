@@ -21,6 +21,8 @@
 void Prefab::init() {
   m_grid_data.clear();
   m_items_open.clear();
+  m_items.clear();
+  m_folders.clear();
 
   std::string json_file_path =
       g_fini->get_value<std::string>("editor", "project_folder") +
