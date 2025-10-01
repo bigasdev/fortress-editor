@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
@@ -6,31 +6,35 @@
 
 class GPU_Camera;
 
-class Camera{
-public: 
-  Camera(vec2* size);
+class Camera {
+public:
+  Camera(vec2 *size);
   ~Camera();
 
   void move();
   void update();
 
-  GPU_Camera** get_gpu_cam();
+  GPU_Camera **get_gpu_cam();
+  void set_game_scale(int scale) { m_game_scale = scale; }
   int get_game_scale() { return m_game_scale; }
+  float get_zoom() { return m_zoom; }
   vec2 get_camera_pos();
 
   bool is_on_screen(vec2 pos);
-  void track_pos(vec2* pos);
+  void track_pos(vec2 *pos);
   void set_zoom(float zoom);
+
 private:
   GPU_Camera *m_camera;
   vec2 m_pos;
   vec2 m_ref_pos;
   vec2 *m_size;
   vec2 *m_tracked_pos;
+  float m_zoom = 1.f;
 
   int m_game_scale;
 
-  //tracking stuff 
+  // tracking stuff
   bool clamp_bounds = false;
   float tracking_speed = 30.f;
   float base_frict = .4f;

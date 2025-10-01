@@ -104,9 +104,13 @@ void Profiler::update() {
   }
 }
 
-float get_pos_x(int value) { return static_cast<int>(g_engine->get_window_size()->x) - value; }
+float get_pos_x(int value) {
+  return static_cast<int>(g_engine->get_window_size()->x) - value;
+}
 
-float get_pos_y(int value) { return static_cast<int>(g_engine->get_window_size()->y) - value; }
+float get_pos_y(int value) {
+  return static_cast<int>(g_engine->get_window_size()->y) - value;
+}
 
 void Profiler::draw() {
 #if __WIN32__ && _DEBUG
@@ -126,10 +130,10 @@ void Profiler::draw() {
       {255, 0, 0, 255});
   g_engine->get_renderer()->draw_text(
       {get_pos_x(102), get_pos_y(138)}, (std::to_string(m_frames)).c_str(),
-      g_res->get_font("arial"), {255, 0, 0, 255});
+      g_res->get_font("fusion10"), {255, 0, 0, 255});
   g_engine->get_renderer()->draw_text(
       {get_pos_x(102), get_pos_y(148)},
-      (std::to_string(m_cpu_usage) + "%").c_str(), g_res->get_font("arial"),
+      (std::to_string(m_cpu_usage) + "%").c_str(), g_res->get_font("fusion10"),
       {255, 0, 0, 255});
 
   g_engine->get_renderer()->draw_rect({static_cast<int>(get_pos_x(105)),
@@ -148,7 +152,7 @@ void Profiler::draw() {
       {255, 255, 0, 255});
   g_engine->get_renderer()->draw_text({get_pos_x(102), get_pos_y(98)},
                                       (std::to_string(m_calls) + "c/s").c_str(),
-                                      g_res->get_font("arial"),
+                                      g_res->get_font("fusion10"),
                                       {255, 255, 0, 255});
 
   g_engine->get_renderer()->draw_rect({static_cast<int>(get_pos_x(105)),
@@ -167,13 +171,13 @@ void Profiler::draw() {
       {0, 255, 0, 255});
   g_engine->get_renderer()->draw_text(
       {get_pos_x(102), get_pos_y(48)},
-      (std::to_string(m_ram_usage) + "mb").c_str(), g_res->get_font("arial"),
+      (std::to_string(m_ram_usage) + "mb").c_str(), g_res->get_font("fusion10"),
       {0, 255, 0, 255});
 
   g_engine->get_renderer()->draw_text(
-      {get_pos_x(80), 2},
+      {get_pos_x(70), 1},
       ("_DEBUG " + std::to_string(static_cast<int>(Timer::get_fps())) + " fps")
           .c_str(),
-      g_res->get_font("arial"), {0, 255, 0, 255});
+      g_res->get_font("fusion10"), {0, 255, 0, 255});
 #endif
 }

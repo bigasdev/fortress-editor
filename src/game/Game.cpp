@@ -1,7 +1,6 @@
 #include "Game.hpp"
 #include "../core/Engine.hpp"
 #include "../core/InputManager.hpp"
-#include "../core/EditorDataManager.hpp"
 #include "../core/Timer.hpp"
 #include "../core/global.hpp"
 #include "../imgui/imgui.h"
@@ -11,15 +10,20 @@
 #include "../renderer/Sprite.hpp"
 #include "../res/Res.hpp"
 #include "../tools/Cooldown.hpp"
+#include "../tools/FUtils.hpp"
 #include "../tools/Logger.hpp"
 #include "../tools/Math.hpp"
 #include "../tools/Mouse.hpp"
 #include "DataLoader.hpp"
+#include "Editor.hpp"
 #include "Fini.hpp"
+#include "Pallete.hpp"
+#include "Prefab.hpp"
 #include "SDL.h"
 #include "SDL_gpu.h"
 #include "SDL_keycode.h"
 #include "json.hpp"
+#include <algorithm>
 #include <cmath>
 #include <fstream>
 #include <iomanip>
@@ -27,98 +31,50 @@
 #include <string>
 
 // Systems
-#include "../core/UndoManager.hpp"
-
-// Components
-#include "../entity/visualizers/AssetScreen.hpp"
-#include "../entity/editors/AssetView.hpp"
-#include "../entity/editors/DBView.hpp"
-#include "../entity/editors/AnimatorView.hpp"
-#include "../entity/editors/MainMenu.hpp"
-#include "../entity/editors/SideMenu.hpp"
-
-struct Asset {
-  char asset_name[128] = "asset";
-  std::string file_name;
-  Sprite spr;
-  std::vector<Animation> animations;
-};
-
-std::unique_ptr<EditorDataManager> m_editor_data_manager;
-
-std::string project_folder;
-std::string asset_folder;
-vec2 pos = {0, 0};
-std::map<std::string, Sprite> sprite_map;
-std::vector<std::unique_ptr<Asset>> m_assets;
-std::unique_ptr<Asset> *m_selected_asset;
-std::string selected_asset;
-std::string current_asset = "asset";
-
-vec2 mouse_pos;
-bool mouse_clicked;
-bool mouse_wheel_clicked;
-bool mouse_not_clicked;
-
-bool ctrl_pressed = false;
-bool load_project = false;
-bool save_pressed = false;
-bool z_pressed = false;
-bool load_assets = false;
-
-// Systems
-SpriteAnimator *m_sprite_animator;
 Fini *fini;
-UndoManager *m_undo_manager;
 
-// Components
-std::unique_ptr<SideMenu> side_menu;
-std::unique_ptr<MainMenu> main_menu;
-std::unique_ptr<AssetView> asset_view;
-std::unique_ptr<DBView> db_view;
-std::unique_ptr<AnimatorView> animator_view;
-std::unique_ptr<AssetScreen> asset_screen;
+// Views
+std::unique_ptr<Editor> m_editor;
+std::unique_ptr<Pallete> m_pallete;
+std::unique_ptr<Prefab> m_prefab;
 
 Game::Game() {}
 
-Game::~Game() {
-  fini->save();
-}
+Game::~Game() { fini->save(); }
 
 void Game::init() {
-  m_camera = new Camera(g_engine->get_window_size());
-  m_cooldown = new Cooldown();
-  m_undo_manager = new UndoManager();
-  m_editor_data_manager = std::make_unique<EditorDataManager>();
-  g_editor_data_manager = m_editor_data_manager.get();
-  g_undo_manager = m_undo_manager;
+  // g_editor_folder_path = FUtils::get_current_path();
 
-  //
+  m_camera = new Camera(g_engine->get_window_size());
+  m_camera->set_game_scale(2);
+  m_cooldown = new Cooldown();
 
   // initial settings to get last folder and asset
-  fini = new Fini("res/config.ini");
+  /*fini = new Fini("res/config.ini");
   fini->initialize_value("last", "folder", "");
   g_folder_path = fini->get_value<std::string>("last", "folder");
   fini->initialize_value("last", "asset", "");
   fini->initialize_value("settings", "grid_size", 16);
   fini->initialize_value("settings", "zoom", 1.0f);
   fini->initialize_value("settings", "zoom", 1.0f);
+  g_fini = fini;*/
+
+  fini = new Fini("res/editor.ini");
+  fini->initialize_value("memory", "tab", "editor");
+  auto tab = fini->get_value<std::string>("memory", "tab");
+  if (tab == "editor") {
+    m_current_tab = Tab::EDITOR;
+  } else if (tab == "pallete") {
+    m_current_tab = Tab::PALLETES;
+  } else if (tab == "prefab") {
+    m_current_tab = Tab::PREFABS;
+  } else {
+    Logger::log("Unknown tab in memory, defaulting to editor");
+    m_current_tab = Tab::EDITOR;
+  }
   g_fini = fini;
 
-  project_folder = fini->get_value<std::string>("last", "folder");
-
-  // this will crash if the saved folder or assets are not found anymore
-  // FIX:
-  if (project_folder != "") {
-    g_res->reset_aseprites();
-    g_res->load_aseprites(project_folder + "/res/");
-    g_res->load_prefabs(project_folder + "/res/prefabs/");
-    sprite_map.clear();
-  }
-
-  asset_folder = fini->get_value<std::string>("last", "asset");
-  if (asset_folder != "") {
-  }
+  Logger::log("Game init");
 
   g_cooldown = m_cooldown;
   g_camera = m_camera;
@@ -128,86 +84,48 @@ void Game::init() {
     Logger::log(file);
 
     auto spr = Sprite();
-
-    sprite_map[file] = spr;
   }
 
-  // basic camera tracking to make everything in the middle of the screen
-  g_camera->track_pos(&pos);
+  // FIX: rework the input manager
+  g_input_manager->bind_mouse(&g_left_click, &g_right_click, &g_left_click);
 
-  g_input_manager->bind_mouse(&mouse_clicked, nullptr, &mouse_wheel_clicked);
-  g_input_manager->bind_keyboard(SDLK_s, &g_s_pressed);
-  g_input_manager->bind_keyboard(SDLK_p, &load_assets);
-  g_input_manager->bind_keyboard(SDLK_e, &load_project);
-  g_input_manager->bind_keyboard(SDLK_z, &z_pressed);
-  g_input_manager->bind_keyboard(SDLK_o, &g_o_pressed);
-  g_input_manager->bind_keyboard(SDLK_LCTRL, &g_ctrl_pressed);
-  g_input_manager->bind_keyboard(SDLK_RETURN, &g_enter_pressed);
-  g_input_manager->bind_keyboard(SDLK_DELETE, &g_del_pressed);
-  g_input_manager->bind_keyboard(SDLK_EQUALS, &g_plus_pressed);
-  g_input_manager->bind_keyboard(SDLK_MINUS, &g_minus_pressed);
-
-
-  side_menu = std::make_unique<SideMenu>();
-  main_menu = std::make_unique<MainMenu>();
-  asset_view = std::make_unique<AssetView>(sprite_map, project_folder);
-  db_view = std::make_unique<DBView>();
-  animator_view = std::make_unique<AnimatorView>();
-  asset_screen = std::make_unique<AssetScreen>();
+  m_editor = std::make_unique<Editor>();
+  m_editor->init();
+  m_pallete = std::make_unique<Pallete>();
+  m_pallete->init();
+  m_prefab = std::make_unique<Prefab>();
+  m_prefab->init();
 }
 
 void Game::fixed_update(double tmod) {}
 
 void Game::update(double dt) {
+  if (g_input_manager->get_key_press(SDLK_e, SDLK_LCTRL)) {
+    m_current_tab = Tab::EDITOR;
+  }
+  if (g_input_manager->get_key_press(SDLK_p, SDLK_LCTRL)) {
+    m_current_tab = Tab::PALLETES;
+  }
+  /*if (g_input_manager->get_key_press(SDLK_f, SDLK_LCTRL)) {
+    m_current_tab = Tab::PREFABS;
+  }*/
+
+  switch (m_current_tab) {
+  case Tab::EDITOR:
+    m_editor->update();
+    break;
+  case Tab::PALLETES:
+    m_pallete->update();
+    break;
+  case Tab::PREFABS:
+    m_prefab->update();
+    break;
+  default:
+    Logger::log("Unknown tab selected");
+    break;
+  }
+
   m_cooldown->update(dt);
-
-  mouse_not_clicked = !mouse_clicked;
-
-
-  // LOAD PROJECT FOLDER
-  if (g_ctrl_pressed and load_project) {
-    project_folder = Data_Loader::load_folder("Select project folder");
-    if (project_folder == "")
-      return;
-    fini->set_value("last", "folder", project_folder);
-    g_res->reset_aseprites();
-    g_res->load_aseprites(project_folder + "/res/");
-    sprite_map.clear();
-
-    auto files = g_res->get_aseprite_names();
-    for (auto file : files) {
-      Logger::log(file);
-
-      auto spr = Sprite();
-
-      sprite_map[file] = spr;
-    }
-
-    load_project = false;
-    ctrl_pressed = false;
-    asset_view->update_sprite_map(project_folder, sprite_map);
-  }
-
-  // UNDO
-  if (g_ctrl_pressed and z_pressed) {
-    m_undo_manager->undo();
-    z_pressed = false;
-    ctrl_pressed = false;
-  }
-
-  // components updates
-  if (side_menu->get_state() == State::ASSET) {
-    asset_screen->update();
-    asset_view->update();
-  }
-
-  if (side_menu->get_state() == State::ANIMATOR) {
-    animator_view->update();
-  }
-
-  if(side_menu->get_state() == State::DB){
-    db_view->update();
-  }
 }
 
 void Game::post_update(double dt) {
@@ -216,31 +134,23 @@ void Game::post_update(double dt) {
 }
 
 void Game::draw_root() {
-  if (side_menu->get_state() == State::ASSET) {
+  /*if (side_menu->get_state() == State::ASSET) {
     asset_screen->root();
-  }
+  }*/
 }
 
 void Game::draw_ent() {
-  if (side_menu->get_state() == State::ASSET) {
+  /*if (side_menu->get_state() == State::ASSET) {
     asset_screen->ent();
+  }*/
+  if (m_current_tab == Tab::PALLETES) {
+    m_pallete->draw();
   }
 }
 
-void Game::draw_ui() {
-  if (side_menu->get_state() == State::ASSET) {
-    asset_screen->ui();
-    asset_view->draw();
-  }
+void Game::draw_ui() {}
 
-  if (side_menu->get_state() == State::ANIMATOR) {
-    animator_view->draw();
-  }
-
-  if(side_menu->get_state() == State::DB){
-    db_view->draw();
-  } 
-}
+void Game::draw_viewers() {}
 
 void Game::imgui_assets() {}
 
@@ -248,34 +158,98 @@ int x = 16;
 int y = 16;
 void Game::imgui_map() {
   ImGui::SetNextWindowPos(ImVec2(0, 0));
-  ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1, 0.1, 0.1, 0.0));
   ImGui::SetNextWindowSize(
       ImVec2(g_engine->get_window_size()->x, g_engine->get_window_size()->y));
   ImGui::Begin("Workspace", nullptr,
                ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
                    ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar |
                    ImGuiWindowFlags_NoMouseInputs |
-                   ImGuiWindowFlags_NoScrollbar);
+                   ImGuiWindowFlags_NoScrollbar |
+                   ImGuiWindowFlags_NoBringToFrontOnFocus);
 
-  side_menu->show();
-  //
-  main_menu->show();
+  // tab selection, i.e the main screen at the editor
+  ImGui::BeginChild("Tabs", ImVec2(150, 0), true,
+                    ImGuiWindowFlags_AlwaysUseWindowPadding);
 
-  if (side_menu->get_state() == State::ASSET) {
-    asset_view->show();
+  ImDrawList *draw_list = ImGui::GetWindowDrawList();
+  ImVec2 start_pos = ImGui::GetCursorScreenPos();
+
+  float button_width = 122.0f;
+  float button_height = 30.0f;
+  float spacing = 10.0f;
+
+  auto tab_button = [&](const char *label, Tab tab, ImU32 color) {
+    ImVec2 p = ImGui::GetCursorScreenPos();
+
+    draw_list->AddRectFilled(p, ImVec2(p.x + button_width, p.y + button_height),
+                             color);
+
+    ImGui::SetCursorScreenPos(ImVec2(p.x + spacing, p.y));
+    if (ImGui::Button(label, ImVec2(button_width, button_height))) {
+      m_current_tab = tab;
+      switch (tab) {
+      case Tab::EDITOR:
+        g_fini->set_value("memory", "tab", "editor");
+        m_editor->init();
+        break;
+      case Tab::PALLETES:
+        g_fini->set_value("memory", "tab", "pallete");
+        m_pallete->init();
+        break;
+      case Tab::PREFABS:
+        g_fini->set_value("memory", "tab", "prefab");
+        m_prefab->init();
+        break;
+      default:
+        Logger::log("Unknown tab selected");
+        break;
+      }
+    }
+  };
+
+  tab_button("  Editor", Tab::EDITOR, IM_COL32(63, 113, 166, 255));
+  tab_button(" Palettes", Tab::PALLETES, IM_COL32(210, 88, 38, 255));
+  tab_button(" Data", Tab::PREFABS, IM_COL32(90, 139, 90, 255));
+
+  ImGui::EndChild();
+  ImGui::SameLine();
+  if (m_current_tab != Tab::EDITOR) {
+    ImGui::BeginChild("SideMenu", ImVec2(150, 0), true,
+                      ImGuiWindowFlags_AlwaysUseWindowPadding);
+
+    switch (m_current_tab) {
+    case Tab::PALLETES:
+      m_pallete->side_draw();
+      break;
+    case Tab::PREFABS:
+      m_prefab->side_draw();
+      break;
+    default:
+      ImGui::Text("Unknown tab selected");
+      break;
+    }
+
+    ImGui::EndChild();
   }
-
-  if (side_menu->get_state() == State::ANIMATOR) {
-    animator_view->show();
+  ImGui::SameLine();
+  ImGui::BeginChild("MainContent", ImVec2(0, 0), true,
+                    ImGuiWindowFlags_AlwaysUseWindowPadding |
+                        ImGuiWindowFlags_NoBringToFrontOnFocus);
+  switch (m_current_tab) {
+  case Tab::EDITOR:
+    m_editor->draw();
+    break;
+  case Tab::PALLETES:
+    break;
+  case Tab::PREFABS:
+    m_prefab->draw();
+    break;
+  default:
+    ImGui::Text("Unknown tab selected");
+    break;
   }
+  ImGui::EndChild();
 
-  if(side_menu->get_state() == State::DB){
-    db_view->show();
-  }
-
-  if (side_menu->get_state() == State::NONE) {
-  }
-  ImGui::PopStyleColor();
   ImGui::End();
 }
 
@@ -284,7 +258,7 @@ void Game::draw_imgui() {
 }
 
 void Game::save() {
-  nlohmann::json j;
+  /*nlohmann::json j;
   for (auto &asset : m_assets) {
     nlohmann::json asset_j;
     asset_j["asset_name"] = asset->asset_name;
@@ -305,11 +279,11 @@ void Game::save() {
     std::ofstream o(asset_folder);
     o << std::setw(4) << j << std::endl;
     o.close();
-  }
+  }*/
 }
 
 void Game::load(std::string file_path) {
-  std::ifstream i(file_path);
+  /*std::ifstream i(file_path);
   nlohmann::json j;
   i >> j;
   m_selected_asset = nullptr;
@@ -326,7 +300,7 @@ void Game::load(std::string file_path) {
     asset.spr.hei = asset_j["hei"];
 
     m_assets.push_back(std::make_unique<Asset>(asset));
-  }
+  }*/
 }
 
-void Game::clean() { delete fini; }
+void Game::clean() { g_fini->save(); }

@@ -1,12 +1,15 @@
 #include "InputManager.hpp"
-#include "global.hpp"
+#include "../core/Timer.hpp"
 #include "../tools/Logger.hpp"
 #include "SDL_events.h"
 #include "SDL_joystick.h"
 #include "SDL_keycode.h"
+#include "SDL_stdinc.h"
+#include "global.hpp"
+#include <iostream>
 
-//grab the connected joystick, this runs with the connect/disconnected event too 
-//no support for double joysticks yet
+// grab the connected joystick, this runs with the connect/disconnected event
+// too no support for double joysticks yet
 void connect_controller() {
   if (SDL_NumJoysticks() < 1) {
     Logger::log("No joysticks connected!\n");
@@ -38,9 +41,22 @@ void InputManager::bind_mouse(bool *left, bool *right, bool *wheel) {
   wheel_click = wheel;
 }
 
-//loops through the keys set in the key and joy map
-//default implementation for axis and RT/LT 
+void InputManager::tick_update() {
+  if (tick > tick_timer) {
+    has_tick = true;
+    std::cout << "Tick: " << tick << std::endl;
+    tick = 0.0;
+  } else {
+    if (!has_tick) {
+      tick += Timer::get_dt();
+    }
+  }
+}
+
+// loops through the keys set in the key and joy map
+// default implementation for axis and RT/LT
 void InputManager::update(SDL_Event event) {
+
   switch (event.type) {
   case SDL_JOYDEVICEREMOVED:
     Logger::log("Controller Removed");
@@ -68,7 +84,7 @@ void InputManager::update(SDL_Event event) {
   case SDL_JOYAXISMOTION:
     switch (event.jaxis.axis) {
     case 0:
-      //Left X Axis
+      // Left X Axis
       if (event.jaxis.value < -8000) {
         raw_axis.x = -1;
       } else if (event.jaxis.value > 8000) {
@@ -78,7 +94,7 @@ void InputManager::update(SDL_Event event) {
       }
       break;
     case 1:
-      //Left Y axis
+      // Left Y axis
       if (event.jaxis.value < -8000) {
         raw_axis.y = -1;
       } else if (event.jaxis.value > 8000) {
@@ -88,7 +104,7 @@ void InputManager::update(SDL_Event event) {
       }
       break;
     case 2:
-      //Right x axis
+      // Right x axis
       if (event.jaxis.value < -8000) {
         right_axis.x = -1;
       } else if (event.jaxis.value > 8000) {
@@ -98,7 +114,7 @@ void InputManager::update(SDL_Event event) {
       }
       break;
     case 3:
-      //Right y axis
+      // Right y axis
       if (event.jaxis.value < -8000) {
         right_axis.y = -1;
       } else if (event.jaxis.value > 8000) {
@@ -108,29 +124,25 @@ void InputManager::update(SDL_Event event) {
       }
       break;
     case 4:
-      //LT
+      // LT
       if (event.jaxis.value > 8000) {
-        if (m_joy_map.find(static_cast<JoyInput>(10)) !=
-            m_joy_map.end()) {
+        if (m_joy_map.find(static_cast<JoyInput>(10)) != m_joy_map.end()) {
           *m_joy_map[static_cast<JoyInput>(10)] = true;
         }
       } else {
-        if (m_joy_map.find(static_cast<JoyInput>(10)) !=
-            m_joy_map.end()) {
+        if (m_joy_map.find(static_cast<JoyInput>(10)) != m_joy_map.end()) {
           *m_joy_map[static_cast<JoyInput>(10)] = false;
         }
       }
       break;
     case 5:
-      //RT
+      // RT
       if (event.jaxis.value > 8000) {
-        if (m_joy_map.find(static_cast<JoyInput>(11)) !=
-            m_joy_map.end()) {
+        if (m_joy_map.find(static_cast<JoyInput>(11)) != m_joy_map.end()) {
           *m_joy_map[static_cast<JoyInput>(11)] = true;
         }
       } else {
-        if (m_joy_map.find(static_cast<JoyInput>(11)) !=
-            m_joy_map.end()) {
+        if (m_joy_map.find(static_cast<JoyInput>(11)) != m_joy_map.end()) {
           *m_joy_map[static_cast<JoyInput>(11)] = false;
         }
       }
@@ -163,7 +175,6 @@ void InputManager::update(SDL_Event event) {
     break;
   case SDL_KEYDOWN:
     if (m_key_map.find(event.key.keysym.sym) != m_key_map.end()) {
-      Logger::log(std::to_string(event.key.keysym.sym));
       *m_key_map[event.key.keysym.sym] = true;
     }
     if (event.key.keysym.sym == SDLK_d || event.key.keysym.sym == SDLK_RIGHT) {
@@ -203,4 +214,23 @@ void InputManager::update(SDL_Event event) {
   default:
     break;
   }
+}
+
+bool InputManager::get_key_press(SDL_Keycode key, SDL_Keycode mod) {
+  if (!has_tick) {
+    return false;
+  }
+
+  const Uint8 *state = SDL_GetKeyboardState(NULL);
+  if (mod != SDLK_UNKNOWN) {
+    if (!state[SDL_GetScancodeFromKey(mod)]) {
+      return false;
+    }
+  }
+
+  if (state[SDL_GetScancodeFromKey(key)]) {
+    has_tick = false;
+    return true;
+  }
+  return false;
 }

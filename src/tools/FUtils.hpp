@@ -1,0 +1,27 @@
+#pragma once
+
+// this will be used to create any util that i might need for the fortress
+// editor, such as check if a folder/file exists check if something can be
+// saved, if something is corrupted etc
+
+#include <string>
+#include <vector>
+
+class FUtils {
+public:
+  static bool file_exists(const std::string &path);
+  static bool folder_exists(const std::string &path);
+  static void open_folder(const std::string &path);
+  static std::vector<std::string>
+  get_all_files_in_folder(const std::string &path,
+                          std::vector<std::string> &files);
+  static std::string remove_filename(const std::string &path);
+  static bool is_corrupted(const std::string &path);
+  static bool is_empty(const std::string &path);
+  static std::string get_file_name(const std::string &path);
+  static std::string get_filename_without_extension(const std::string &path);
+  static bool get_file_extension(const std::string &path,
+                                 const std::string &extension);
+  static std::string get_current_path();
+  static std::vector<std::string> get_files_in_folder(const std::string &path);
+};

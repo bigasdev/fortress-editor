@@ -28,6 +28,13 @@ void error(const std::string message) {
 #endif
 }
 
+void warn(const std::string message) {
+  logs.push_back("WARNING: " + message);
+#if _DEBUG
+  std::cout << "WARNING: " << message << "\n";
+#endif
+}
+
 void write_to_file(const std::string file_name) {
   std::ofstream file(file_name);
   if (file.is_open()) {

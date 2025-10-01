@@ -60,8 +60,8 @@ void Renderer::draw_text(vec2 pos, const char *text, TTF_Font *font, Col color,
   m_calls++;
 }
 
-void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point,int scale,
-                               bool use_shader) {
+void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point,
+                               int scale, bool use_shader) {
   GPU_Rect src;
   src.x = l_point.x * l_point.w;
   src.y = l_point.y * l_point.h;
@@ -72,8 +72,8 @@ void Renderer::draw_from_sheet(GPU_Image *sheet, vec2 pos, Rect l_point,int scal
   dst.x = static_cast<int>(pos.x);
   dst.y = static_cast<int>(pos.y);
   // the zoom is the key..
-  dst.w = (src.w*scale) * g_camera->get_game_scale();
-  dst.h = (src.h*scale) * g_camera->get_game_scale();
+  dst.w = (src.w * scale) * g_camera->get_game_scale();
+  dst.h = (src.h * scale) * g_camera->get_game_scale();
 
   if (use_shader) {
     auto program = g_res->get_shader_id();
@@ -115,8 +115,26 @@ void Renderer::draw(GPU_Image *sheet, Sprite spr, vec2 pos) {
   GPU_BlitRectX(sheet, &src, m_gpu, &dst, spr.angle, 0, 0, flip);
   m_calls++;
 }
-bool Renderer::is_rect_fully_transparent(GPU_Image *sheet,
-                                         const GPU_Rect &rect, ase_t *ase) {
+
+void Renderer::draw_raw_sheet(GPU_Image *sheet, vec2 pos) {
+  GPU_Rect src;
+  src.x = 0;
+  src.y = 0;
+  src.w = sheet->w;
+  src.h = sheet->h;
+
+  GPU_Rect dst;
+  dst.x = static_cast<int>(pos.x);
+  dst.y = static_cast<int>(pos.y);
+  dst.w = sheet->w * g_camera->get_game_scale() * g_camera->get_zoom();
+  dst.h = sheet->h * g_camera->get_game_scale() * g_camera->get_zoom();
+
+  GPU_BlitRectX(sheet, &src, m_gpu, &dst, 0, 0, 0, GPU_FLIP_NONE);
+  m_calls++;
+}
+
+bool Renderer::is_rect_fully_transparent(GPU_Image *sheet, const GPU_Rect &rect,
+                                         ase_t *ase) {
   auto frame = &ase->frames[0];
   auto pixels = reinterpret_cast<const uint8_t *>(frame->ase->frames[0].pixels);
 

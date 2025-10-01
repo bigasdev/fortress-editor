@@ -9,6 +9,7 @@
 #include "../tools/Math.hpp"
 #include "../tools/Profiler.hpp"
 #include "Assert.hpp"
+#include "Fini.hpp"
 #include "InputManager.hpp"
 #include "SDL.h"
 #include "SDL_events.h"
@@ -47,7 +48,7 @@ void Engine::init() {
 #endif
 
   R_ASSERT(init == 0);
-  
+
   Logger::log("Loading started...");
   if (init == 0) {
     Logger::log("SDL2 initialized");
@@ -60,10 +61,21 @@ void Engine::init() {
   SDL_WindowFlags window_flags =
       (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI |
                         SDL_WINDOW_RESIZABLE);
-  m_sdl_window = SDL_CreateWindow("rog_editor", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                  WIN_WIDTH, WIN_HEIGHT, window_flags);
-  SDL_SetWindowMinimumSize(m_sdl_window, 1024, 576);
-  m_window_size = {WIN_WIDTH, WIN_HEIGHT};
+
+  // starting fini
+  m_fini = new Fini("res/engine.ini");
+  m_fini->initialize_value("window", "pos_x", SDL_WINDOWPOS_CENTERED);
+  m_fini->initialize_value("window", "pos_y", SDL_WINDOWPOS_CENTERED);
+  m_fini->initialize_value("window", "width", WIN_WIDTH);
+  m_fini->initialize_value("window", "height", WIN_HEIGHT);
+
+  m_window_size = {m_fini->get_value<int>("window", "width"),
+                   m_fini->get_value<int>("window", "height")};
+
+  m_sdl_window =
+      SDL_CreateWindow("rog_editor", m_fini->get_value<int>("window", "pos_x"),
+                       m_fini->get_value<int>("window", "pos_y"),
+                       m_window_size.x, m_window_size.y, window_flags);
 
   GPU_SetInitWindow(SDL_GetWindowID(m_sdl_window));
 
@@ -77,6 +89,11 @@ void Engine::init() {
   R_ASSERT(m_gpu != nullptr);
 
   GPU_SetWindowResolution(m_window_size.x, m_window_size.y);
+
+#if _IMGUI
+  SDL_GLContext &gl_context = m_gpu->context->context;
+  GUI::setup(m_sdl_window, gl_context);
+#endif
 
   Logger::log("Loading 50%...");
 
@@ -130,7 +147,6 @@ void Engine::post_init() {
   m_input_manager = new InputManager();
   g_input_manager = m_input_manager;
 
-
   m_renderer->init_shader(m_res->get_shaders());
 
   g_engine = this;
@@ -142,11 +158,6 @@ void Engine::post_init() {
   m_game->init();
 
   Logger::log("Game initialized");
-
-#if _IMGUI
-  SDL_GLContext &gl_context = m_gpu->context->context;
-  GUI::setup(m_sdl_window, gl_context);
-#endif
 
   Logger::log("Engine post init");
   m_loaded = true;
@@ -173,7 +184,18 @@ void Engine::input() {
           SDL_GetWindowSize(m_sdl_window, &h, &w);
           m_window_size.x = h;
           m_window_size.y = w;
+          m_fini->set_value("window", "width", std::to_string(h));
+          m_fini->set_value("window", "height", std::to_string(w));
           GPU_SetWindowResolution(h, w);
+        }
+      }
+      if (event.window.event == SDL_WINDOWEVENT_MOVED) {
+        // updating window position
+        {
+          int x = 0, y = 0;
+          SDL_GetWindowPosition(m_sdl_window, &x, &y);
+          m_fini->set_value("window", "pos_x", std::to_string(x));
+          m_fini->set_value("window", "pos_y", std::to_string(y));
         }
       }
       break;
@@ -206,6 +228,7 @@ void Engine::update() {
     return;
   }
 
+  g_input_manager->tick_update();
   m_game->update(Timer::get_dt());
 }
 
@@ -230,9 +253,9 @@ void Engine::draw() {
 
   GPU_Clear(m_gpu);
 
-#if _DEBUG
-  GPU_SetCamera(m_gpu, nullptr);
-  m_profiler->draw();
+#if _IMGUI
+  GPU_FlushBlitBuffer();
+  m_game->draw_imgui();
 #endif
 
   // game draw
@@ -242,11 +265,14 @@ void Engine::draw() {
   m_game->draw_ent();
   GPU_SetCamera(m_gpu, nullptr);
   m_game->draw_ui();
+
+  GPU_SetCamera(m_gpu, nullptr);
+  m_game->draw_viewers();
   GPU_DeactivateShaderProgram();
 
-#if _IMGUI
-  GPU_FlushBlitBuffer();
-  m_game->draw_imgui();
+#if _DEBUG
+  GPU_SetCamera(m_gpu, nullptr);
+  m_profiler->draw();
 #endif
 
   GPU_Flip(m_gpu);
@@ -254,8 +280,9 @@ void Engine::draw() {
 
 void Engine::quit() {
   m_game->clean();
-  SDL_DestroyWindow(SDL_GetWindowFromID(GPU_GetInitWindow()));
-  SDL_Quit();
+  m_fini->save();
   Logger::log("SDL2 quit");
   Logger::write_to_file("log.txt");
+  SDL_DestroyWindow(SDL_GetWindowFromID(GPU_GetInitWindow()));
+  SDL_Quit();
 }

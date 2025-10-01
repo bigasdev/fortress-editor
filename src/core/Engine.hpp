@@ -17,6 +17,7 @@ class Renderer;
 class Camera;
 class Game;
 class Res;
+class Fini;
 class InputManager;
 class SoundManager;
 
@@ -28,10 +29,11 @@ private:
   SDL_Renderer *m_sdl_renderer;
   SDL_Window *m_sdl_window;
   GPU_Target *m_gpu;
-  Game* m_game;
+  Game *m_game;
   Profiler *m_profiler;
   Renderer *m_renderer;
   Res *m_res;
+  Fini *m_fini;
   InputManager *m_input_manager;
   SoundManager *m_sound_manager;
 
@@ -51,10 +53,12 @@ public:
   void quit();
   bool is_running() { return m_running; }
 
-  //getters 
+  // getters
   Renderer *get_renderer() { return m_renderer; }
   SDL_Renderer *get_sdl_renderer() { return m_sdl_renderer; }
-  vec2* get_window_size() { return &m_window_size; }
+  vec2 *get_window_size() { return &m_window_size; }
+  Game *get_game() { return m_game; }
+  GPU_Target *get_gpu() { return m_gpu; }
 };
 
 #endif

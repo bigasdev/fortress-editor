@@ -1,6 +1,8 @@
 #pragma once
 
 #include "SDL_stdinc.h"
+#include <unordered_map>
+
 struct Rect {
   int x, y, w, h;
 
@@ -19,14 +21,13 @@ struct Line {
   Line(int x1, int y1, int x2, int y2) : x1(x1), y1(y1), x2(x2), y2(y2) {}
 };
 
-
 struct vec2 {
   float x, y;
 
   vec2() : x(0), y(0) {}
   vec2(float x, float y) : x(x), y(y) {}
   bool zero() { return x == 0 && y == 0; }
-  bool operator==(const vec2 &v) { return x == v.x && y == v.y; }
+  bool operator==(const vec2 &v) const { return x == v.x && y == v.y; }
   bool operator!=(const vec2 &v) { return x != v.x || y != v.y; }
   vec2 operator+(const vec2 &v) { return vec2(x + v.x, y + v.y); }
   vec2 operator+=(const vec2 &v) {
@@ -44,19 +45,19 @@ struct vec2 {
 struct vec3 {
   float x, y, z;
 };
-//primitive color, its used to get 0 to 1 rgb values.
-struct PCol{
+// primitive color, its used to get 0 to 1 rgb values.
+struct PCol {
   float r, g, b;
 };
 
-#define RED PCol{1,0,0}
-#define GREEN PCol{0,1,0}
-#define BLUE PCol{0,0,1}
-#define WHITE PCol{1,1,1}
-#define BLACK PCol{0,0,0}
-#define YELLOW PCol{1,1,0}
-#define CYAN PCol{0,1,1}
-#define MAGENTA PCol{1,0,1}
+#define RED PCol{1, 0, 0}
+#define GREEN PCol{0, 1, 0}
+#define BLUE PCol{0, 0, 1}
+#define WHITE PCol{1, 1, 1}
+#define BLACK PCol{0, 0, 0}
+#define YELLOW PCol{1, 1, 0}
+#define CYAN PCol{0, 1, 1}
+#define MAGENTA PCol{1, 0, 1}
 
 struct Col {
   Uint8 r, g, b, a;
@@ -75,3 +76,12 @@ struct vec2i {
 struct vec3i {
   int x, y, z;
 };
+
+// specializations will be put here
+namespace std {
+template <> struct hash<vec2> {
+  std::size_t operator()(const vec2 &v) const {
+    return std::hash<int>()(v.x) ^ (std::hash<int>()(v.y) << 1);
+  }
+};
+} // namespace std

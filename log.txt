@@ -3,6 +3,8 @@ SDL2 initialized
 SDL2 version: SDL-release-2.28.4-0-gcc016b004
 Loading 25%...
 Loading 50%...
+SDL2 renderer created
+SDL2 GPU created
 SDL2 image initialized
 SDL2 mixer initialized
 Loading 75%...
@@ -17,6 +19,26 @@ Loading font: blueterm
 Loaded font: res/font\blueterm.ttf
 Loading font: code8
 Loaded font: res/font\code8.ttf
+Loading font: fusion10
+Loaded font: res/font\fusion10.ttf
+Loading font: fusion8px
+Loaded font: res/font\fusion8px.ttf
+Loading font: Galmuri11-Bold
+Loaded font: res/font\Galmuri11-Bold.ttf
+Loading font: Galmuri11
+Loaded font: res/font\Galmuri11.ttf
+Loading font: Galmuri14
+Loaded font: res/font\Galmuri14.ttf
+Loading font: Galmuri7
+Loaded font: res/font\Galmuri7.ttf
+Loading font: Galmuri9
+Loaded font: res/font\Galmuri9.ttf
+Loading font: GalmuriMono11
+Loaded font: res/font\GalmuriMono11.ttf
+Loading font: GalmuriMono7
+Loaded font: res/font\GalmuriMono7.ttf
+Loading font: GalmuriMono9
+Loaded font: res/font\GalmuriMono9.ttf
 Loading font: gohu11
 Loaded font: res/font\gohu11.ttf
 Loading font: gohufont-11
@@ -51,6 +73,7 @@ Loading sound: victory
 SoundManager::load_sound: loaded sound victory
 res/character_atlas.aseprite
 res/concept.aseprite
+res/fortress_atlas.aseprite
 res/item_atlas.aseprite
 res/logo.aseprite
 res/rog_editor_ui.aseprite
@@ -59,6 +82,7 @@ Finished aseprite load!
 ------------
 Aseprite: character_atlas
 Aseprite: concept
+Aseprite: fortress_atlas
 Aseprite: item_atlas
 Aseprite: logo
 Aseprite: rog_editor_ui
@@ -69,63 +93,21 @@ No joysticks connected!
 
 Game:1
 1
-C:\Users\gusta\.code\rog/res/character_atlas.aseprite
-C:\Users\gusta\.code\rog/res/items_atlas.aseprite
-Finished aseprite load!
-------------
-Aseprite: character_atlas
-Aseprite: items_atlas
-Loading prefab: map
-Prefab loaded: bigas
-Prefab loaded: health_potion
+Game init
 character_atlas
-items_atlas
-Importing assets from: C:\Users\gusta\.code\rog\res\prefabs\map.json
-Importing asset: 
-Importing component: TransformComponent
-Importing component: SpriteComponent
-Importing component: PlayerMoveComponent
-float
-speed
-std::string
-name
-vec2
-pos
-vec2
-scale
-float
-rotation
-bool
-flip_x
-bool
-flip_y
-Adding action to undo stack
-Assets from the data manager
-bigas
-Importing asset: 
-Importing component: TransformComponent
-Importing component: SpriteComponent
-Importing component: PlayerMoveComponent
-float
-speed
-std::string
-name
-vec2
-pos
-vec2
-scale
-float
-rotation
-bool
-flip_x
-bool
-flip_y
-Adding action to undo stack
-Assets from the data manager
-bigas
-health_potion
-Animator: bigas
-Animator: health_potion
+concept
+fortress_atlas
+item_atlas
+logo
+rog_editor_ui
+ui
+Item: entity loaded with 1 params
 Game initialized
 Engine post init
+Item: entity loaded with 1 params
+Item: entity loaded with 1 params
+Item: entity loaded with 1 params
+Item: entity loaded with 1 params
+Item: entity loaded with 1 params
+Item: entity loaded with 1 params
 SDL2 quit
