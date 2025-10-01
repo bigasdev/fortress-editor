@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../tools/Common.hpp"
+#include <memory>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -22,6 +23,8 @@ public:
 private:
   struct ItemParam {
     virtual ~ItemParam() = default;
+
+    std::string name = "Param";
   };
 
   struct ItemParamInt : public ItemParam {
@@ -54,7 +57,7 @@ private:
     std::string folder;
     // the name of the sprite, but this can be null
     SpriteInfo sprite;
-    std::unordered_map<std::string, ItemParam> params;
+    std::vector<std::shared_ptr<ItemParam>> params;
   };
 
   std::vector<std::string> m_folders;

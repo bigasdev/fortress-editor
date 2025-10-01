@@ -77,7 +77,34 @@ void Prefab::init() {
 
         if (item.contains("params")) {
           for (const auto &param : item["params"]) {
-            // new_item.params.push_back(param);
+            std::string type = param["type"];
+            if (type == "int") {
+              auto p = std::make_unique<ItemParamInt>();
+              p->name = param["name"];
+              p->value = param["value"];
+              new_item.params.push_back(std::move(p));
+            } else if (type == "float") {
+              auto p = std::make_unique<ItemParamFloat>();
+              p->name = param["name"];
+              p->value = param["value"];
+              new_item.params.push_back(std::move(p));
+            } else if (type == "string") {
+              auto p = std::make_unique<ItemParamString>();
+              p->name = param["name"];
+              p->value = param["value"];
+              new_item.params.push_back(std::move(p));
+            } else if (type == "bool") {
+              auto p = std::make_unique<ItemParamBool>();
+              p->name = param["name"];
+              p->value = param["value"];
+              new_item.params.push_back(std::move(p));
+            } else if (type == "vec2") {
+              auto p = std::make_unique<ItemParamVec2>();
+              p->name = param["name"];
+              p->value.x = param["value"][0];
+              p->value.y = param["value"][1];
+              new_item.params.push_back(std::move(p));
+            }
           }
         }
 
@@ -255,8 +282,26 @@ void Prefab::save() {
     item_json["sprite"]["name"] = item.second.sprite.name;
     item_json["sprite"]["pallete"] = item.second.sprite.pallete;
 
-    for (const auto &param : item.second.params) {
-      item_json["params"].push_back(param.first);
+    nlohmann::json param_json;
+    for (auto &param : item.second.params) {
+      param_json["name"] = param->name;
+      if (auto p = dynamic_cast<ItemParamInt *>(param.get())) {
+        param_json["type"] = "int";
+        param_json["value"] = p->value;
+      } else if (auto p = dynamic_cast<ItemParamFloat *>(param.get())) {
+        param_json["type"] = "float";
+        param_json["value"] = p->value;
+      } else if (auto p = dynamic_cast<ItemParamString *>(param.get())) {
+        param_json["type"] = "string";
+        param_json["value"] = p->value;
+      } else if (auto p = dynamic_cast<ItemParamBool *>(param.get())) {
+        param_json["type"] = "bool";
+        param_json["value"] = p->value;
+      } else if (auto p = dynamic_cast<ItemParamVec2 *>(param.get())) {
+        param_json["type"] = "vec2";
+        param_json["value"] = {p->value.x, p->value.y};
+      }
+      item_json["params"].push_back(param_json);
     }
 
     data_json.push_back(item_json);
@@ -290,19 +335,98 @@ void Prefab::draw() {
 
   // items windows
 
+  int id = 0;
   for (auto i : m_items_open) {
     if (i.second) {
-      ImGui::BeginChild(("Item: " + i.first).c_str(), {0, 250});
-      ImGui::Text(("Name: " + m_items[i.first].name).c_str());
-      ImGui::Text(("Folder: " + m_items[i.first].folder).c_str());
-      ImGui::Text(("Sprite Name: " + m_items[i.first].sprite.name).c_str());
-      ImGui::Text(
-          ("Sprite Pallete: " + m_items[i.first].sprite.pallete).c_str());
-      ImGui::Separator();
-      ImGui::Text("Parameters:");
-      for (const auto &param : m_items[i.first].params) {
-        ImGui::Text(param.first.c_str());
+      ImGui::BeginChild(("Item: " + i.first).c_str(), {0, 250},
+                        ImGuiChildFlags_Borders);
+      ImGuiUtils::header_input_text("Data name:", &m_items[i.first].name);
+      ImGuiUtils::header_input_text("Data folder:", &m_items[i.first].folder);
+      int selected_sprite = -1;
+      if (ImGui::BeginCombo(("Sprite##" + std::to_string(id++)).c_str(),
+                            selected_sprite >= 0 &&
+                                    selected_sprite < m_grid_data.size()
+                                ? m_grid_data[selected_sprite].name.c_str()
+                                : "Select Sprite")) {
+        for (int n = 0; n < m_grid_data.size(); n++) {
+          bool is_selected = (selected_sprite == n);
+          if (ImGui::Selectable(m_grid_data[n].name.c_str(), is_selected)) {
+            selected_sprite = n;
+          }
+          if (is_selected) {
+            ImGui::SetItemDefaultFocus();
+          }
+        }
+        ImGui::EndCombo();
       }
+      if (selected_sprite >= 0 && selected_sprite < m_grid_data.size()) {
+        m_items[i.first].sprite.name = m_grid_data[selected_sprite].name;
+        m_items[i.first].sprite.pallete = m_grid_data[selected_sprite].pallete;
+      }
+      ImGui::Text("Sprite: %s", m_items[i.first].sprite.name.c_str());
+      ImGui::Separator();
+      if (ImGui::CollapsingHeader("Parameters")) {
+        if (ImGui::Button("Add Int")) {
+          m_items[i.first].params.push_back(std::make_unique<ItemParamInt>());
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Add Float")) {
+          m_items[i.first].params.push_back(std::make_unique<ItemParamFloat>());
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Add String")) {
+          m_items[i.first].params.push_back(
+              std::make_unique<ItemParamString>());
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Add Bool")) {
+          m_items[i.first].params.push_back(std::make_unique<ItemParamBool>());
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Add Vec2")) {
+          m_items[i.first].params.push_back(std::make_unique<ItemParamVec2>());
+        }
+
+        int param_id = 0;
+        for (auto &param : m_items[i.first].params) {
+          param_id++;
+          ImGui::PushID((i.first + std::to_string(param_id)).c_str());
+          ImGuiUtils::header_input_text("Param Name", &param->name);
+          if (auto p = dynamic_cast<ItemParamInt *>(param.get())) {
+            ImGuiUtils::header_input_int("Int", &p->value);
+          } else if (auto p = dynamic_cast<ItemParamFloat *>(param.get())) {
+            ImGuiUtils::header_input_float("Float", &p->value);
+          } else if (auto p = dynamic_cast<ItemParamString *>(param.get())) {
+            ImGuiUtils::header_input_text("String", &p->value);
+          } else if (auto p = dynamic_cast<ItemParamBool *>(param.get())) {
+            // ImGui::Checkbox("Bool", &p->value);
+          } else if (auto p = dynamic_cast<ItemParamVec2 *>(param.get())) {
+            // ImGuiUtils::header_input_vec2("Vec2", &p->value);
+          }
+
+          if (ImGui::Button("Remove")) {
+            m_items[i.first].params.erase(
+                std::remove_if(m_items[i.first].params.begin(),
+                               m_items[i.first].params.end(),
+                               [&](const std::shared_ptr<ItemParam> &ptr) {
+                                 return ptr->name == param->name;
+                               }),
+                m_items[i.first].params.end());
+            ImGui::PopID();
+            break;
+          }
+          ImGui::PopID();
+        }
+      }
+      ImGui::Separator();
+
+      // check if an imgui keyboard action was done
+      if (ImGui::IsWindowFocused() &&
+          ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S)) &&
+          (ImGui::GetIO().KeyCtrl)) {
+        save();
+      }
+
       ImGui::EndChild();
     }
   }
