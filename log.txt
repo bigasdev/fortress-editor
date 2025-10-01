@@ -101,6 +101,7 @@ item_atlas
 logo
 rog_editor_ui
 ui
+Item: entity loaded with 1 params
 Game initialized
 Engine post init
 SDL2 quit

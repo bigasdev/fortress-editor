@@ -344,8 +344,7 @@ void Prefab::draw() {
   int id = 0;
   for (auto i : m_items_open) {
     if (i.second) {
-      ImGui::BeginChild(("Item: " + i.first).c_str(), {0, 250},
-                        ImGuiChildFlags_Borders);
+      ImGui::Begin(("Item: " + i.first).c_str());
       ImGuiUtils::header_input_text("Data name:", &m_items[i.first].name);
       ImGuiUtils::header_input_text("Data folder:", &m_items[i.first].folder);
       int selected_sprite = -1;
@@ -433,7 +432,7 @@ void Prefab::draw() {
         save();
       }
 
-      ImGui::EndChild();
+      ImGui::End();
     }
   }
 }

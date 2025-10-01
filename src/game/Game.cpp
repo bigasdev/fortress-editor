@@ -164,7 +164,8 @@ void Game::imgui_map() {
                ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
                    ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar |
                    ImGuiWindowFlags_NoMouseInputs |
-                   ImGuiWindowFlags_NoScrollbar);
+                   ImGuiWindowFlags_NoScrollbar |
+                   ImGuiWindowFlags_NoBringToFrontOnFocus);
 
   // tab selection, i.e the main screen at the editor
   ImGui::BeginChild("Tabs", ImVec2(150, 0), true,
@@ -232,7 +233,8 @@ void Game::imgui_map() {
   }
   ImGui::SameLine();
   ImGui::BeginChild("MainContent", ImVec2(0, 0), true,
-                    ImGuiWindowFlags_AlwaysUseWindowPadding);
+                    ImGuiWindowFlags_AlwaysUseWindowPadding |
+                        ImGuiWindowFlags_NoBringToFrontOnFocus);
   switch (m_current_tab) {
   case Tab::EDITOR:
     m_editor->draw();
