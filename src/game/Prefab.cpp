@@ -106,6 +106,10 @@ void Prefab::init() {
               new_item.params.push_back(std::move(p));
             }
           }
+
+          Logger::log_group("Item", new_item.name + " loaded with " +
+                                        std::to_string(new_item.params.size()) +
+                                        " params");
         }
 
         // TODO: REFACTOR THE FOLDERS AND OPENED ITEMS TO BE ENGINE-SIDE
@@ -127,7 +131,7 @@ void Prefab::init() {
 
 void Prefab::update() {
   if (g_input_manager->get_key_press(SDLK_d, SDLK_LCTRL)) {
-    std::cout << "Create Item Popup" << std::endl;
+    Logger::log_group("Item", "Open new item popup");
     m_create_item_popup = true;
   }
 }
@@ -196,17 +200,15 @@ void Prefab::side_draw() {
       } else {
       }
       if (item.name.empty()) {
-        std::cout << "Item name is empty, can't create an item without a name, "
-                     "returning..."
-                  << std::endl;
+        Logger::error(
+            "Item name is empty, can't create an item without a name");
         return;
       }
 
       if (m_items.find(item.name) != m_items.end()) {
-        std::cout << "Item with name " << item.name
-                  << " already exists, can't create an item with the same "
-                     "name, returning..."
-                  << std::endl;
+        Logger::warn("Item with name " + item.name +
+                     " already exists, can't create an item with the same "
+                     "name");
         return;
       }
 
@@ -230,10 +232,10 @@ void Prefab::side_draw() {
         m_folder_name_cache.clear();
         save();
       } else {
-        Logger::log("Folder already exists");
+        Logger::warn("Folder already exists");
       }
     } else {
-      Logger::log("Folder name is empty");
+      Logger::warn("Folder name is empty");
     }
   }
 
@@ -258,7 +260,7 @@ void Prefab::save() {
       "\\res\\data\\" + "data.json";
 
   if (json_file_path.empty()) {
-    Logger::log("Data JSON file path is empty.");
+    Logger::error("Prefab JSON file path is empty.");
     return;
   }
 
@@ -305,6 +307,10 @@ void Prefab::save() {
     }
 
     data_json.push_back(item_json);
+
+    Logger::log_group("Item", item.first + " saved with " +
+                                  std::to_string(item.second.params.size()) +
+                                  " params");
   }
 
   if (FUtils::file_exists(json_file_path)) {
