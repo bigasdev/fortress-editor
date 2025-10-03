@@ -5,6 +5,7 @@
 #include <iostream>
 
 std::unordered_map<std::string, List> DebugLayer::lists;
+std::string search_filter = "";
 
 void DebugLayer::start_debug_layer() {
   std::cout << "Debug Layer started" << std::endl;
@@ -25,11 +26,18 @@ void DebugLayer::draw_debug_layer() {
   for (auto &list : lists) {
     if (list.second.open) {
       ImGui::BeginChild(list.first.c_str(), ImVec2(0, 200), true);
-      ImGui::Text("%s", list.second.title.c_str());
+      ImGuiUtils::header_input_text("Search", &search_filter);
+
       ImGui::Separator();
       if (list.second.items) {
         for (int i = 0; i < list.second.items->size(); i++) {
           auto &item = (*list.second.items)[i];
+
+          if (!search_filter.empty() &&
+              item.name.find(search_filter) == std::string::npos) {
+            continue;
+          }
+
           bool is_selected = (list.second.selected_index == i);
           if (ImGui::Selectable(item.name.c_str(), is_selected)) {
             list.second.selected_index = i;
