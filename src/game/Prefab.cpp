@@ -247,7 +247,12 @@ void Prefab::side_draw() {
     if (ImGui::CollapsingHeader(f.c_str())) {
       for (const auto &item : m_items) {
         if (item.second.folder == f) {
-          if (ImGui::Selectable(item.first.c_str())) {
+          auto text = item.first;
+          if (m_items_open[item.first]) {
+            text = "  " + text;
+          }
+
+          if (ImGui::Selectable(text.c_str())) {
             m_items_open[item.first] = !m_items_open[item.first];
           }
         }
@@ -347,6 +352,10 @@ void Prefab::draw() {
   for (auto i : m_items_open) {
     if (i.second) {
       ImGui::Begin(("Item: " + i.first).c_str());
+      if (ImGui::Button(" ")) {
+        m_items_open[i.first] = false;
+        save();
+      }
       ImGuiUtils::header_input_text("Data name:", &m_items[i.first].name);
       ImGuiUtils::header_input_text("Data folder:", &m_items[i.first].folder);
       int selected_sprite = -1;
