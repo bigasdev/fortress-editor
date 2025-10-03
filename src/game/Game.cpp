@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "../core/DebugLayer.hpp"
 #include "../core/Engine.hpp"
 #include "../core/InputManager.hpp"
 #include "../core/Timer.hpp"
@@ -251,6 +252,10 @@ void Game::imgui_map() {
   ImGui::EndChild();
 
   ImGui::End();
+
+#if _DEBUG
+  DebugLayer::draw_debug_layer();
+#endif
 }
 
 void Game::draw_imgui() {

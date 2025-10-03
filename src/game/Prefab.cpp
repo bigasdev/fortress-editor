@@ -1,4 +1,5 @@
 #include "Prefab.hpp"
+#include "../core/DebugLayer.hpp"
 #include "../core/InputManager.hpp"
 #include "../core/global.hpp"
 #include "../imgui/ImGuiUtils.hpp"
@@ -18,11 +19,20 @@
 #include "json.hpp"
 #include <regex>
 
+std::vector<ListItem> list_items;
+
 void Prefab::init() {
   m_grid_data.clear();
   m_items_open.clear();
   m_items.clear();
   m_folders.clear();
+
+  DebugLayer::add_list("Prefab Items", List{
+                                           "Data Items",
+                                           &list_items,
+                                           -1,
+                                           false,
+                                       });
 
   std::string json_file_path =
       g_fini->get_value<std::string>("editor", "project_folder") +
@@ -76,6 +86,15 @@ void Prefab::init() {
         new_item.folder = item["folder"];
         new_item.sprite.name = item["sprite"]["name"];
         new_item.sprite.pallete = item["sprite"]["pallete"];
+
+        list_items.push_back(ListItem{
+            new_item.name,
+            [this, new_item]() {
+              m_items_open[new_item.name] = !m_items_open[new_item.name];
+            },
+            nullptr,
+            nullptr,
+        });
 
         if (item.contains("params")) {
           for (const auto &param : item["params"]) {

@@ -9,6 +9,7 @@
 #include "../tools/Math.hpp"
 #include "../tools/Profiler.hpp"
 #include "Assert.hpp"
+#include "DebugLayer.hpp"
 #include "Fini.hpp"
 #include "InputManager.hpp"
 #include "SDL.h"
@@ -152,6 +153,8 @@ void Engine::post_init() {
   g_engine = this;
   g_res = m_res;
   g_renderer = m_renderer;
+
+  DebugLayer::start_debug_layer();
 
   // starting game
   m_game = new Game();
