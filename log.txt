@@ -101,8 +101,24 @@ item_atlas
 logo
 rog_editor_ui
 ui
-Item: entity loaded with 1 params
 Item: axe loaded with 1 params
+Item: entity loaded with 1 params
 Game initialized
 Engine post init
+Item: wooden_dagger saved with 0 params
+Item: entity saved with 1 params
+Item: axe_old saved with 0 params
+Item: axe saved with 1 params
+Item: wooden_dagger saved with 0 params
+Item: entity saved with 1 params
+Item: axe_old saved with 0 params
+Item: axe saved with 1 params
+Item: wooden_dagger saved with 0 params
+Item: entity saved with 1 params
+Item: axe_old saved with 0 params
+Item: axe saved with 1 params
+Item: wooden_dagger saved with 0 params
+Item: entity saved with 1 params
+Item: axe_old saved with 0 params
+Item: axe saved with 1 params
 SDL2 quit

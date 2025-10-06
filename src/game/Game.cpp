@@ -107,6 +107,9 @@ void Game::update(double dt) {
   if (g_input_manager->get_key_press(SDLK_p, SDLK_LCTRL)) {
     m_current_tab = Tab::PALLETES;
   }
+  if (g_input_manager->get_key_press(SDLK_m)) {
+    m_debug_layer_open = !m_debug_layer_open;
+  }
   /*if (g_input_manager->get_key_press(SDLK_f, SDLK_LCTRL)) {
     m_current_tab = Tab::PREFABS;
   }*/
@@ -254,7 +257,9 @@ void Game::imgui_map() {
   ImGui::End();
 
 #if _DEBUG
-  DebugLayer::draw_debug_layer();
+  if (m_debug_layer_open) {
+    DebugLayer::draw_debug_layer();
+  }
 #endif
 }
 

@@ -47,6 +47,7 @@ private:
   Cooldown *m_cooldown;
 
   Tab m_current_tab = Tab::EDITOR;
+  bool m_debug_layer_open = false;
 };
 
 #endif
