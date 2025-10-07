@@ -3,6 +3,7 @@
 #include "../imgui/ImGuiUtils.hpp"
 #include "../imgui/imgui.h"
 #include "../renderer/AppGui.hpp"
+#include "../res/ResGenerator.hpp"
 #include "../tools/FUtils.hpp"
 #include "../tools/Logger.hpp"
 #include "../tools/Math.hpp"
@@ -46,6 +47,10 @@ void Editor::draw() {
     if (buffer_project_folder != project_folder) {
       g_fini->set_value("editor", "project_folder", buffer_project_folder);
       project_folder = buffer_project_folder;
+    }
+
+    if (ImGui::Button("Generate Resources")) {
+      res::generate_resources(project_folder);
     }
   }
 
