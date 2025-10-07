@@ -119,6 +119,7 @@ void res::generate_resources(std::string project_folder) {
     std::cout << "Sprite found: " << s << std::endl;
     content += "inline constexpr const char* " + s + " = \"" + s + "\";\n";
   }
+  content += "}\n";
 
   // start fonts
   auto fonts = load_fonts(project_folder + "/res/font");
