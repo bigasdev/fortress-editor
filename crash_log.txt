@@ -101,6 +101,11 @@ item_atlas
 logo
 rog_editor_ui
 ui
+Item: lily loaded with 1 params
+Item: cherry loaded with 1 params
+Item: herb loaded with 1 params
+Item: entity loaded with 1 params
+Item: axe loaded with 1 params
 Game initialized
 Engine post init
 ERROR: Signal: 22
