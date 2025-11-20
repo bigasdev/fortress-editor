@@ -159,6 +159,9 @@ void Prefab::update() {
   if (g_input_manager->get_key_press(SDLK_s, SDLK_LCTRL)) {
     save();
   }
+  if (g_input_manager->get_key_press(SDLK_r, SDLK_LCTRL)) {
+    init();
+  }
 
   handle_delete();
   handle_duplicate();
