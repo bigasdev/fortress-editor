@@ -102,4 +102,23 @@ logo
 rog_editor_ui
 ui
 Item: spear_bullet loaded with 7 params
-ERROR: Signal: 8
+Item: cherry loaded with 1 params
+Item: lily loaded with 1 params
+Item: silver_vein loaded with 5 params
+Item: wooden_base loaded with 3 params
+Item: axe loaded with 1 params
+Item: wooden_handle loaded with 2 params
+Item: spear_head loaded with 4 params
+Item: herb loaded with 1 params
+Item: goblin_bullet loaded with 7 params
+Item: saw_head loaded with 4 params
+Item: apple loaded with 3 params
+Item: saw_bullet loaded with 7 params
+Item: goblin loaded with 3 params
+Item: wooden_acc loaded with 4 params
+Item: jewel_bullet loaded with 6 params
+Item: orc_rogue loaded with 5 params
+Item: jewel_head loaded with 4 params
+Game initialized
+Engine post init
+ERROR: Signal: 11

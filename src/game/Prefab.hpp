@@ -23,6 +23,7 @@ public:
   //
   void handle_delete();
   void handle_duplicate();
+  void handle_revert();
 
 private:
   struct ItemParam {
@@ -80,6 +81,7 @@ private:
 
   // behaviours that needs to happen after the for loop
   std::string m_selected_item = "null";
+  Item m_selected_item_cache = Item();
   bool delete_trigger = false;
   bool duplicate_trigger = false;
 };

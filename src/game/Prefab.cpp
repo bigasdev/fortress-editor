@@ -158,6 +158,7 @@ void Prefab::update() {
 
   handle_delete();
   handle_duplicate();
+  handle_revert();
 }
 
 void Prefab::side_draw() {
@@ -506,6 +507,7 @@ void Prefab::clean() { Logger::log("Tabs cleaned"); }
 
 void Prefab::handle_delete() {
   if (delete_trigger && !m_selected_item.empty()) {
+    m_selected_item_cache = m_items[m_selected_item];
     m_items.erase(m_selected_item);
     m_items_open.erase(m_selected_item);
     delete_trigger = false;
@@ -518,6 +520,7 @@ void Prefab::handle_delete() {
 void Prefab::handle_duplicate() {
   if (duplicate_trigger && !m_selected_item.empty()) {
     Item original_item = m_items[m_selected_item];
+    m_selected_item_cache = original_item;
     Item new_item = original_item;
     new_item.name = original_item.name + "_copy";
 
@@ -528,5 +531,16 @@ void Prefab::handle_duplicate() {
     Logger::log_group("Item", "Duplicated item: " + m_selected_item + " to " +
                                   new_item.name);
     m_selected_item = "";
+  }
+}
+
+void Prefab::handle_revert() {
+  if (g_input_manager->get_key_press(SDLK_z, SDLK_LCTRL)) {
+    if (!m_selected_item_cache.name.empty()) {
+      m_items[m_selected_item_cache.name] = m_selected_item_cache;
+      save();
+      Logger::log_group("Item", "Reverted item: " + m_selected_item_cache.name);
+      m_selected_item_cache = Item();
+    }
   }
 }
