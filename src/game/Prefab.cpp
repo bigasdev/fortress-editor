@@ -155,6 +155,9 @@ void Prefab::update() {
     Logger::log_group("Item", "Open new item popup");
     m_create_item_popup = true;
   }
+
+  handle_delete();
+  handle_duplicate();
 }
 
 void Prefab::side_draw() {
@@ -262,6 +265,32 @@ void Prefab::side_draw() {
 
   ImGui::Separator();
 
+  if (m_item_options_popup) {
+    ImGui::SetNextWindowPos(ImVec2(item_popup_pos.x, item_popup_pos.y),
+                            ImGuiCond_Always);
+    ImGui::Begin("Item Options", &m_item_options_popup,
+                 ImGuiWindowFlags_AlwaysAutoResize |
+                     ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
+    if (ImGui::Button("Delete Item")) {
+      delete_trigger = true;
+      m_item_options_popup = false;
+    }
+    if (ImGui::Button("Rename Item")) {
+      m_item_options_popup = false;
+    }
+    if (ImGui::Button("Duplicate Item")) {
+      duplicate_trigger = true;
+      m_item_options_popup = false;
+    }
+    if (ImGui::Button("Move Item")) {
+      m_item_options_popup = false;
+    }
+    if (ImGui::Button("Close")) {
+      m_item_options_popup = false;
+    }
+    ImGui::End();
+  }
+
   for (auto f : m_folders) {
     if (ImGui::CollapsingHeader(f.c_str())) {
       for (const auto &item : m_items) {
@@ -273,6 +302,12 @@ void Prefab::side_draw() {
 
           if (ImGui::Selectable(text.c_str())) {
             m_items_open[item.first] = !m_items_open[item.first];
+          }
+
+          if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+            m_item_options_popup = !m_item_options_popup;
+            m_selected_item = item.first;
+            item_popup_pos = {ImGui::GetMousePos().x, ImGui::GetMousePos().y};
           }
         }
       }
@@ -468,3 +503,30 @@ void Prefab::draw() {
 }
 
 void Prefab::clean() { Logger::log("Tabs cleaned"); }
+
+void Prefab::handle_delete() {
+  if (delete_trigger && !m_selected_item.empty()) {
+    m_items.erase(m_selected_item);
+    m_items_open.erase(m_selected_item);
+    delete_trigger = false;
+    save();
+    Logger::log_group("Item", "Deleted item: " + m_selected_item);
+    m_selected_item = "";
+  }
+}
+
+void Prefab::handle_duplicate() {
+  if (duplicate_trigger && !m_selected_item.empty()) {
+    Item original_item = m_items[m_selected_item];
+    Item new_item = original_item;
+    new_item.name = original_item.name + "_copy";
+
+    m_items[new_item.name] = new_item;
+    m_items_open[new_item.name] = false;
+    duplicate_trigger = false;
+    save();
+    Logger::log_group("Item", "Duplicated item: " + m_selected_item + " to " +
+                                  new_item.name);
+    m_selected_item = "";
+  }
+}

@@ -9,4 +9,6 @@ CompileFlags:
   - "-IC:/sdl2"
   - "-IC:/emscriptem"
   - "-IC:/Users/gusta/.code/rog-editor/src"
+  - "-IC:/Users/Escritorio2/Documents/.code/fortress-editor/src"
+  - "-IC:/Users/Escritorio2/Documents/.code/fortress-editor/include"
   - "-I./include"

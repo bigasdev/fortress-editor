@@ -20,6 +20,10 @@ public:
   void draw();
   void clean();
 
+  //
+  void handle_delete();
+  void handle_duplicate();
+
 private:
   struct ItemParam {
     virtual ~ItemParam() = default;
@@ -69,6 +73,13 @@ private:
 
   // popup
   bool m_create_item_popup = false;
+  vec2 item_popup_pos;
+  bool m_item_options_popup = false;
 
   std::unordered_map<std::string, bool> m_items_open;
+
+  // behaviours that needs to happen after the for loop
+  std::string m_selected_item = "null";
+  bool delete_trigger = false;
+  bool duplicate_trigger = false;
 };
