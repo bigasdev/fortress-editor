@@ -156,6 +156,10 @@ void Prefab::update() {
     m_create_item_popup = true;
   }
 
+  if (g_input_manager->get_key_press(SDLK_s, SDLK_LCTRL)) {
+    save();
+  }
+
   handle_delete();
   handle_duplicate();
   handle_revert();
@@ -272,18 +276,15 @@ void Prefab::side_draw() {
     ImGui::Begin("Item Options", &m_item_options_popup,
                  ImGuiWindowFlags_AlwaysAutoResize |
                      ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
-    if (ImGui::Button("Delete Item")) {
-      delete_trigger = true;
-      m_item_options_popup = false;
-    }
-    if (ImGui::Button("Rename Item")) {
-      m_item_options_popup = false;
-    }
     if (ImGui::Button("Duplicate Item")) {
       duplicate_trigger = true;
       m_item_options_popup = false;
     }
     if (ImGui::Button("Move Item")) {
+      m_item_options_popup = false;
+    }
+    if (ImGui::Button("Delete Item")) {
+      delete_trigger = true;
       m_item_options_popup = false;
     }
     if (ImGui::Button("Close")) {
@@ -490,13 +491,6 @@ void Prefab::draw() {
         }
       }
       ImGui::Separator();
-
-      // check if an imgui keyboard action was done
-      if (ImGui::IsWindowFocused() &&
-          ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_S)) &&
-          (ImGui::GetIO().KeyCtrl)) {
-        save();
-      }
 
       ImGui::End();
     }
