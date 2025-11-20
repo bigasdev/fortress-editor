@@ -471,8 +471,10 @@ void Prefab::draw() {
           } else if (auto p = dynamic_cast<ItemParamString *>(param.get())) {
             ImGuiUtils::header_input_text("String", &p->value);
           } else if (auto p = dynamic_cast<ItemParamBool *>(param.get())) {
+            ImGuiUtils::header_input_bool("Bool", &p->value);
             // ImGui::Checkbox("Bool", &p->value);
           } else if (auto p = dynamic_cast<ItemParamVec2 *>(param.get())) {
+            ImGuiUtils::header_input_vec2("Vec2", &p->value);
             // ImGuiUtils::header_input_vec2("Vec2", &p->value);
           }
 
